@@ -137,7 +137,7 @@ const getSkillClass = (skill: string): string => {
     ["180/DPS Attacking Group Center, Club, Landmark", "30% Damage World Building Guard", "36% Damage to World Building Guard", "36% Damage World Building Guard", "180/DPS Attacking Enemy Company", "20% Damage WG / 50% Drive Speed", "75% Drive Speed", "40% Drive Speed Increase", "15% Damage Increase World Building Guard"].includes(trimmed) ||
     t.includes("drive speed increase") || t.includes("damage increase world building guard")
   ) return "skill-specific-worst bg-gradient-to-r from-slate-600 to-slate-700 shadow-sm border border-red-500/40";
-  if (["20% Skill Damage", "10% Skill Damage"].includes(trimmed)) return "skill-damage-20 bg-gradient-to-r from-emerald-400 to-green-600 shadow-sm";
+  if (["20% Skill Damage", "10% Skill Damage"].includes(trimmed)) return "skill-good bg-gradient-to-r from-slate-700 to-slate-800 shadow-sm border border-slate-500/40";
   if (trimmed === "12% Skill Damage Reduction") return "bg-gradient-to-r from-slate-600 to-slate-700 text-blue-500 border border-slate-500/40 blue-text";
   if (t.includes("reduce") && (t.includes("normal damage taken") || t.includes("skill damage taken"))) return "bg-gradient-to-r from-slate-600 to-slate-700 text-blue-500 border border-slate-500/40 blue-text";
   if (t.includes("fan capacity") && !t.includes("rally")) {

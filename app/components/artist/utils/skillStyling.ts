@@ -46,10 +46,9 @@ export const getSkillClass = (skill: string): string => {
       !trimmed.toLowerCase().includes("reduction"))
   )
     return "skill-specific-worst bg-gradient-to-r from-slate-600 to-slate-700 shadow-sm border border-red-500/40";
-  if (["20% Skill Damage", "12% Skill Damage Reduction"].includes(trimmed)) {
-    return trimmed === "20% Skill Damage"
-      ? "skill-damage-20 bg-gradient-to-r from-emerald-400 to-green-600 shadow-sm"
-      : "bg-gradient-to-r from-slate-600 to-slate-700 text-blue-500 border border-slate-500/40 blue-text";
-  }
+  if (trimmed === "20% Skill Damage")
+    return "skill-good bg-gradient-to-r from-slate-700 to-slate-800 shadow-sm border border-slate-500/40";
+  if (trimmed === "12% Skill Damage Reduction")
+    return "bg-gradient-to-r from-slate-600 to-slate-700 text-blue-500 border border-slate-500/40 blue-text";
   return "bg-gradient-to-r from-slate-600 to-slate-700 text-slate-100 border border-slate-500/40";
 };
