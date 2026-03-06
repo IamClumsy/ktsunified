@@ -106,14 +106,14 @@ body::before {
 }
 
 .skill-worst {
-  color: #ef4444 !important;
-  border-color: #ef4444 !important;
+  color: #fca5a5 !important;
+  border-color: #fca5a5 !important;
   font-weight: 600 !important;
 }
 
 .skill-specific-worst {
-  color: #ef4444 !important;
-  border-color: #ef4444 !important;
+  color: #fca5a5 !important;
+  border-color: #fca5a5 !important;
   font-weight: 600 !important;
 }
 
@@ -124,8 +124,8 @@ body::before {
 }
 
 .blue-text {
-  color: #3b82f6 !important;
-  border-color: #3b82f6 !important;
+  color: #93c5fd !important;
+  border-color: #93c5fd !important;
   font-weight: 600 !important;
 }
 
