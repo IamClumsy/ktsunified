@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback } from "react";
-import { FaDownload } from "react-icons/fa";
+import { useState, useEffect, useMemo } from "react";
 import artistsDataRaw from "@/src/data/artists.json";
 import { Artist } from "./types";
 import { categorizeSkills } from "./utils/skillCategorization";
@@ -12,8 +11,6 @@ import { ArtistRow } from "./artist-row";
 
 const artistsData = artistsDataRaw as Artist[];
 
-const GOOGLE_SHEET_URL =
-  "https://docs.google.com/spreadsheets/d/1KJ2GMDqrE1pmFWcP38ThXLsfeV4jZl_IgKjyMnI1ztE/edit?gid=1557514537#gid=1557514537";
 
 export function ArtistTab() {
   const [artists, setArtists] = useState<Artist[]>([]);
@@ -104,17 +101,6 @@ export function ArtistTab() {
             >
               Mick&apos;s Awesome SSR Artist Helper
             </h1>
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={() => window.open(GOOGLE_SHEET_URL, "_blank", "noopener")}
-                className="p-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-full hover:from-green-600 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-110 transform flex items-center justify-center aspect-square w-12 h-12"
-                title="Open artists Google Sheet"
-                aria-label="Open artists Google Sheet"
-              >
-                <FaDownload size={22} aria-hidden="true" />
-              </button>
-            </div>
           </div>
         </header>
 
