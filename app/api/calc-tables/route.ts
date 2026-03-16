@@ -51,7 +51,9 @@ function extractRange(
 
 export async function GET() {
   try {
-    const filePath = path.join(process.cwd(), "src", "apex girl calculator.xlsx");
+    const dataFilePath = path.join(process.cwd(), "src", "data", "apex girl calculator.xlsx");
+    const legacyFilePath = path.join(process.cwd(), "src", "apex girl calculator.xlsx");
+    const filePath = fs.existsSync(dataFilePath) ? dataFilePath : legacyFilePath;
     if (!fs.existsSync(filePath)) {
       return NextResponse.json({ error: "Workbook not found" }, { status: 500 });
     }
@@ -66,6 +68,26 @@ export async function GET() {
     const result: Record<string, { headers: (string | null)[]; data: unknown[][] }> = {};
     for (const [name, rangeDef] of Object.entries(RANGES)) {
       result[name] = extractRange(raw, rangeDef);
+    }
+
+    // Override glass data from dedicated Glass sheet if available
+    const glassWs = wb.Sheets["Glass"];
+    if (glassWs) {
+      const glassRaw = XLSX.utils.sheet_to_json(glassWs, { header: 1 }) as unknown[][];
+      const glassData: unknown[][] = [];
+      let accumulated = 0;
+      for (let r = 2; r < glassRaw.length; r++) {
+        const row = glassRaw[r];
+        if (!Array.isArray(row)) continue;
+        const level = row[0];
+        if (typeof level !== "number") continue;
+        const cost = typeof row[1] === "number" ? row[1] : 0;
+        accumulated += cost;
+        glassData.push([level - 1, cost || null, accumulated]);
+      }
+      if (glassData.length > 0) {
+        result.glass = { headers: result.glass?.headers ?? [], data: glassData };
+      }
     }
 
     // Extend artist data from Artist sheet
