@@ -202,6 +202,27 @@ export async function GET() {
       }
     }
 
+    // Load artist XP modifiers from artistxpmods.xlsx
+    const artistXpModsPath = path.join(process.cwd(), "src", "artistxpmods.xlsx");
+    if (fs.existsSync(artistXpModsPath)) {
+      const modsBuffer = await fs.promises.readFile(artistXpModsPath);
+      const modsWb = XLSX.read(modsBuffer, { type: "buffer" });
+      const modsWs = modsWb.Sheets[modsWb.SheetNames[0]];
+      if (modsWs) {
+        const modsRaw = XLSX.utils.sheet_to_json(modsWs, { header: 1 }) as unknown[][];
+        const modsData: unknown[][] = [];
+        for (const row of modsRaw) {
+          if (!Array.isArray(row)) continue;
+          const name = row[0];
+          const mod = row[1];
+          if (name != null && name !== "" && mod != null) {
+            modsData.push([String(name), typeof mod === "number" ? mod : Number(mod)]);
+          }
+        }
+        result.artistMods = { headers: ["Artist", "Modifier"], data: modsData };
+      }
+    }
+
     return NextResponse.json(result);
   } catch (error) {
     console.error("calc-tables route failed", error);
