@@ -202,6 +202,68 @@ export async function GET() {
       }
     }
 
+    // Parse Others sheet (HQ Building Cards + Business Building Gold)
+    const othersWs = wb.Sheets["Others"];
+    if (othersWs) {
+      const othersRaw = XLSX.utils.sheet_to_json(othersWs, { header: 1 }) as unknown[][];
+      const cardsData: unknown[][] = [];
+      const goldData: unknown[][] = [];
+      for (let r = 2; r < othersRaw.length; r++) {
+        const row = othersRaw[r];
+        if (!Array.isArray(row)) continue;
+        if (typeof row[0] === "number" && typeof row[2] === "number") {
+          cardsData.push([row[0] - 1, row[1] ?? null, row[2]]);
+        }
+        if (typeof row[4] === "number" && typeof row[6] === "number") {
+          goldData.push([row[4] - 1, row[5] ?? null, row[6]]);
+        }
+      }
+      if (cardsData.length > 0) result.buildingCards = { headers: ["Level", "Cards", "Accum"], data: cardsData };
+      if (goldData.length > 0) result.buildingGold = { headers: ["Level", "Gold", "Accum"], data: goldData };
+    }
+
+    // Parse CEO Sports from dedicated Floors sheet (columns 41–48)
+    const floorsWs = wb.Sheets["Floors,Exhibits,Homemaking,CarC"];
+    if (floorsWs) {
+      const floorsRaw = XLSX.utils.sheet_to_json(floorsWs, { header: 1 }) as unknown[][];
+      const sportsData: unknown[][] = [];
+      const accum = [0, 0, 0, 0, 0, 0, 0, 0]; // T1 drink/bar, T2 drink/bar, T3 drink/bar, T4 hq drink/bar
+      for (const row of floorsRaw) {
+        if (!Array.isArray(row) || typeof row[0] !== "number") continue;
+        for (let i = 0; i < 8; i++) {
+          accum[i] += typeof row[41 + i] === "number" ? (row[41 + i] as number) : 0;
+        }
+        sportsData.push([row[0] - 1, ...accum]);
+      }
+      if (sportsData.length > 0) {
+        result.ceoSports = {
+          headers: ["Level", "T1 Drink", "T1 Bar", "T2 Drink", "T2 Bar", "T3 Drink", "T3 Bar", "T4 HQ Drink", "T4 HQ Bar"],
+          data: sportsData,
+        };
+      }
+    }
+
+    // Parse CEO Outfit sheet
+    const ceoOutfitWs = wb.Sheets["CEO Outfit"];
+    if (ceoOutfitWs) {
+      const outfitRaw = XLSX.utils.sheet_to_json(ceoOutfitWs, { header: 1 }) as unknown[][];
+      const outfitData: unknown[][] = [];
+      let lastAppearance = "";
+      for (let r = 2; r < outfitRaw.length; r++) {
+        const row = outfitRaw[r];
+        if (!Array.isArray(row) || row.every((v) => v == null || v === "")) break;
+        const appearance = row[0] != null && row[0] !== "" ? String(row[0]) : lastAppearance;
+        lastAppearance = appearance;
+        const goldCrowns = typeof row[2] === "number" ? row[2] : 0;
+        const label = appearance === "Essential" ? "Essential" : `${appearance} GC${goldCrowns}`;
+        const bankCardsPerItem = typeof row[5] === "number" ? row[5] : 0;
+        const droids = typeof row[6] === "number" ? row[6] : 0;
+        const crownCards = typeof row[11] === "number" ? row[11] : 0;
+        outfitData.push([label, bankCardsPerItem, droids, crownCards]);
+      }
+      result.ceoOutfit = { headers: ["Step", "Bank Cards per Item", "Droids", "Crown Cards"], data: outfitData };
+    }
+
     // Load artist XP modifiers from artistxpmods.xlsx
     const artistXpModsPath = path.join(process.cwd(), "src", "artistxpmods.xlsx");
     if (fs.existsSync(artistXpModsPath)) {

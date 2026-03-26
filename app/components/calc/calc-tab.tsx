@@ -11,6 +11,9 @@ import { CarParts } from "./sections/car-parts";
 import { CarCore } from "./sections/car-core";
 import { VillaSuite } from "./sections/villa-suite";
 import { VillaHomemaking } from "./sections/villa-homemaking";
+import { CeoOutfit } from "./sections/ceo-outfit";
+import { CeoSports } from "./sections/ceo-sports";
+import { HqBuilding } from "./sections/hq-building";
 
 function CalcContent() {
   const { loading, error } = useCalcTables();
@@ -30,6 +33,9 @@ function CalcContent() {
       <CarCore />
       <VillaSuite />
       <VillaHomemaking />
+      <CeoOutfit />
+      <CeoSports />
+      <HqBuilding />
     </div>
   );
 }
