@@ -40,13 +40,13 @@ export function CeoOutfit() {
   }, [tables, steps, from, to]);
 
   return (
-    <CalculatorSection title="CEO Outfit" note="*Bank Cards per Item (per outfit piece)" color="emerald">
+    <CalculatorSection title="CEO Outfit" note="*Bank Cards per Item (per outfit piece)" color="pink">
       <div className="grid grid-cols-2 gap-3">
         <DropdownInput label="From Step" value={from} options={steps} onChange={setFrom} />
         <DropdownInput label="To Step" value={to} options={steps} onChange={setTo} />
       </div>
       <ResultDisplay
-        accentClass="text-emerald-300"
+        accentClass="text-pink-300"
         results={[
           { label: "Bank Cards per Item", value: results?.bankCards ?? null },
           { label: "Droids (all 4 items)", value: results?.droids ?? null },

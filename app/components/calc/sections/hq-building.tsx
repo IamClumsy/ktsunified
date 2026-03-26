@@ -23,10 +23,10 @@ export function HqBuilding() {
   }, [tables, from, to]);
 
   return (
-    <CalculatorSection title="HQ Building" note="*Max level 14" color="sky">
+    <CalculatorSection title="HQ Building" note="*Max level 14" color="violet">
       <LevelRangeInput from={from} to={to} onFromChange={setFrom} onToChange={setTo} min={1} max={14} />
       <ResultDisplay
-        accentClass="text-sky-300"
+        accentClass="text-violet-300"
         results={[
           { label: "Building Cards", value: cards },
           { label: "Business Building Gold", value: gold },
