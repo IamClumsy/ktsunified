@@ -135,6 +135,12 @@ body::before {
   font-weight: 600 !important;
 }
 
+.skill-white {
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
 .legend-white {
   color: #ffffff !important;
 }
@@ -177,7 +183,7 @@ body::before {
     .skill-worst
   ):not(.skill-specific-worst):not(.ranking-a):not(.ranking-b):not(.ranking-c):not(
     .ranking-d
-  ):not(.ranking-f):not(.gold-text):not(.blue-text):not(.violet-text) {
+  ):not(.ranking-f):not(.gold-text):not(.blue-text):not(.violet-text):not(.skill-white) {
   color: #fff !important;
 }
 

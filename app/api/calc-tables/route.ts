@@ -277,10 +277,11 @@ export async function GET() {
           if (!Array.isArray(row)) continue;
           const name = row[0];
           const mod = row[1];
-          if (name != null && name !== "" && mod != null) {
-            modsData.push([String(name), typeof mod === "number" ? mod : Number(mod)]);
+          if (typeof name === "string" && name !== "" && typeof mod === "number") {
+            modsData.push([name, mod]);
           }
         }
+        modsData.sort((a, b) => (a[0] as string).localeCompare(b[0] as string));
         result.artistMods = { headers: ["Artist", "Modifier"], data: modsData };
       }
     }

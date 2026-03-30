@@ -23,6 +23,7 @@ export const getSkillClass = (skill: string): string => {
     trimmed === "200/DPS Defending HQ, GH, Club, LM" ||
     trimmed === "240/DPS Defending HQ, GH, Club, LM" ||
     trimmed === "240/DPS Attacking Enemy Company" ||
+    trimmed === "10% Gain Fans" ||
     (trimmed.toLowerCase().includes("dps") &&
       trimmed.toLowerCase().includes("defending") &&
       trimmed.toLowerCase().includes("hq"))
@@ -50,7 +51,10 @@ export const getSkillClass = (skill: string): string => {
     return "skill-good bg-gradient-to-r from-slate-700 to-slate-800 border shadow-sm";
   if (trimmed === "12% Skill Damage Reduction")
     return "bg-gradient-to-r from-slate-600 to-slate-700 text-blue-500 border border-slate-500/40 blue-text";
-  if (trimmed.toLowerCase().includes("fan capacity"))
-    return "bg-gradient-to-r from-slate-600 to-slate-700 text-white border border-white/40 shadow-sm";
+  if (
+    trimmed.toLowerCase().includes("fan capacity") ||
+    trimmed === "240/DPS Attacking Group Center, Club, Landmark"
+  )
+    return "skill-white bg-gradient-to-r from-slate-600 to-slate-700 border shadow-sm";
   return "bg-gradient-to-r from-slate-600 to-slate-700 text-slate-100 border border-slate-500/40";
 };
