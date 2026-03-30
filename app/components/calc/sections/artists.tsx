@@ -19,6 +19,18 @@ export function Artists() {
     return ["None", ...tables.artistMods.data.map((row) => String(row[0]))];
   }, [tables]);
 
+  const artistOptionLabels = useMemo(() => {
+    if (!tables?.artistMods) return ["None"];
+    return [
+      "None",
+      ...tables.artistMods.data.map((row) => {
+        const name = String(row[0]);
+        const mod = typeof row[1] === "number" ? row[1] : 0;
+        return mod === 0 ? name : `${name} (+${mod}%)`;
+      }),
+    ];
+  }, [tables]);
+
   const modifier = useMemo(() => {
     if (!tables?.artistMods || artist === "None") return 1;
     const row = tables.artistMods.data.find((r) => String(r[0]) === artist);
@@ -42,7 +54,7 @@ export function Artists() {
   return (
     <CalculatorSection title="Artists" color="pink">
       <LevelRangeInput from={from} to={to} onFromChange={setFrom} onToChange={setTo} />
-      <DropdownInput label="Artist" value={artist} options={artistOptions} onChange={setArtist} />
+      <DropdownInput label="Artist" value={artist} options={artistOptions} optionLabels={artistOptionLabels} onChange={setArtist} />
       <ResultDisplay
         accentClass="text-pink-300"
         results={[
