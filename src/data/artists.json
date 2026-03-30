@@ -1018,5 +1018,20 @@
     ],
     "build": "",
     "photos": "Rome3"
-  }
+  },
+  {
+    "id": 69,
+    "name": "Yoon",
+    "group": "None",
+    "rank": "SSR",
+    "position": "Dancer",
+    "genre": "Electronic",
+    "skills": [
+      "10 sec/1800 Damage",
+      "40% Gold Brick Gathering Speed",
+      "10% Gain Fans Selling CDs"
+    ],
+    "build": "",
+    "photos": "Universal"
+  }  
 ]
