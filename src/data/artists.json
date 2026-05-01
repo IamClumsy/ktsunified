@@ -882,7 +882,7 @@
       "12% Fan Capacity"
     ],
     "build": "Single Car",
-    "photos": "Rome2"
+    "photos": "Universal"
   },
   {
     "id": 60,
@@ -897,7 +897,7 @@
       "12% Skill Damage Reduction"
     ],
     "build": "Damage Reduction",
-    "photos": "Tokyo3"
+    "photos": "Universal"
   },
   {
     "id": 61,
@@ -912,7 +912,7 @@
       "12% Fan Capacity"
     ],
     "build": "Single Car",
-    "photos": "Rome2"
+    "photos": "Universal"
   },
   {
     "id": 62,
@@ -927,7 +927,7 @@
       "12% Fan Capacity"
     ],
     "build": "Single Car",
-    "photos": "Tokyo3"
+    "photos": "Universal"
   },
   {
     "id": 63,
@@ -972,7 +972,7 @@
       "12% Skill Damage Reduction"
     ],
     "build": "HQ Defense",
-    "photos": "Rome2"
+    "photos": "Universal"
   },
   {
     "id": 66,
@@ -987,7 +987,7 @@
       "12% Reduction Basic Attack Damage"
     ],
     "build": "",
-    "photos": "Tokyo3"
+    "photos": "Universal"
   },
   {
     "id": 67,
