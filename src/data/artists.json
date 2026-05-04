@@ -356,7 +356,7 @@
       "40% Gold Brick Gathering Speed",
       "40% Gold Brick Gathering Speed"
     ],
-    "build": "",
+    "build": "Gold Gathering",
     "photos": "Universal"
   },
   {
@@ -566,7 +566,7 @@
       "40% Gold Brick Gathering Speed",
       "20% Damage to Player"
     ],
-    "build": "",
+    "build": "Gold Gathering",
     "photos": "Universal"
   },
   {
@@ -641,7 +641,7 @@
       "50% Basic Attack Damage",
       "40% Gold Brick Gathering Speed"
     ],
-    "build": "",
+    "build": "Gold Gathering",
     "photos": "Universal"
   },
   {
@@ -1031,7 +1031,7 @@
       "40% Gold Brick Gathering Speed",
       "10% Gain Fans Selling CDs"
     ],
-    "build": "",
+    "build": "Gold Gathering",
     "photos": "Universal"
   },
    {
