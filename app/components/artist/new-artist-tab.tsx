@@ -1,0 +1,273 @@
+"use client";
+
+import { useState, useMemo } from "react";
+import artistsDataRaw from "@/src/data/artists.json";
+import { Artist } from "./types";
+import { categorizeSkills } from "./utils/skillCategorization";
+import { getSkillClass, getRankingClass } from "./utils/skillStyling";
+import { getLetterGrade } from "./utils/artistCalculations";
+import { useArtistFilters } from "./hooks/useArtistFilters";
+
+const artistsData = artistsDataRaw as Artist[];
+
+const selectClass =
+  "w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-pink-400/70";
+
+export function NewArtistTab() {
+  const artists = artistsData;
+
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedGroup, setSelectedGroup] = useState("");
+  const [selectedRole, setSelectedRole] = useState("");
+  const [selectedGenre, setSelectedGenre] = useState("");
+  const [selectedSkill, setSelectedSkill] = useState("");
+  const [selectedSkill3, setSelectedSkill3] = useState("");
+  const [selectedBuild, setSelectedBuild] = useState("");
+  const [selectedRanking, setSelectedRanking] = useState("");
+  const [selectedPhotos, setSelectedPhotos] = useState("");
+
+  const groupOptions = useMemo(
+    () => [...new Set(artists.map((a) => a.group))].sort((a, b) => a.localeCompare(b)),
+    [artists]
+  );
+  const roles = useMemo(() => [...new Set(artists.map((a) => a.position))], [artists]);
+  const genres = useMemo(() => [...new Set(artists.map((a) => a.genre))], [artists]);
+  const artistNames = useMemo(() => [...new Set(artists.map((a) => a.name))].sort(), [artists]);
+  const buildOptions = useMemo(
+    () => [...new Set(artists.map((a) => a.build).filter(Boolean))] as string[],
+    [artists]
+  );
+  const photosOptions = useMemo(
+    () => [...new Set(artists.map((a) => a.photos).filter(Boolean))] as string[],
+    [artists]
+  );
+
+  const allSkills = useMemo(
+    () => [...new Set(artists.map((a) => a.skills[1]).filter(Boolean))],
+    [artists]
+  );
+  const allSkills3 = useMemo(
+    () => [...new Set(artists.map((a) => a.skills[2]).filter(Boolean))],
+    [artists]
+  );
+  const skill2Categories = useMemo(() => categorizeSkills(allSkills), [allSkills]);
+  const skill3Categories = useMemo(() => categorizeSkills(allSkills3), [allSkills3]);
+
+  const skillArrays = useMemo(
+    () => ({
+      bestSkills: skill2Categories.bestSkills,
+      goodSkills: skill2Categories.goodSkills,
+      okaySkills: skill2Categories.okaySkills,
+      badSkills: skill2Categories.badSkills,
+      worstSkills: skill2Categories.worstSkills,
+      bestSkills3: skill3Categories.bestSkills,
+      goodSkills3: skill3Categories.goodSkills,
+      okaySkills3: skill3Categories.okaySkills,
+      badSkills3: skill3Categories.badSkills,
+      worstSkills3: skill3Categories.worstSkills,
+    }),
+    [skill2Categories, skill3Categories]
+  );
+
+  const { filteredArtists, calculatePoints } = useArtistFilters({
+    artists,
+    filters: {
+      searchTerm,
+      selectedGroup,
+      selectedRole,
+      selectedGenre,
+      selectedSkill,
+      selectedSkill3,
+      selectedBuild,
+      selectedRanking,
+      selectedPhotos,
+    },
+    skillArrays,
+  });
+
+  const activeFilterCount = [
+    searchTerm, selectedGroup, selectedRole, selectedGenre,
+    selectedSkill, selectedSkill3, selectedBuild, selectedRanking, selectedPhotos,
+  ].filter(Boolean).length;
+
+  function clearFilters() {
+    setSearchTerm(""); setSelectedGroup(""); setSelectedRole(""); setSelectedGenre("");
+    setSelectedSkill(""); setSelectedSkill3(""); setSelectedBuild(""); setSelectedRanking(""); setSelectedPhotos("");
+  }
+
+  return (
+    <div className="mx-auto max-w-7xl px-4 py-6">
+      <header className="mb-6 text-center">
+        <p className="text-xs uppercase tracking-[0.4em] text-slate-400">SSR Artists</p>
+        <h1 className="mt-2 text-xl md:text-3xl font-bold bg-gradient-to-r from-pink-200 via-purple-200 to-fuchsia-200 bg-clip-text text-transparent">
+          SSR Helper
+        </h1>
+        <p className="mt-1 text-sm text-slate-400">{filteredArtists.length} artists</p>
+      </header>
+
+      {/* Filter bar */}
+      <div className="mb-4 flex items-center justify-center gap-2">
+        <button
+          onClick={() => setFiltersOpen((o) => !o)}
+          className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-slate-700 bg-slate-900 text-sm text-slate-300 hover:border-pink-500/50 hover:text-white transition-colors"
+        >
+          <span>Filters</span>
+          {activeFilterCount > 0 && (
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pink-600 text-white text-xs font-bold">
+              {activeFilterCount}
+            </span>
+          )}
+          <span className="text-slate-500 text-xs">{filtersOpen ? "▲" : "▼"}</span>
+        </button>
+        {activeFilterCount > 0 && (
+          <button
+            onClick={clearFilters}
+            className="px-3 py-2.5 rounded-lg border border-slate-700 bg-slate-900 text-sm text-slate-400 hover:text-red-400 hover:border-red-500/50 transition-colors"
+          >
+            Clear all
+          </button>
+        )}
+      </div>
+
+      {/* Filter panel */}
+      {filtersOpen && (
+        <div className="mb-6 p-4 rounded-xl border border-slate-700 bg-slate-900/60 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+          <div className="space-y-1">
+            <label className="text-xs uppercase tracking-widest text-slate-400">Artist</label>
+            <select value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className={selectClass}>
+              <option value="">All Artists</option>
+              {artistNames.map((n) => <option key={n} value={n}>{n}</option>)}
+            </select>
+          </div>
+          <div className="space-y-1">
+            <label className="text-xs uppercase tracking-widest text-slate-400">Genre</label>
+            <select value={selectedGenre} onChange={(e) => setSelectedGenre(e.target.value)} className={selectClass}>
+              <option value="">All Genres</option>
+              {genres.map((g) => <option key={g} value={g}>{g}</option>)}
+            </select>
+          </div>
+          <div className="space-y-1">
+            <label className="text-xs uppercase tracking-widest text-slate-400">Role</label>
+            <select value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)} className={selectClass}>
+              <option value="">All Roles</option>
+              {roles.map((r) => <option key={r} value={r}>{r}</option>)}
+            </select>
+          </div>
+          <div className="space-y-1">
+            <label className="text-xs uppercase tracking-widest text-slate-400">Group</label>
+            <select value={selectedGroup} onChange={(e) => setSelectedGroup(e.target.value)} className={selectClass}>
+              <option value="">All Groups</option>
+              {groupOptions.map((g) => <option key={g} value={g}>{g}</option>)}
+            </select>
+          </div>
+          <div className="space-y-1">
+            <label className="text-xs uppercase tracking-widest text-slate-400">Skill 2</label>
+            <select value={selectedSkill} onChange={(e) => setSelectedSkill(e.target.value)} className={selectClass}>
+              <option value="">All Skills</option>
+              <optgroup label="Best">{skill2Categories.bestSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+              <optgroup label="Good">{skill2Categories.goodSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+              <optgroup label="Okay">{skill2Categories.okaySkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+              <optgroup label="Bad">{skill2Categories.badSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+              <optgroup label="Worst">{skill2Categories.worstSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+            </select>
+          </div>
+          <div className="space-y-1">
+            <label className="text-xs uppercase tracking-widest text-slate-400">Skill 3</label>
+            <select value={selectedSkill3} onChange={(e) => setSelectedSkill3(e.target.value)} className={selectClass}>
+              <option value="">All Skills</option>
+              <optgroup label="Best">{skill3Categories.bestSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+              <optgroup label="Good">{skill3Categories.goodSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+              <optgroup label="Okay">{skill3Categories.okaySkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+              <optgroup label="Bad">{skill3Categories.badSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+              <optgroup label="Worst">{skill3Categories.worstSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+            </select>
+          </div>
+          <div className="space-y-1">
+            <label className="text-xs uppercase tracking-widest text-slate-400">Ranking</label>
+            <select value={selectedRanking} onChange={(e) => setSelectedRanking(e.target.value)} className={selectClass}>
+              <option value="">All Rankings</option>
+              {["S", "A", "B", "C", "F"].map((r) => <option key={r} value={r}>{r}</option>)}
+            </select>
+          </div>
+          <div className="space-y-1">
+            <label className="text-xs uppercase tracking-widest text-slate-400">Build</label>
+            <select value={selectedBuild} onChange={(e) => setSelectedBuild(e.target.value)} className={selectClass}>
+              <option value="">All Builds</option>
+              {buildOptions.map((b) => <option key={b} value={b}>{b}</option>)}
+            </select>
+          </div>
+          <div className="space-y-1">
+            <label className="text-xs uppercase tracking-widest text-slate-400">Photos</label>
+            <select value={selectedPhotos} onChange={(e) => setSelectedPhotos(e.target.value)} className={selectClass}>
+              <option value="">All Photos</option>
+              {photosOptions.map((p) => <option key={p} value={p}>{p}</option>)}
+            </select>
+          </div>
+        </div>
+      )}
+
+      {/* Cards */}
+      {filteredArtists.length === 0 ? (
+        <div className="text-center py-16 text-slate-400">No artists match the current filters.</div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+          {filteredArtists.map((artist) => {
+            const points = calculatePoints(artist);
+            const grade = getLetterGrade(points);
+            return (
+              <div
+                key={artist.id}
+                className="rounded-xl border border-fuchsia-500/30 bg-gradient-to-br from-violet-900/60 via-fuchsia-900/40 to-slate-900/80 p-3 flex flex-col gap-2"
+              >
+                {/* Name + grade */}
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-semibold text-white text-sm truncate">{artist.name}</span>
+                  <span className={`inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-bold bg-gradient-to-r from-slate-600 to-slate-700 shrink-0 ${getRankingClass(grade)}`}>
+                    {grade}
+                  </span>
+                </div>
+
+                {/* Genre · Role · Group */}
+                <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-xs text-slate-400">
+                  <span>{artist.genre}</span>
+                  <span className="text-slate-600">·</span>
+                  <span>{artist.position}</span>
+                  {artist.group && artist.group !== "None" && (
+                    <>
+                      <span className="text-slate-600">·</span>
+                      <span className="truncate">{artist.group}</span>
+                    </>
+                  )}
+                </div>
+
+                {/* Skills */}
+                <div className="flex flex-col gap-1">
+                  {artist.skills[1] && (
+                    <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs ${getSkillClass(artist.skills[1])}`}>
+                      {artist.skills[1]}
+                    </span>
+                  )}
+                  {artist.skills[2] && (
+                    <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs ${getSkillClass(artist.skills[2])}`}>
+                      {artist.skills[2]}
+                    </span>
+                  )}
+                </div>
+
+                {/* Build */}
+                {artist.build && (
+                  <div className="mt-auto pt-1">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gradient-to-r from-purple-500 to-fuchsia-600 text-white">
+                      {artist.build}
+                    </span>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}

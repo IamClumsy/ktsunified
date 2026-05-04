@@ -6,8 +6,9 @@ import { SvsTab } from "@/app/components/svs/svs-tab";
 import { CalcTab } from "@/app/components/calc/calc-tab";
 import { ArtistTab } from "@/app/components/artist/artist-tab";
 import { SrArtistTab } from "@/app/components/artist/sr-artist-tab";
+import { NewArtistTab } from "@/app/components/artist/new-artist-tab";
 
-type Tab = "artists" | "sr-artists" | "resource-calc" | "ceo-event" | "svs-store";
+type Tab = "artists" | "sr-artists" | "new-artists" | "resource-calc" | "ceo-event" | "svs-store";
 
 const TABS: { id: Tab; label: string; accent: string; activeClass: string }[] = [
   {
@@ -21,6 +22,12 @@ const TABS: { id: Tab; label: string; accent: string; activeClass: string }[] = 
     label: "SR Artists",
     accent: "purple",
     activeClass: "bg-gradient-to-r from-purple-600 to-violet-600 text-white border-purple-500",
+  },
+  {
+    id: "new-artists",
+    label: "Possible New Artist Layout",
+    accent: "rose",
+    activeClass: "bg-gradient-to-r from-rose-600 to-pink-600 text-white border-rose-500",
   },
   {
     id: "resource-calc",
@@ -85,6 +92,7 @@ export default function Home() {
         <Suspense fallback={<Loading />}>
           {activeTab === "artists" && <ArtistTab />}
           {activeTab === "sr-artists" && <SrArtistTab />}
+          {activeTab === "new-artists" && <NewArtistTab />}
           {activeTab === "resource-calc" && <CalcTab />}
           {activeTab === "ceo-event" && <CeoTab />}
           {activeTab === "svs-store" && <SvsTab />}
