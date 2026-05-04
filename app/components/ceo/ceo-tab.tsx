@@ -84,7 +84,7 @@ export function CeoTab() {
       <div className="mx-auto max-w-3xl px-4 py-6">
         <header className="mb-6 text-center">
           <p className="text-xs uppercase tracking-[0.4em] text-slate-400">Top Girl</p>
-          <h1 className="mt-2 text-3xl font-bold text-white">CEO Event Calculator</h1>
+          <h1 className="mt-2 text-3xl font-bold text-white">Event Calculators</h1>
           <p className="mt-1 text-sm text-slate-400">
             Enter how many items you plan to use to calculate your event points
           </p>

@@ -30,7 +30,7 @@ const TABS: { id: Tab; label: string; accent: string; activeClass: string }[] = 
   },
   {
     id: "ceo-event",
-    label: "CEO Event",
+    label: "Event Calculators",
     accent: "violet",
     activeClass: "bg-gradient-to-r from-violet-600 to-indigo-600 text-white border-violet-500",
   },
