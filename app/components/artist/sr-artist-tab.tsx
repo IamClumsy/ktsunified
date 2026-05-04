@@ -172,8 +172,8 @@ export function SrArtistTab() {
     <div className="w-full min-h-screen flex flex-col items-center">
       <div className="w-full flex flex-col items-center py-8 gap-8 px-4">
         <header className="flex flex-col items-center gap-4 app-header hero-banner">
-          <h1 className="text-4xl md:text-5xl font-bold drop-shadow-[0_0_25px_rgba(236,72,153,0.6)] tracking-tight text-center bg-gradient-to-r from-pink-300 via-purple-300 to-fuchsia-300 bg-clip-text text-transparent hero-title">
-            Mick&apos;s Awesome Non-SSR Artist Helper
+          <h1 className="text-2xl md:text-2xl font-bold drop-shadow-[0_0_25px_rgba(236,72,153,0.6)] tracking-tight text-center bg-gradient-to-r from-pink-300 via-purple-300 to-fuchsia-300 bg-clip-text text-transparent hero-title">
+            SR and S Artist Helper
           </h1>
           <p className="text-slate-400 text-sm">SR &amp; R rank artists</p>
         </header>
