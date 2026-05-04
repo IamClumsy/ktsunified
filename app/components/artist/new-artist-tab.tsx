@@ -197,11 +197,17 @@ export function NewArtistTab() {
                   </span>
                 </div>
 
-                {/* Genre · Role */}
+                {/* Genre · Role · Group */}
                 <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-xs">
                   <span className="text-pink-300">{artist.genre}</span>
                   <span className="text-slate-500">·</span>
                   <span className="text-purple-300">{artist.position}</span>
+                  {artist.group && artist.group !== "None" && (
+                    <>
+                      <span className="text-slate-500">·</span>
+                      <span className="text-fuchsia-300 truncate">{artist.group}</span>
+                    </>
+                  )}
                 </div>
 
                 {/* Skills */}
@@ -217,6 +223,22 @@ export function NewArtistTab() {
                     </span>
                   )}
                 </div>
+
+                {/* Build · Photos */}
+                {(artist.build || artist.photos) && (
+                  <div className="flex flex-wrap gap-1 mt-auto pt-1">
+                    {artist.build && (
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gradient-to-r from-purple-500 to-fuchsia-600 text-white">
+                        {artist.build}
+                      </span>
+                    )}
+                    {artist.photos && (
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-slate-700 text-slate-300">
+                        {artist.photos}
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
             );
           })}
