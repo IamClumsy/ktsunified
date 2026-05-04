@@ -26,30 +26,15 @@ export function NewArtistTab() {
 
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedGroup, setSelectedGroup] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("");
   const [selectedSkill, setSelectedSkill] = useState("");
   const [selectedSkill3, setSelectedSkill3] = useState("");
-  const [selectedBuild, setSelectedBuild] = useState("");
   const [selectedRanking, setSelectedRanking] = useState("");
-  const [selectedPhotos, setSelectedPhotos] = useState("");
 
-  const groupOptions = useMemo(
-    () => [...new Set(artists.map((a) => a.group))].sort((a, b) => a.localeCompare(b)),
-    [artists]
-  );
   const roles = useMemo(() => [...new Set(artists.map((a) => a.position))], [artists]);
   const genres = useMemo(() => [...new Set(artists.map((a) => a.genre))], [artists]);
   const artistNames = useMemo(() => [...new Set(artists.map((a) => a.name))].sort(), [artists]);
-  const buildOptions = useMemo(
-    () => [...new Set(artists.map((a) => a.build).filter(Boolean))] as string[],
-    [artists]
-  );
-  const photosOptions = useMemo(
-    () => [...new Set(artists.map((a) => a.photos).filter(Boolean))] as string[],
-    [artists]
-  );
 
   const allSkills = useMemo(
     () => [...new Set(artists.map((a) => a.skills[1]).filter(Boolean))],
@@ -82,26 +67,23 @@ export function NewArtistTab() {
     artists,
     filters: {
       searchTerm,
-      selectedGroup,
+      selectedGroup: "",
       selectedRole,
       selectedGenre,
       selectedSkill,
       selectedSkill3,
-      selectedBuild,
+      selectedBuild: "",
       selectedRanking,
-      selectedPhotos,
+      selectedPhotos: "",
     },
     skillArrays,
   });
 
-  const activeFilterCount = [
-    searchTerm, selectedGroup, selectedRole, selectedGenre,
-    selectedSkill, selectedSkill3, selectedBuild, selectedRanking, selectedPhotos,
-  ].filter(Boolean).length;
+  const activeFilterCount = [searchTerm, selectedRole, selectedGenre, selectedSkill, selectedSkill3, selectedRanking].filter(Boolean).length;
 
   function clearFilters() {
-    setSearchTerm(""); setSelectedGroup(""); setSelectedRole(""); setSelectedGenre("");
-    setSelectedSkill(""); setSelectedSkill3(""); setSelectedBuild(""); setSelectedRanking(""); setSelectedPhotos("");
+    setSearchTerm(""); setSelectedRole(""); setSelectedGenre("");
+    setSelectedSkill(""); setSelectedSkill3(""); setSelectedRanking("");
   }
 
   return (
@@ -163,13 +145,6 @@ export function NewArtistTab() {
             </select>
           </div>
           <div className="space-y-1">
-            <label className="text-xs uppercase tracking-widest text-slate-400">Group</label>
-            <select value={selectedGroup} onChange={(e) => setSelectedGroup(e.target.value)} className={selectClass}>
-              <option value="">All Groups</option>
-              {groupOptions.map((g) => <option key={g} value={g}>{g}</option>)}
-            </select>
-          </div>
-          <div className="space-y-1">
             <label className="text-xs uppercase tracking-widest text-slate-400">Skill 2</label>
             <select value={selectedSkill} onChange={(e) => setSelectedSkill(e.target.value)} className={selectClass}>
               <option value="">All Skills</option>
@@ -198,20 +173,6 @@ export function NewArtistTab() {
               {["S", "A", "B", "C", "F"].map((r) => <option key={r} value={r}>{r}</option>)}
             </select>
           </div>
-          <div className="space-y-1">
-            <label className="text-xs uppercase tracking-widest text-slate-400">Build</label>
-            <select value={selectedBuild} onChange={(e) => setSelectedBuild(e.target.value)} className={selectClass}>
-              <option value="">All Builds</option>
-              {buildOptions.map((b) => <option key={b} value={b}>{b}</option>)}
-            </select>
-          </div>
-          <div className="space-y-1">
-            <label className="text-xs uppercase tracking-widest text-slate-400">Photos</label>
-            <select value={selectedPhotos} onChange={(e) => setSelectedPhotos(e.target.value)} className={selectClass}>
-              <option value="">All Photos</option>
-              {photosOptions.map((p) => <option key={p} value={p}>{p}</option>)}
-            </select>
-          </div>
         </div>
       )}
 
@@ -236,17 +197,11 @@ export function NewArtistTab() {
                   </span>
                 </div>
 
-                {/* Genre · Role · Group */}
-                <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-xs text-slate-200">
+                {/* Genre · Role */}
+                <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-xs">
                   <span className="text-pink-300">{artist.genre}</span>
                   <span className="text-slate-500">·</span>
                   <span className="text-purple-300">{artist.position}</span>
-                  {artist.group && artist.group !== "None" && (
-                    <>
-                      <span className="text-slate-500">·</span>
-                      <span className="text-fuchsia-300 truncate">{artist.group}</span>
-                    </>
-                  )}
                 </div>
 
                 {/* Skills */}
@@ -262,15 +217,6 @@ export function NewArtistTab() {
                     </span>
                   )}
                 </div>
-
-                {/* Build */}
-                {artist.build && (
-                  <div className="mt-auto pt-1">
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gradient-to-r from-purple-500 to-fuchsia-600 text-white">
-                      {artist.build}
-                    </span>
-                  </div>
-                )}
               </div>
             );
           })}
