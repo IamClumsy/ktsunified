@@ -79,60 +79,80 @@ body::before {
   color: #fde047 !important;
   border-color: #fde047 !important;
   font-weight: 700 !important;
+  box-shadow: 0 0 10px 3px rgba(253, 224, 71, 0.45), 0 0 20px 4px rgba(253, 224, 71, 0.2) !important;
+  text-shadow: 0 0 6px rgba(253, 224, 71, 0.8);
 }
 
 .basic-attack-60 {
   color: #fde047 !important;
   border-color: #fde047 !important;
   font-weight: 700 !important;
+  box-shadow: 0 0 10px 3px rgba(253, 224, 71, 0.45), 0 0 20px 4px rgba(253, 224, 71, 0.2) !important;
+  text-shadow: 0 0 6px rgba(253, 224, 71, 0.8);
 }
 
 .basic-attack-50 {
   color: #4ade80 !important;
   border-color: #4ade80 !important;
   font-weight: 600 !important;
+  box-shadow: 0 0 10px 3px rgba(74, 222, 128, 0.4), 0 0 20px 4px rgba(74, 222, 128, 0.18) !important;
+  text-shadow: 0 0 6px rgba(74, 222, 128, 0.7);
 }
 
 .skill-damage-20 {
   color: #4ade80 !important;
   border-color: #6ee7b7 !important;
   font-weight: 600 !important;
+  box-shadow: 0 0 10px 3px rgba(74, 222, 128, 0.4), 0 0 20px 4px rgba(74, 222, 128, 0.18) !important;
+  text-shadow: 0 0 6px rgba(74, 222, 128, 0.7);
 }
 
 .skill-good {
   color: #4ade80 !important;
   border-color: #4ade80 !important;
   font-weight: 600 !important;
+  box-shadow: 0 0 10px 3px rgba(74, 222, 128, 0.4), 0 0 20px 4px rgba(74, 222, 128, 0.18) !important;
+  text-shadow: 0 0 6px rgba(74, 222, 128, 0.7);
 }
 
 .skill-worst {
   color: #fca5a5 !important;
   border-color: #fca5a5 !important;
   font-weight: 600 !important;
+  box-shadow: 0 0 10px 3px rgba(252, 165, 165, 0.4), 0 0 20px 4px rgba(252, 165, 165, 0.18) !important;
+  text-shadow: 0 0 6px rgba(252, 165, 165, 0.7);
 }
 
 .skill-specific-worst {
   color: #fca5a5 !important;
   border-color: #fca5a5 !important;
   font-weight: 600 !important;
+  box-shadow: 0 0 10px 3px rgba(252, 165, 165, 0.4), 0 0 20px 4px rgba(252, 165, 165, 0.18) !important;
+  text-shadow: 0 0 6px rgba(252, 165, 165, 0.7);
 }
 
 .gold-text {
   color: #fb923c !important;
   border-color: #fb923c !important;
   font-weight: 600 !important;
+  box-shadow: 0 0 10px 3px rgba(251, 146, 60, 0.4), 0 0 20px 4px rgba(251, 146, 60, 0.18) !important;
+  text-shadow: 0 0 6px rgba(251, 146, 60, 0.7);
 }
 
 .blue-text {
   color: #93c5fd !important;
   border-color: #93c5fd !important;
   font-weight: 600 !important;
+  box-shadow: 0 0 10px 3px rgba(147, 197, 253, 0.4), 0 0 20px 4px rgba(147, 197, 253, 0.18) !important;
+  text-shadow: 0 0 6px rgba(147, 197, 253, 0.7);
 }
 
 .violet-text {
   color: #a78bfa !important;
   border-color: #a78bfa !important;
   font-weight: 600 !important;
+  box-shadow: 0 0 10px 3px rgba(167, 139, 250, 0.4), 0 0 20px 4px rgba(167, 139, 250, 0.18) !important;
+  text-shadow: 0 0 6px rgba(167, 139, 250, 0.7);
 }
 
 .skill-white {
