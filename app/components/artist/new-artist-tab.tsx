@@ -225,20 +225,20 @@ export function NewArtistTab() {
                 </div>
 
                 {/* Build · Photos */}
-                {(artist.build || artist.photos) && (
-                  <div className="flex flex-wrap gap-1 mt-auto pt-1">
-                    {artist.build && (
-                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gradient-to-r from-purple-500 to-fuchsia-600 text-white">
-                        {artist.build}
-                      </span>
-                    )}
-                    {artist.photos && (
-                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-slate-700 text-slate-300">
-                        {artist.photos}
-                      </span>
-                    )}
-                  </div>
-                )}
+                <div className="flex flex-wrap gap-1 mt-auto pt-1">
+                  {artist.build ? (
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gradient-to-r from-purple-500 to-fuchsia-600 text-white">
+                      {artist.build}
+                    </span>
+                  ) : (
+                    <span />
+                  )}
+                  {artist.photos && (
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-slate-700 text-slate-300">
+                      {artist.photos}
+                    </span>
+                  )}
+                </div>
               </div>
             );
           })}
