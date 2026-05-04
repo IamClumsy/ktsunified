@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useState, useTransition } from "react";
 import { CeoTab } from "@/app/components/ceo/ceo-tab";
 import { SvsTab } from "@/app/components/svs/svs-tab";
 import { CalcTab } from "@/app/components/calc/calc-tab";
@@ -51,6 +51,7 @@ const TABS: { id: Tab; label: string; accent: string; activeClass: string }[] = 
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>("artists");
+  const [isPending, startTransition] = useTransition();
 
   return (
     <div className="min-h-screen text-white">
@@ -72,10 +73,10 @@ export default function Home() {
               return (
                 <button
                   key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
+                  onClick={() => startTransition(() => setActiveTab(tab.id))}
                   className={`px-3 py-2.5 rounded-lg text-sm font-semibold border transition-all duration-200 cursor-pointer
                     ${isActive
-                      ? tab.activeClass
+                      ? `${tab.activeClass} ${isPending ? "opacity-70" : ""}`
                       : "bg-slate-900/60 text-slate-400 border-slate-700 hover:text-slate-200 hover:border-slate-500"
                     }`}
                 >
