@@ -66,7 +66,7 @@ export default function Home() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`px-3 py-1.5 rounded-lg text-sm font-semibold border transition-all duration-200 cursor-pointer
+                  className={`px-3 py-2.5 rounded-lg text-sm font-semibold border transition-all duration-200 cursor-pointer
                     ${isActive
                       ? tab.activeClass
                       : "bg-slate-900/60 text-slate-400 border-slate-700 hover:text-slate-200 hover:border-slate-500"

@@ -60,7 +60,7 @@ export function ShopSection({ shop, color }: { shop: ShopData; color: ColorSchem
         <h2 className={`text-lg font-semibold ${scheme.title}`}>{shop.title}</h2>
         <button
           onClick={reset}
-          className="text-xs text-slate-500 hover:text-slate-300 transition-colors px-2 py-1 rounded border border-slate-700 hover:border-slate-500"
+          className="text-xs text-slate-500 hover:text-slate-300 transition-colors px-3 py-2 rounded border border-slate-700 hover:border-slate-500"
         >
           Reset
         </button>
@@ -98,7 +98,7 @@ export function ShopSection({ shop, color }: { shop: ShopData; color: ColorSchem
                       value={state.quantity}
                       onChange={(e) => setQty(i, Number(e.target.value))}
                       disabled={!state.inCart}
-                      className="w-20 rounded border border-slate-700 bg-slate-950 px-2 py-1 text-right text-white text-xs disabled:opacity-30 disabled:cursor-not-allowed"
+                      className="w-full sm:w-20 rounded border border-slate-700 bg-slate-950 px-2 py-1.5 text-right text-white text-xs disabled:opacity-30 disabled:cursor-not-allowed"
                     />
                   </td>
                   <td className="py-2 text-right text-slate-400 tabular-nums pr-1">{fmt(item.price)}</td>

@@ -38,7 +38,7 @@ export function Assets() {
 
   return (
     <CalculatorSection title="Assets" color="pink">
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <DropdownInput label="Type" value={type} options={TYPE_OPTIONS} onChange={setType} />
         <DropdownInput label="Source" value={source} options={SOURCE_OPTIONS} onChange={setSource} />
       </div>

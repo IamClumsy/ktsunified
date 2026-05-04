@@ -48,7 +48,7 @@ export function CalcTab() {
           <p className="text-sm uppercase tracking-[0.4em] text-slate-400">
             Mick&apos;s Top Girl Resource Calculator
           </p>
-          <h1 className="mt-4 text-4xl font-bold text-white">Level Progression Cost Calculator</h1>
+          <h1 className="mt-4 text-2xl md:text-4xl font-bold text-white">Level Progression Cost Calculator</h1>
           <p className="mt-2 text-slate-300">Only complete levels are available</p>
         </header>
         <CalcContent />

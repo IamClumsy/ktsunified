@@ -25,7 +25,7 @@ export function SvsTab() {
       <div className="mx-auto max-w-3xl px-4 py-10">
         <header className="mb-10 text-center">
           <p className="text-sm uppercase tracking-[0.4em] text-slate-400">SVS Store Calculator</p>
-          <h1 className="mt-4 text-4xl font-bold text-white">SVS Store Calculator</h1>
+          <h1 className="mt-4 text-2xl md:text-4xl font-bold text-white">SVS Store Calculator</h1>
           <p className="mt-2 text-slate-300">Toggle items and adjust quantities to plan your coin spending</p>
         </header>
         <SvsContent />

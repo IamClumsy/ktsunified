@@ -104,7 +104,7 @@ export function EventSection({ event, color, id, onReset }: Props) {
         <button
           type="button"
           onClick={onReset}
-          className="text-xs text-slate-500 hover:text-slate-300 transition-colors px-2 py-1 rounded border border-slate-700 hover:border-slate-500"
+          className="text-xs text-slate-500 hover:text-slate-300 transition-colors px-3 py-2 rounded border border-slate-700 hover:border-slate-500"
         >
           Reset
         </button>
@@ -160,7 +160,7 @@ export function EventSection({ event, color, id, onReset }: Props) {
                               onChange={(e) => setUsed(ci, ti, Number(e.target.value))}
                               disabled={!state.included}
                               aria-label={`Amount used for ${task.task}`}
-                              className="w-24 rounded border border-slate-700 bg-slate-950 px-2 py-1 text-right text-white text-xs disabled:opacity-30 disabled:cursor-not-allowed"
+                              className="w-full sm:w-24 rounded border border-slate-700 bg-slate-950 px-2 py-1.5 text-right text-white text-xs disabled:opacity-30 disabled:cursor-not-allowed"
                             />
                           </td>
                           <td className={`py-1 text-right font-medium tabular-nums ${state.included ? scheme.total : "text-slate-700"}`}>

@@ -29,7 +29,7 @@ export function VillaSuite() {
 
   return (
     <CalculatorSection title="Villa Suite" note="*Until Urban Heights-0" color="emerald">
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <DropdownInput label="From Villa" value={from} options={villas} onChange={setFrom} />
         <DropdownInput label="To Villa" value={to} options={villas} onChange={setTo} />
       </div>

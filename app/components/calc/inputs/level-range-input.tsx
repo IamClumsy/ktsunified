@@ -71,7 +71,7 @@ export function LevelRangeInput({
   toLabel = "To Level",
 }: Props) {
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
       <NumericInput value={from} onChange={onFromChange} min={min} max={max} label={fromLabel} />
       <NumericInput value={to} onChange={onToChange} min={min} max={max} label={toLabel} />
     </div>
