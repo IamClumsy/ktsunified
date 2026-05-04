@@ -264,6 +264,42 @@ export async function GET() {
       result.ceoOutfit = { headers: ["Step", "Bank Cards per Item", "Droids", "Crown Cards"], data: outfitData };
     }
 
+    // Override SSS2-SSS5 car parts data from dedicated Car Parts sheet
+    const carPartsSheetWs = wb.Sheets["Car Parts"];
+    if (carPartsSheetWs && result.carParts) {
+      const cpRaw = XLSX.utils.sheet_to_json(carPartsSheetWs, { header: 1 }) as unknown[][];
+      const toStars = (v: unknown) => (typeof v === "string" ? v.length : 0);
+
+      let partsAccum = 0;
+      let drawingsAccum = 0;
+      for (const row of result.carParts.data) {
+        if (String(row[0]) === "SSS1") {
+          partsAccum = typeof row[2] === "number" ? row[2] : 0;
+          drawingsAccum = typeof row[4] === "number" ? row[4] : 0;
+          break;
+        }
+      }
+
+      const newRows: unknown[][] = [];
+      for (const row of cpRaw) {
+        if (!Array.isArray(row) || String(row[0]) !== "SSS") continue;
+        const n = toStars(row[1]);
+        if (n === 0 || n >= 5) continue;
+        const parts = typeof row[8] === "number" ? row[8] : 0;
+        const drawings = typeof row[12] === "number" ? row[12] : 0;
+        partsAccum += parts;
+        drawingsAccum += drawings;
+        newRows.push([`SSS${n + 1}`, parts, partsAccum, drawings, drawingsAccum]);
+      }
+
+      if (newRows.length > 0) {
+        result.carParts.data = [
+          ...result.carParts.data.filter((row) => !/^SSS[2-9]/.test(String(row[0]))),
+          ...newRows,
+        ];
+      }
+    }
+
     // Load artist XP modifiers from artistxpmods.xlsx
     const artistXpModsPath = path.join(process.cwd(), "src", "artistxpmods.xlsx");
     if (fs.existsSync(artistXpModsPath)) {
