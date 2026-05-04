@@ -237,14 +237,14 @@ export function NewArtistTab() {
                 </div>
 
                 {/* Genre · Role · Group */}
-                <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-xs text-slate-400">
-                  <span>{artist.genre}</span>
-                  <span className="text-slate-600">·</span>
-                  <span>{artist.position}</span>
+                <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-xs text-slate-200">
+                  <span className="text-pink-300">{artist.genre}</span>
+                  <span className="text-slate-500">·</span>
+                  <span className="text-purple-300">{artist.position}</span>
                   {artist.group && artist.group !== "None" && (
                     <>
-                      <span className="text-slate-600">·</span>
-                      <span className="truncate">{artist.group}</span>
+                      <span className="text-slate-500">·</span>
+                      <span className="text-fuchsia-300 truncate">{artist.group}</span>
                     </>
                   )}
                 </div>
