@@ -1033,5 +1033,35 @@
     ],
     "build": "",
     "photos": "Universal"
-  }  
+  },
+   {
+    "id": 70,
+    "name": "Rhea",
+    "group": "None",
+    "rank": "SSR",
+    "position": "Vocalist",
+    "genre": "Hip Hop",
+    "skills": [
+      "10 sec/1800 Damage",
+      "40% Damage to Player",
+      "20% Rally Fan Capacity"
+    ],
+    "build": "Rally",
+    "photos": "Own Photos"
+  },
+   {
+    "id": 71,
+    "name": "Belle",
+    "group": "None",
+    "rank": "SSR",
+    "position": "Center",
+    "genre": "Pop",
+    "skills": [
+      "10 sec/1800 Damage",
+      "10% Rally Fan Capacity",
+      "50% Basic Attack Damage"
+    ],
+    "build": "",
+    "photos": "Universal"
+  }      
 ]
