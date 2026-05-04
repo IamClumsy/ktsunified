@@ -308,7 +308,8 @@ export function SrArtistTab() {
                 { cls: "blue-text", color: "Blue", desc: "Damage Reduction Skills" },
                 { cls: "violet-text", color: "Violet", desc: "Okay Skills" },
                 { cls: "skill-specific-worst", color: "Red", desc: "Worst Skills (Drive Speed, World Building Guard, etc.)" },
-                { cls: "gold-text", color: "Orange", desc: "Gold Gathering / Fan Capacity" },
+                { cls: "gold-text", color: "Orange", desc: "Gold Gathering" },
+                { cls: "skill-white", color: "White", desc: "Capacity Increase Skills (Fan Capacity)" },
               ].map(({ cls, color, desc }) => (
                 <div key={color} className="flex items-center gap-3">
                   <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-slate-600 to-slate-700 ${cls}`}>{color}</span>
