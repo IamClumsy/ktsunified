@@ -10,6 +10,14 @@ import { useArtistFilters } from "./hooks/useArtistFilters";
 
 const artistsData = artistsDataRaw as Artist[];
 
+const GRADE_GLOW: Record<string, string> = {
+  S: "border-yellow-400/70 shadow-[0_0_16px_4px_rgba(250,204,21,0.35)]",
+  A: "border-emerald-400/70 shadow-[0_0_16px_4px_rgba(52,211,153,0.35)]",
+  B: "border-sky-400/70 shadow-[0_0_16px_4px_rgba(56,189,248,0.30)]",
+  C: "border-slate-400/50 shadow-[0_0_10px_2px_rgba(148,163,184,0.20)]",
+  F: "border-red-500/50 shadow-[0_0_10px_2px_rgba(239,68,68,0.20)]",
+};
+
 const selectClass =
   "w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-pink-400/70";
 
@@ -218,7 +226,7 @@ export function NewArtistTab() {
             return (
               <div
                 key={artist.id}
-                className="rounded-xl border border-fuchsia-500/30 bg-gradient-to-br from-violet-900/60 via-fuchsia-900/40 to-slate-900/80 p-3 flex flex-col gap-2"
+                className={`rounded-xl border bg-gradient-to-br from-violet-900/60 via-fuchsia-900/40 to-slate-900/80 p-3 flex flex-col gap-2 ${GRADE_GLOW[grade] ?? GRADE_GLOW.F}`}
               >
                 {/* Name + grade */}
                 <div className="flex items-center justify-between gap-2">
