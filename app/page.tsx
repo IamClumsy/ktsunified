@@ -49,35 +49,34 @@ export default function Home() {
     <div className="min-h-screen text-white">
       {/* Top header */}
       <header className="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800/60 shadow-xl">
-        <div className="mx-auto max-w-7xl px-4 py-3">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-            <div className="flex items-center gap-2 shrink-0">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/favicon.png" alt="KTS" className="w-7 h-7 rounded" />
-              <span className="text-sm font-bold text-slate-200 hidden sm:block">
-                KTS 1118
-              </span>
-            </div>
-            {/* Tab nav */}
-            <nav className="flex flex-wrap gap-1.5">
-              {TABS.map((tab) => {
-                const isActive = activeTab === tab.id;
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`px-3 py-1.5 rounded-lg text-sm font-semibold border transition-all duration-200 cursor-pointer
-                      ${isActive
-                        ? tab.activeClass
-                        : "bg-slate-900/60 text-slate-400 border-slate-700 hover:text-slate-200 hover:border-slate-500"
-                      }`}
-                  >
-                    {tab.label}
-                  </button>
-                );
-              })}
-            </nav>
+        <div className="mx-auto max-w-7xl px-4 pt-3 pb-2">
+          {/* Title row */}
+          <div className="flex items-center gap-3 mb-2">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/favicon.png" alt="KTS" className="w-8 h-8 rounded shrink-0" />
+            <span className="text-2xl font-extrabold tracking-widest text-slate-100 uppercase w-full">
+              KTS 1118
+            </span>
           </div>
+          {/* Tab nav */}
+          <nav className="flex flex-wrap gap-1.5">
+            {TABS.map((tab) => {
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`px-3 py-1.5 rounded-lg text-sm font-semibold border transition-all duration-200 cursor-pointer
+                    ${isActive
+                      ? tab.activeClass
+                      : "bg-slate-900/60 text-slate-400 border-slate-700 hover:text-slate-200 hover:border-slate-500"
+                    }`}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
+          </nav>
         </div>
       </header>
 
