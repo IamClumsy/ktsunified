@@ -68,7 +68,7 @@ export async function GET() {
   try {
     const filePath = path.join(process.cwd(), "src", "EventScoring.xlsx");
     if (!fs.existsSync(filePath)) {
-      return NextResponse.json({ error: "Workbook not found" }, { status: 500 });
+      return NextResponse.json({ error: `Workbook not found: ${filePath}` }, { status: 500 });
     }
     const mtime = fs.statSync(filePath).mtimeMs;
     if (_cache && _cache.mtime === mtime) return NextResponse.json(_cache.data);
@@ -78,7 +78,7 @@ export async function GET() {
 
     const ws = wb.Sheets["Sheet1"];
     if (!ws) {
-      return NextResponse.json({ error: "Sheet1 not found" }, { status: 500 });
+      return NextResponse.json({ error: `"Sheet1" not found in ${filePath}` }, { status: 500 });
     }
 
     const raw = XLSX.utils.sheet_to_json(ws, { header: 1 }) as unknown[][];

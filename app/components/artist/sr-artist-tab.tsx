@@ -1,6 +1,9 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
+import { categorizeSkills } from "./utils/skillCategorization";
+import { getSkillClass, getRankingClass } from "./utils/skillStyling";
+import { getSrLetterGrade } from "./utils/artistCalculations";
 
 interface Artist {
   id: number;
@@ -10,7 +13,6 @@ interface Artist {
   position: string;
   rank: string;
   skills: string[];
-  description: string;
   thoughts?: string;
   build?: string;
   photos?: string;
@@ -68,100 +70,12 @@ function processArtists(records: CsvRow[], startId: number): Artist[] {
       position: row.Position,
       genre: row.Genre,
       skills,
-      description: "",
       thoughts: row["Micks Thoughts are they Good"] || "",
       build,
       photos: "Universal",
     };
   });
 }
-
-// ─── Skill helpers ────────────────────────────────────────────────
-const isGoodBuff = (skill: string): boolean => {
-  const t = (skill || "").toLowerCase();
-  if (t.includes("60%") && (t.includes("basic attack damage") || t.includes("normal attack damage"))) return false;
-  if (t.includes("30%") && t.includes("skill damage")) return false;
-  if (t.includes("24%") && t.includes("skill damage")) return false;
-  if (t.includes("reduc")) return false;
-  return t.includes("skill damage") || t.includes("basic attack damage") || t.includes("normal attack damage") || t.includes("basic damage") || t.includes("normal damage");
-};
-
-const isWorstSkill = (skill: string): boolean => {
-  const t = (skill || "").toLowerCase();
-  const isDamageSkill = t.includes("damage") && (t.includes("sec/") || /\d+\s*damage/.test(t));
-  if (isDamageSkill) return false;
-  const is200DpsDefending = t.includes("200/dps") && (t.includes("defending") || t.includes("hq") || t.includes("gh") || t.includes("club") || t.includes("lm"));
-  if (is200DpsDefending) return false;
-  return (
-    t.includes("180/dps") || t.includes("200/dps") || t.includes("world building guard") || t.includes("damage wg") ||
-    t.includes("damage increase world building guard") || (t.includes("10 sec") && !t.includes("sec/")) ||
-    t.includes("10/sec") || t.includes("driving speed") || t.includes("drive speed") || t.includes("drive speed increase")
-  );
-};
-
-const isBadSkill = (skill: string): boolean => {
-  const t = (skill || "").toLowerCase();
-  const isDefendingDps = (t.includes("200/dps") || t.includes("240/dps")) && (t.includes("defending") || t.includes("hq") || t.includes("gh") || t.includes("club") || t.includes("lm"));
-  const is240DpsAttacking = t.includes("240/dps") && t.includes("attacking enemy company");
-  return (
-    !isWorstSkill(skill) &&
-    (isDefendingDps || is240DpsAttacking || t.includes("gold brick gathering") || t.includes("gold brick gather speed") ||
-      (t.includes("fan capacity") && !t.includes("10% rally fan capacity") && !t.includes("rally")))
-  );
-};
-
-const isDirectDamage = (skill: string): boolean => {
-  const t = (skill || "").toLowerCase();
-  if (t.includes("60%") && (t.includes("basic attack damage") || t.includes("normal attack damage"))) return true;
-  if (t.includes("30%") && t.includes("skill damage")) return true;
-  if (t.includes("24%") && t.includes("skill damage")) return true;
-  if (t.includes("damage to player")) return true;
-  const mentionsDamage = t.includes("damage") && !t.includes("reduc") && !t.includes("taken") && !t.includes("increase");
-  const timeBased = t.includes(" sec/") || /\bsec\b/.test(t);
-  return (mentionsDamage || timeBased) && !isGoodBuff(skill) && !isBadSkill(skill) && !isWorstSkill(skill);
-};
-
-const getSkillClass = (skill: string): string => {
-  if (!skill) return "bg-blue-500 text-white";
-  const trimmed = skill.trim();
-  const t = trimmed.toLowerCase();
-  if (t.includes("damage to player")) return "damage-to-player bg-gradient-to-r from-slate-600 to-slate-700 border shadow-lg";
-  if (trimmed === "60% Basic Attack Damage" || trimmed === "60% Normal Attack Damage") return "basic-attack-60 bg-gradient-to-r from-slate-600 to-slate-700 border shadow-lg";
-  if (trimmed === "24% Skill Damage" || trimmed === "30% Skill Damage") return "basic-attack-60 bg-gradient-to-r from-slate-600 to-slate-700 border shadow-lg";
-  if (trimmed === "50% Basic Attack Damage" || trimmed === "50% Normal Attack Damage" || trimmed === "20% Normal Attack Damage") return "basic-attack-50 bg-gradient-to-r from-slate-700 to-slate-800 border shadow-sm";
-  if (t.includes("gold brick")) return "bg-gradient-to-r from-slate-600 to-slate-700 text-orange-500 border border-slate-500/40 gold-text";
-  if (t.includes("reduction") && (t.includes("basic attack damage") || t.includes("normal attack damage"))) return "bg-gradient-to-r from-slate-600 to-slate-700 text-blue-500 border border-slate-500/40 blue-text";
-  if (trimmed === "200/DPS Defending HQ, GH, Club, LM" || trimmed === "240/DPS Defending HQ, GH, Club, LM" || trimmed === "240/DPS Attacking Enemy Company" || (t.includes("dps") && t.includes("defending") && t.includes("hq")))
-    return "bg-gradient-to-r from-slate-600 to-slate-700 text-violet-400 border border-violet-500/40 violet-text";
-  if (
-    ["180/DPS Attacking Group Center, Club, Landmark", "30% Damage World Building Guard", "36% Damage to World Building Guard", "36% Damage World Building Guard", "180/DPS Attacking Enemy Company", "20% Damage WG / 50% Drive Speed", "75% Drive Speed", "40% Drive Speed Increase", "15% Damage Increase World Building Guard"].includes(trimmed) ||
-    t.includes("drive speed increase") || t.includes("damage increase world building guard")
-  ) return "skill-specific-worst bg-gradient-to-r from-slate-600 to-slate-700 shadow-sm border border-red-500/40";
-  if (["20% Skill Damage", "10% Skill Damage"].includes(trimmed)) return "skill-good bg-gradient-to-r from-slate-700 to-slate-800 border shadow-sm";
-  if (trimmed === "12% Skill Damage Reduction") return "bg-gradient-to-r from-slate-600 to-slate-700 text-blue-500 border border-slate-500/40 blue-text";
-  if (t.includes("reduce") && (t.includes("normal damage taken") || t.includes("skill damage taken"))) return "bg-gradient-to-r from-slate-600 to-slate-700 text-blue-500 border border-slate-500/40 blue-text";
-  if (t.includes("fan capacity")) return "bg-gradient-to-r from-slate-600 to-slate-700 text-white border border-white/40 shadow-sm";
-  return "bg-gradient-to-r from-slate-600 to-slate-700 text-slate-100 border border-slate-500/40";
-};
-
-const getLetterGrade = (points: number) => {
-  if (points >= 14) return "S";
-  if (points >= 10) return "A";
-  if (points >= 5) return "B";
-  if (points >= 0) return "C";
-  return "F";
-};
-
-const getRankingClass = (g: string) => {
-  switch (g) {
-    case "S": return "ranking-a";
-    case "A": return "ranking-b";
-    case "B": return "ranking-c";
-    case "C": return "ranking-d";
-    case "F": return "ranking-f";
-    default: return "text-white";
-  }
-};
 
 const selectClass = "w-full px-1.5 py-1 rounded-md bg-violet-900/60 border border-fuchsia-400/50 text-white text-xs focus:outline-none focus:ring-2 focus:ring-pink-400/70 cursor-pointer hover:border-pink-300/70 hover:bg-violet-800/60 transition-colors not-italic";
 
@@ -202,37 +116,24 @@ export function SrArtistTab() {
   const rankOptions = useMemo(() => [...new Set(artists.map((a) => a.rank))], [artists]);
   const roles = useMemo(() => [...new Set(artists.map((a) => a.position))], [artists]);
   const genres = useMemo(() => [...new Set(artists.map((a) => a.genre))], [artists]);
-  const allSkills2 = useMemo(() => [...new Set(artists.map((a) => a.skills[1]).filter(Boolean))], [artists]);
-  const allSkills3 = useMemo(() => [...new Set(artists.map((a) => a.skills[2]).filter(Boolean))], [artists]);
   const buildOptions = useMemo(() => [...new Set(artists.map((a) => a.build).filter(Boolean))] as string[], [artists]);
   const artistNames = useMemo(() => [...new Set(artists.map((a) => a.name))].sort(), [artists]);
 
-  const bestSkills = useMemo(() => allSkills2.filter(isDirectDamage), [allSkills2]);
-  const goodSkills = useMemo(() => allSkills2.filter(isGoodBuff), [allSkills2]);
-  const worstSkills = useMemo(() => allSkills2.filter(isWorstSkill), [allSkills2]);
-  const badSkills = useMemo(() => allSkills2.filter(isBadSkill), [allSkills2]);
-  const okaySkills = useMemo(() => allSkills2.filter((s) => !bestSkills.includes(s) && !goodSkills.includes(s) && !badSkills.includes(s) && !worstSkills.includes(s)), [allSkills2, bestSkills, goodSkills, badSkills, worstSkills]);
+  const allSkills2 = useMemo(() => [...new Set(artists.map((a) => a.skills[1]).filter(Boolean))], [artists]);
+  const allSkills3 = useMemo(() => [...new Set(artists.map((a) => a.skills[2]).filter(Boolean))], [artists]);
 
-  const bestSkills3 = useMemo(() => allSkills3.filter(isDirectDamage), [allSkills3]);
-  const goodSkills3 = useMemo(() => allSkills3.filter(isGoodBuff), [allSkills3]);
-  const worstSkills3 = useMemo(() => allSkills3.filter(isWorstSkill), [allSkills3]);
-  const badSkills3 = useMemo(() => allSkills3.filter(isBadSkill), [allSkills3]);
-  const okaySkills3 = useMemo(() => allSkills3.filter((s) => !bestSkills3.includes(s) && !goodSkills3.includes(s) && !badSkills3.includes(s) && !worstSkills3.includes(s)), [allSkills3, bestSkills3, goodSkills3, badSkills3, worstSkills3]);
+  const skill2Categories = useMemo(() => categorizeSkills(allSkills2), [allSkills2]);
+  const skill3Categories = useMemo(() => categorizeSkills(allSkills3), [allSkills3]);
 
   const calculatePoints = (artist: Artist) => {
     let points = 0;
     artist.skills.forEach((skill, index) => {
       if (!skill || index === 0) return;
-      const isBest = index === 1 ? bestSkills.includes(skill) : bestSkills3.includes(skill);
-      const isGood = index === 1 ? goodSkills.includes(skill) : goodSkills3.includes(skill);
-      const isOkay = index === 1 ? okaySkills.includes(skill) : okaySkills3.includes(skill);
-      const isBad = index === 1 ? badSkills.includes(skill) : badSkills3.includes(skill);
-      const isWorst = index === 1 ? worstSkills.includes(skill) : worstSkills3.includes(skill);
-      if (isBest) points += 10;
-      else if (isGood) points += 6;
-      else if (isOkay) points += 3;
-      else if (isBad) points += 0;
-      else if (isWorst) points -= 1;
+      const cats = index === 1 ? skill2Categories : skill3Categories;
+      if (cats.bestSkills.includes(skill)) points += 10;
+      else if (cats.goodSkills.includes(skill)) points += 6;
+      else if (cats.okaySkills.includes(skill)) points += 3;
+      else if (cats.worstSkills.includes(skill)) points -= 1;
     });
     return points;
   };
@@ -240,6 +141,7 @@ export function SrArtistTab() {
   const filteredArtists = useMemo(() => {
     return artists
       .filter((artist) => {
+        const grade = getSrLetterGrade(calculatePoints(artist));
         return (
           (searchTerm === "" || artist.name === searchTerm) &&
           (selectedGroup === "" || artist.group === selectedGroup) &&
@@ -249,7 +151,7 @@ export function SrArtistTab() {
           (selectedSkill === "" || artist.skills[1] === selectedSkill) &&
           (selectedSkill3 === "" || artist.skills[2] === selectedSkill3) &&
           (selectedBuild === "" || (artist.build && artist.build.toLowerCase().includes(selectedBuild.toLowerCase()))) &&
-          (selectedRanking === "" || getLetterGrade(calculatePoints(artist)) === selectedRanking)
+          (selectedRanking === "" || grade === selectedRanking)
         );
       })
       .sort((a, b) => {
@@ -260,8 +162,7 @@ export function SrArtistTab() {
         if (gc !== 0) return gc;
         return a.name.localeCompare(b.name, undefined, { sensitivity: "base" });
       });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [artists, searchTerm, selectedGroup, selectedRank, selectedRole, selectedGenre, selectedSkill, selectedSkill3, selectedBuild, selectedRanking, bestSkills, goodSkills, okaySkills, badSkills, worstSkills, bestSkills3, goodSkills3, okaySkills3, badSkills3, worstSkills3]);
+  }, [artists, searchTerm, selectedGroup, selectedRank, selectedRole, selectedGenre, selectedSkill, selectedSkill3, selectedBuild, selectedRanking, skill2Categories, skill3Categories]);
 
   if (loading) {
     return <div className="flex items-center justify-center py-32"><p className="text-slate-400">Loading SR/R artists…</p></div>;
@@ -271,10 +172,7 @@ export function SrArtistTab() {
     <div className="w-full min-h-screen flex flex-col items-center">
       <div className="w-full flex flex-col items-center py-8 gap-8 px-4">
         <header className="flex flex-col items-center gap-4 app-header hero-banner">
-          <h1
-            className="text-4xl md:text-5xl font-bold text-white drop-shadow-[0_0_25px_rgba(236,72,153,0.6)] tracking-tight text-center bg-gradient-to-r from-pink-300 via-purple-300 to-fuchsia-300 bg-clip-text text-transparent hero-title"
-            style={{ color: "#ffffff" }}
-          >
+          <h1 className="text-4xl md:text-5xl font-bold drop-shadow-[0_0_25px_rgba(236,72,153,0.6)] tracking-tight text-center bg-gradient-to-r from-pink-300 via-purple-300 to-fuchsia-300 bg-clip-text text-transparent hero-title">
             Mick&apos;s Awesome Non-SSR Artist Helper
           </h1>
           <p className="text-slate-400 text-sm">SR &amp; R rank artists</p>
@@ -319,21 +217,21 @@ export function SrArtistTab() {
                   <th className="px-1 py-2">
                     <select value={selectedSkill} onChange={(e) => setSelectedSkill(e.target.value)} className={selectClass} aria-label="Filter by skill 2">
                       <option value="">Skill 2</option>
-                      <optgroup label="Best">{bestSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-                      <optgroup label="Good">{goodSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-                      <optgroup label="Okay">{okaySkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-                      <optgroup label="Bad">{badSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-                      <optgroup label="Worst">{worstSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+                      <optgroup label="Best">{skill2Categories.bestSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+                      <optgroup label="Good">{skill2Categories.goodSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+                      <optgroup label="Okay">{skill2Categories.okaySkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+                      <optgroup label="Bad">{skill2Categories.badSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+                      <optgroup label="Worst">{skill2Categories.worstSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
                     </select>
                   </th>
                   <th className="px-1 py-2">
                     <select value={selectedSkill3} onChange={(e) => setSelectedSkill3(e.target.value)} className={selectClass} aria-label="Filter by skill 3">
                       <option value="">Skill 3</option>
-                      <optgroup label="Best">{bestSkills3.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-                      <optgroup label="Good">{goodSkills3.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-                      <optgroup label="Okay">{okaySkills3.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-                      <optgroup label="Bad">{badSkills3.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-                      <optgroup label="Worst">{worstSkills3.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+                      <optgroup label="Best">{skill3Categories.bestSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+                      <optgroup label="Good">{skill3Categories.goodSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+                      <optgroup label="Okay">{skill3Categories.okaySkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+                      <optgroup label="Bad">{skill3Categories.badSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+                      <optgroup label="Worst">{skill3Categories.worstSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
                     </select>
                   </th>
                   <th className="px-1 py-2">
@@ -359,7 +257,7 @@ export function SrArtistTab() {
               <tbody className="bg-gray-800/80">
                 {filteredArtists.map((artist) => {
                   const points = calculatePoints(artist);
-                  const grade = getLetterGrade(points);
+                  const grade = getSrLetterGrade(points);
                   return (
                     <tr key={artist.id} className="artist-row hover:bg-amber-400/10 transition-colors duration-200" role="row">
                       <td className="px-1 py-2 whitespace-nowrap"><div className="text-sm font-medium text-white">{artist.name}</div></td>
@@ -402,7 +300,7 @@ export function SrArtistTab() {
 
           {/* Legend */}
           <div className="mt-8 mb-4 px-6 py-4 backdrop-blur-sm rounded-2xl border-2 border-fuchsia-400/40 shadow-[0_0_30px_rgba(192,38,211,0.4)] relative z-10 legend-panel">
-            <h3 className="text-xl font-bold text-pink-100 mb-4 text-center" style={{ color: "#ffffff" }}>Skill Color Legend</h3>
+            <h3 className="text-xl font-bold text-white mb-4 text-center">Skill Color Legend</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 place-items-center">
               {[
                 { cls: "damage-to-player", color: "Gold", desc: "Best Skills (Damage to Player, 60% Attack Damage)" },

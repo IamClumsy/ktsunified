@@ -7,8 +7,6 @@ export interface Artist {
   rank: string;
   rating?: number | null;
   skills: string[];
-  description: string;
-  image?: string;
   thoughts?: string;
   build?: string;
   photos?: string;

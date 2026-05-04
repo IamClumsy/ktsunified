@@ -53,11 +53,9 @@ function extractRange(
 
 export async function GET() {
   try {
-    const dataFilePath = path.join(process.cwd(), "src", "data", "apex girl calculator.xlsx");
-    const legacyFilePath = path.join(process.cwd(), "src", "apex girl calculator.xlsx");
-    const filePath = fs.existsSync(dataFilePath) ? dataFilePath : legacyFilePath;
+    const filePath = path.join(process.cwd(), "src", "data", "apex girl calculator.xlsx");
     if (!fs.existsSync(filePath)) {
-      return NextResponse.json({ error: "Workbook not found" }, { status: 500 });
+      return NextResponse.json({ error: `Workbook not found: ${filePath}` }, { status: 500 });
     }
     const artistXpModsPath = path.join(process.cwd(), "src", "artistxpmods.xlsx");
     const mtime = Math.max(
@@ -70,7 +68,7 @@ export async function GET() {
     const wb = XLSX.read(fileBuffer, { type: "buffer", cellDates: true });
     const ws = wb.Sheets["Tables"];
     if (!ws) {
-      return NextResponse.json({ error: "Tables sheet not found" }, { status: 500 });
+      return NextResponse.json({ error: `"Tables" sheet not found in ${filePath}` }, { status: 500 });
     }
     const raw = XLSX.utils.sheet_to_json(ws, { header: 1 }) as unknown[][];
 

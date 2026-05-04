@@ -1,7 +1,7 @@
 "use client";
 
 import { Artist } from "./types";
-import { getSkillClass } from "./utils/skillStyling";
+import { getSkillClass, getRankingClass } from "./utils/skillStyling";
 import { getLetterGrade } from "./utils/artistCalculations";
 
 interface ArtistRowProps {
@@ -12,17 +12,6 @@ interface ArtistRowProps {
 export const ArtistRow = ({ artist, calculatePoints }: ArtistRowProps) => {
   const points = calculatePoints(artist);
   const grade = getLetterGrade(points);
-
-  const getRankingClass = (g: string) => {
-    switch (g) {
-      case "S": return "ranking-a";
-      case "A": return "ranking-b";
-      case "B": return "ranking-c";
-      case "C": return "ranking-d";
-      case "F": return "ranking-f";
-      default: return "text-white";
-    }
-  };
 
   return (
     <tr className="artist-row hover:bg-amber-400/10 transition-colors duration-200" role="row">

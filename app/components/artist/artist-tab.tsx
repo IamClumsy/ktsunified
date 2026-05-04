@@ -97,7 +97,6 @@ export function ArtistTab() {
           <div className="relative z-10 flex flex-col items-center gap-4 w-full max-w-5xl">
             <h1
               className="text-4xl md:text-6xl font-extrabold tracking-tight text-center bg-gradient-to-r from-pink-200 via-purple-200 to-fuchsia-200 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(236,72,153,0.7)] hero-title"
-              style={{ color: "#fff" }}
             >
               Mick&apos;s Awesome SSR Artist Helper
             </h1>
@@ -164,7 +163,7 @@ export function ArtistTab() {
 
           {/* Legend */}
           <div className="mt-8 mb-4 px-6 py-4 backdrop-blur-sm rounded-2xl border-2 border-fuchsia-400/40 shadow-[0_0_30px_rgba(192,38,211,0.4)] relative z-10 legend-panel">
-            <h3 className="text-xl font-bold text-pink-100 mb-4 text-center drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]" style={{ color: "#ffffff" }}>
+            <h3 className="text-xl font-bold text-white mb-4 text-center drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]">
               Skill Color Legend
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 place-items-center">
@@ -184,10 +183,10 @@ export function ArtistTab() {
                 </div>
               ))}
               <div className="flex items-center gap-3">
-                <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-slate-600 to-slate-700" style={{ color: "#ffffff", fontWeight: "700" }}>
+                <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-slate-600 to-slate-700 text-white">
                   White
                 </span>
-                <span className="text-white text-sm font-bold" style={{ color: "#ffffff" }}>Capacity Increase Skills</span>
+                <span className="text-white text-sm font-bold">Capacity Increase Skills</span>
               </div>
             </div>
           </div>

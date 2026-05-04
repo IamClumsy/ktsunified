@@ -47,7 +47,7 @@ export async function GET() {
   try {
     const filePath = path.join(process.cwd(), "src", "SVS Store Calculator.xlsx");
     if (!fs.existsSync(filePath)) {
-      return NextResponse.json({ error: "Workbook not found" }, { status: 500 });
+      return NextResponse.json({ error: `Workbook not found: ${filePath}` }, { status: 500 });
     }
     const mtime = fs.statSync(filePath).mtimeMs;
     if (_cache && _cache.mtime === mtime) return NextResponse.json(_cache.data);

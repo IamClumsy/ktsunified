@@ -1,6 +1,6 @@
 export const isGoodBuff = (skill: string): boolean => {
   const t = (skill || "").toLowerCase();
-  if (t.includes("60%") && t.includes("basic attack damage")) return false;
+  if (t.includes("60%") && (t.includes("basic attack damage") || t.includes("normal attack damage"))) return false;
   if (t.includes("30%") && t.includes("skill damage")) return false;
   if (t.includes("28%") && t.includes("skill damage")) return false;
   if (t.includes("70%") && t.includes("basic attack damage")) return false;
@@ -9,7 +9,9 @@ export const isGoodBuff = (skill: string): boolean => {
   return (
     t.includes("skill damage") ||
     t.includes("basic attack damage") ||
-    t.includes("basic damage")
+    t.includes("normal attack damage") ||
+    t.includes("basic damage") ||
+    t.includes("normal damage")
   );
 };
 
@@ -26,10 +28,12 @@ export const isWorstSkill = (skill: string): boolean => {
     t.includes("200/dps") ||
     t.includes("world building guard") ||
     t.includes("damage wg") ||
+    t.includes("damage increase world building guard") ||
     (t.includes("10 sec") && !t.includes("sec/")) ||
     t.includes("10/sec") ||
     t.includes("driving speed") ||
-    t.includes("drive speed")
+    t.includes("drive speed") ||
+    t.includes("drive speed increase")
   );
 };
 
@@ -44,18 +48,20 @@ export const isBadSkill = (skill: string): boolean => {
     (isDefendingDps ||
       is240DpsAttacking ||
       t.includes("gold brick gathering") ||
-      (t.includes("fan capacity") && !t.includes("10% rally fan capacity")))
+      t.includes("gold brick gather speed") ||
+      (t.includes("fan capacity") && !t.includes("10% rally fan capacity") && !t.includes("rally")))
   );
 };
 
 export const isDirectDamage = (skill: string): boolean => {
   const t = (skill || "").toLowerCase();
-  if (t.includes("60%") && t.includes("basic attack damage")) return true;
+  if (t.includes("60%") && (t.includes("basic attack damage") || t.includes("normal attack damage"))) return true;
   if (t.includes("70%") && t.includes("basic attack damage")) return true;
   if (t.includes("30%") && t.includes("skill damage")) return true;
   if (t.includes("28%") && t.includes("skill damage")) return true;
   if (t.includes("24%") && t.includes("skill damage")) return true;
-  const mentionsDamage = t.includes("damage") && !t.includes("reduc") && !t.includes("taken");
+  if (t.includes("damage to player")) return true;
+  const mentionsDamage = t.includes("damage") && !t.includes("reduc") && !t.includes("taken") && !t.includes("increase");
   const timeBased = t.includes(" sec/") || /\bsec\b/.test(t);
   return (
     (mentionsDamage || timeBased) &&

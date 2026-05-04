@@ -18,11 +18,10 @@ export function CeoOutfit() {
   const [to, setTo] = useState("Signature GC2");
 
   useEffect(() => {
-    if (steps.length > 0) {
-      if (!steps.includes(from)) setFrom(steps[0]);
-      if (!steps.includes(to)) setTo(steps[steps.length - 1]);
-    }
-  }, [steps]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (steps.length === 0) return;
+    setFrom((prev) => (steps.includes(prev) ? prev : steps[0]));
+    setTo((prev) => (steps.includes(prev) ? prev : steps[steps.length - 1]));
+  }, [steps]);
 
   const results = useMemo(() => {
     if (!tables?.ceoOutfit || steps.length === 0) return null;

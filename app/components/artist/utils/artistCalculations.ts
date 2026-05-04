@@ -37,3 +37,13 @@ export const getLetterGrade = (points: number): LetterGrade => {
   if (points >= GRADE_THRESHOLDS.C) return LetterGrade.C;
   return LetterGrade.F;
 };
+
+const SR_GRADE_THRESHOLDS = { S: 14, A: 10, B: 5, C: 0 } as const;
+
+export const getSrLetterGrade = (points: number): string => {
+  if (points >= SR_GRADE_THRESHOLDS.S) return "S";
+  if (points >= SR_GRADE_THRESHOLDS.A) return "A";
+  if (points >= SR_GRADE_THRESHOLDS.B) return "B";
+  if (points >= SR_GRADE_THRESHOLDS.C) return "C";
+  return "F";
+};

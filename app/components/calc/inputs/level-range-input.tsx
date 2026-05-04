@@ -27,6 +27,7 @@ function NumericInput({
   label: string;
 }) {
   const [display, setDisplay] = useState(String(value));
+  const id = label.toLowerCase().replace(/\s+/g, "-");
 
   useEffect(() => {
     setDisplay(String(value));
@@ -34,8 +35,9 @@ function NumericInput({
 
   return (
     <div className="space-y-1">
-      <label className="text-xs uppercase tracking-widest text-slate-400">{label}</label>
+      <label htmlFor={id} className="text-xs uppercase tracking-widest text-slate-400">{label}</label>
       <input
+        id={id}
         type="text"
         inputMode="numeric"
         pattern="[0-9]*"
