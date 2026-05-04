@@ -3,29 +3,11 @@ import * as XLSX from "xlsx";
 import path from "path";
 import fs from "fs";
 
+import type { Task, Category, EventData, TablesData } from "@/app/components/ceo/types";
+
 export const runtime = "nodejs";
 
 let _cache: { mtime: number; data: TablesData } | null = null;
-
-export type Task = {
-  task: string;
-  points: number;
-  used: number;
-};
-
-export type Category = {
-  name: string;
-  tasks: Task[];
-};
-
-export type EventData = {
-  name: string;
-  categories: Category[];
-};
-
-export type TablesData = {
-  events: EventData[];
-};
 
 const LEFT     = { category: 0,  task: 1,  points: 2,  used: 3  };
 const RIGHT    = { category: 6,  task: 7,  points: 8,  used: 9  };

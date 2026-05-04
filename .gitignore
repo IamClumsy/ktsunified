@@ -9,6 +9,7 @@ out/
 
 # misc
 .DS_Store
+~$*.xlsx
 *.pem
 .env
 .env.local

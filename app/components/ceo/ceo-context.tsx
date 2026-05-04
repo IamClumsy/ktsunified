@@ -1,26 +1,8 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-
-export type Task = {
-  task: string;
-  points: number;
-  used: number;
-};
-
-export type Category = {
-  name: string;
-  tasks: Task[];
-};
-
-export type EventData = {
-  name: string;
-  categories: Category[];
-};
-
-export type TablesData = {
-  events: EventData[];
-};
+import type { TablesData } from "./types";
+export type { Task, Category, EventData, TablesData } from "./types";
 
 type TablesState = {
   tables: TablesData | null;
