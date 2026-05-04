@@ -96,9 +96,9 @@ export function ArtistTab() {
         <header className="relative flex flex-col items-center gap-4 app-header hero-banner">
           <div className="relative z-10 flex flex-col items-center gap-4 w-full max-w-5xl">
             <h1
-              className="text-4xl md:text-6xl font-extrabold tracking-tight text-center bg-gradient-to-r from-pink-200 via-purple-200 to-fuchsia-200 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(236,72,153,0.7)] hero-title"
+              className="text-2xl md:text-3xl font-extrabold tracking-tight text-center bg-gradient-to-r from-pink-200 via-purple-200 to-fuchsia-200 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(236,72,153,0.7)] hero-title"
             >
-              Mick&apos;s Awesome SSR Artist Helper
+              SSR Helper
             </h1>
           </div>
         </header>
