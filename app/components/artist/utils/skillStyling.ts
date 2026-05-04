@@ -70,6 +70,6 @@ export const getSkillClass = (skill: string): string => {
   if (trimmed === "20% Skill Damage" || trimmed === "10% Skill Damage")
     return "skill-good bg-gradient-to-r from-slate-700 to-slate-800 border shadow-sm";
   if (t.includes("fan capacity"))
-    return "bg-gradient-to-r from-slate-600 to-slate-700 text-white border border-white/60 shadow-[0_0_8px_2px_rgba(255,255,255,0.35)]";
+    return "skill-white bg-gradient-to-r from-slate-600 to-slate-700 border";
   return "bg-gradient-to-r from-slate-600 to-slate-700 text-slate-100 border border-slate-500/40";
 };

@@ -137,8 +137,10 @@ body::before {
 
 .skill-white {
   color: #ffffff !important;
-  border-color: #ffffff !important;
-  font-weight: 600 !important;
+  border-color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 700 !important;
+  box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.45), 0 0 20px 4px rgba(255, 255, 255, 0.2) !important;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
 }
 
 .legend-white {
