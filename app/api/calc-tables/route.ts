@@ -53,7 +53,7 @@ function extractRange(
 
 export async function GET() {
   try {
-    const filePath = path.join(process.cwd(), "src", "data", "apex girl calculator.xlsx");
+    const filePath = path.join(process.cwd(), "src", "apex girl calculator.xlsx");
     if (!fs.existsSync(filePath)) {
       return NextResponse.json({ error: `Workbook not found: ${filePath}` }, { status: 500 });
     }
