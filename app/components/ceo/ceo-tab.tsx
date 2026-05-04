@@ -4,62 +4,76 @@ import { useState } from "react";
 import { CeoTablesProvider, useCeoTables } from "./ceo-context";
 import { EventSection } from "./event-section";
 
-const COLORS = ["violet", "cyan", "emerald"] as const;
+const COLORS = ["violet", "cyan", "emerald", "amber"] as const;
+type Color = typeof COLORS[number];
 
-const NAV_COLORS: Record<string, string> = {
-  violet: "text-violet-400 hover:text-violet-200 border-violet-700/50 hover:border-violet-400",
-  cyan:   "text-cyan-400 hover:text-cyan-200 border-cyan-700/50 hover:border-cyan-400",
-  emerald:"text-emerald-400 hover:text-emerald-200 border-emerald-700/50 hover:border-emerald-400",
+const BTN: Record<Color, { inactive: string; active: string }> = {
+  violet: {
+    inactive: "border-violet-700/50 text-violet-400 hover:border-violet-400 hover:text-violet-200",
+    active:   "border-violet-400 bg-violet-900/40 text-violet-200",
+  },
+  cyan: {
+    inactive: "border-cyan-700/50 text-cyan-400 hover:border-cyan-400 hover:text-cyan-200",
+    active:   "border-cyan-400 bg-cyan-900/40 text-cyan-200",
+  },
+  emerald: {
+    inactive: "border-emerald-700/50 text-emerald-400 hover:border-emerald-400 hover:text-emerald-200",
+    active:   "border-emerald-400 bg-emerald-900/40 text-emerald-200",
+  },
+  amber: {
+    inactive: "border-amber-700/50 text-amber-400 hover:border-amber-400 hover:text-amber-200",
+    active:   "border-amber-400 bg-amber-900/40 text-amber-200",
+  },
 };
 
 function CeoContent() {
   const { tables, loading, error } = useCeoTables();
+  const [activeIdx, setActiveIdx] = useState(0);
   const [resetCounts, setResetCounts] = useState<number[]>([]);
 
   if (loading) return <div className="flex items-center justify-center py-24"><p className="text-slate-400">Loading calculator data…</p></div>;
-  if (error) return <div className="flex items-center justify-center py-24"><p className="text-red-400">Error: {error}</p></div>;
+  if (error)   return <div className="flex items-center justify-center py-24"><p className="text-red-400">Error: {error}</p></div>;
   if (!tables) return null;
 
-  const visibleEvents = tables.events.filter(
-    (e) => !e.name.toUpperCase().includes("ULTIMATE CEO EVENT") || e.name.toUpperCase().includes("TOP/ULTIMATE")
-  );
-  const counts = visibleEvents.map((_, i) => resetCounts[i] ?? 0);
+  const { events } = tables;
+  const color = COLORS[activeIdx % COLORS.length];
+  const resetCount = resetCounts[activeIdx] ?? 0;
 
-  function handleReset(i: number) {
+  function handleReset() {
     setResetCounts((prev) => {
-      const next = [...(prev.length ? prev : visibleEvents.map(() => 0))];
-      next[i] = (next[i] ?? 0) + 1;
+      const next = prev.length ? [...prev] : events.map(() => 0);
+      next[activeIdx] = (next[activeIdx] ?? 0) + 1;
       return next;
     });
   }
 
   return (
     <>
-      <nav className="flex gap-2 mb-5 flex-wrap justify-center">
-        {visibleEvents.map((event, i) => {
-          const color = COLORS[i % COLORS.length];
+      <nav className="flex gap-2 mb-6 flex-wrap justify-center">
+        {events.map((event, i) => {
+          const c = COLORS[i % COLORS.length];
+          const isActive = i === activeIdx;
           return (
-            <a
+            <button
               key={event.name}
-              href={`#ceo-${event.name}`}
-              className={`text-xs font-semibold px-3 py-1.5 rounded border transition-colors ${NAV_COLORS[color]}`}
+              type="button"
+              onClick={() => setActiveIdx(i)}
+              className={`rounded-lg border px-4 py-2 text-sm font-semibold transition-colors ${
+                isActive ? BTN[c].active : BTN[c].inactive
+              }`}
             >
               {event.name}
-            </a>
+            </button>
           );
         })}
       </nav>
-      <div className="space-y-4">
-        {visibleEvents.map((event, i) => (
-          <EventSection
-            key={`${event.name}-${counts[i]}`}
-            id={`ceo-${event.name}`}
-            event={event}
-            color={COLORS[i % COLORS.length]}
-            onReset={() => handleReset(i)}
-          />
-        ))}
-      </div>
+
+      <EventSection
+        key={`${activeIdx}-${resetCount}`}
+        event={events[activeIdx]}
+        color={color}
+        onReset={handleReset}
+      />
     </>
   );
 }

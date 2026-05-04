@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import type { EventData } from "./ceo-context";
 
 type TaskState = { included: boolean; used: number };
-type ColorScheme = "violet" | "cyan" | "emerald";
+type ColorScheme = "violet" | "cyan" | "emerald" | "amber";
 
 const schemes: Record<ColorScheme, { card: string; title: string; total: string; check: string; catHeader: string; subtotal: string }> = {
   violet: {
@@ -30,6 +30,14 @@ const schemes: Record<ColorScheme, { card: string; title: string; total: string;
     check: "accent-emerald-400",
     catHeader: "text-emerald-400",
     subtotal: "text-emerald-300",
+  },
+  amber: {
+    card: "bg-gradient-to-b from-amber-900/30 to-slate-900/70 border-amber-700/40",
+    title: "text-amber-300",
+    total: "text-amber-200",
+    check: "accent-amber-400",
+    catHeader: "text-amber-400",
+    subtotal: "text-amber-300",
   },
 };
 
