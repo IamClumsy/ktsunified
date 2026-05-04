@@ -46,6 +46,7 @@ export const getSkillClass = (skill: string): string => {
     trimmed === "240/DPS Defending HQ, GH, Club, LM" ||
     trimmed === "240/DPS Attacking Enemy Company" ||
     trimmed === "10% Gain Fans" ||
+    trimmed === "10% Gain Fans Selling CDs" ||
     (t.includes("dps") && t.includes("defending") && t.includes("hq"))
   )
     return "bg-gradient-to-r from-slate-600 to-slate-700 text-violet-400 border border-violet-500/40 violet-text";
