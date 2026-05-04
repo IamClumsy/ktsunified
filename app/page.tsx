@@ -51,15 +51,15 @@ export default function Home() {
       <header className="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800/60 shadow-xl">
         <div className="mx-auto max-w-7xl px-4 pt-3 pb-2">
           {/* Title row */}
-          <div className="flex items-center gap-3 mb-2">
+          <div className="flex items-center justify-center gap-3 mb-2">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/favicon.png" alt="KTS" className="w-8 h-8 rounded shrink-0" />
-            <span className="text-2xl font-extrabold tracking-widest text-slate-100 uppercase w-full">
+            <span className="text-2xl font-extrabold tracking-widest text-slate-100 uppercase">
               KTS 1118
             </span>
           </div>
           {/* Tab nav */}
-          <nav className="flex flex-wrap gap-1.5">
+          <nav className="flex flex-wrap gap-1.5 justify-center">
             {TABS.map((tab) => {
               const isActive = activeTab === tab.id;
               return (
