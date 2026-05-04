@@ -322,6 +322,36 @@ export async function GET() {
       }
     }
 
+    // Parse EventScoring.xlsx for event scoring calculators
+    const eventScoringPath = path.join(process.cwd(), "src", "EventScoring.xlsx");
+    if (fs.existsSync(eventScoringPath)) {
+      const esBuffer = await fs.promises.readFile(eventScoringPath);
+      const esWb = XLSX.read(esBuffer, { type: "buffer" });
+      const esWs = esWb.Sheets[esWb.SheetNames[0]];
+      if (esWs) {
+        const esRaw = XLSX.utils.sheet_to_json(esWs, { header: 1 }) as unknown[][];
+        const parseEvent = (catCol: number, taskCol: number, ptsCol: number): unknown[][] => {
+          const rows: unknown[][] = [];
+          let cat = "";
+          for (let r = 5; r < esRaw.length; r++) {
+            const row = esRaw[r];
+            if (!Array.isArray(row)) continue;
+            const c = row[catCol];
+            const t = row[taskCol];
+            const p = row[ptsCol];
+            if (typeof c === "string" && c.trim()) cat = c.trim();
+            if (typeof t === "string" && t.trim() && typeof p === "number") {
+              rows.push([cat, t.trim(), p]);
+            }
+          }
+          return rows;
+        };
+        result.topCeo = { headers: ["Category", "Task", "Points"], data: parseEvent(0, 1, 2) };
+        result.ultimateCeo = { headers: ["Category", "Task", "Points"], data: parseEvent(6, 7, 8) };
+        result.ultimateTraveler = { headers: ["Category", "Task", "Points"], data: parseEvent(18, 19, 20) };
+      }
+    }
+
     return NextResponse.json(result);
   } catch (error) {
     console.error("calc-tables route failed", error);
