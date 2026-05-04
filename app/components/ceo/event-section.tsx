@@ -138,7 +138,7 @@ export function EventSection({ event, color, id, onReset }: Props) {
                       const state = taskStates[ci][ti];
                       const score = state.included ? calcScore(task.task, task.points, state.used) : 0;
                       return (
-                        <tr key={task.task} className="transition-opacity">
+                        <tr key={ti} className="transition-opacity">
                           <td className="py-1 pr-2">
                             <input
                               type="checkbox"

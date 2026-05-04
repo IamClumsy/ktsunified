@@ -14,7 +14,6 @@ import { VillaHomemaking } from "./sections/villa-homemaking";
 import { CeoOutfit } from "./sections/ceo-outfit";
 import { CeoSports } from "./sections/ceo-sports";
 import { HqBuilding } from "./sections/hq-building";
-import { EventScoring } from "./sections/event-scoring";
 
 function CalcContent() {
   const { loading, error } = useCalcTables();
@@ -37,15 +36,6 @@ function CalcContent() {
       <CeoOutfit />
       <CeoSports />
       <HqBuilding />
-      <div className="md:col-span-2">
-        <EventScoring title="Top CEO Event" tableKey="topCeo" color="sky" accentClass="text-sky-300" />
-      </div>
-      <div className="md:col-span-2">
-        <EventScoring title="Ultimate CEO Event" tableKey="ultimateCeo" color="emerald" accentClass="text-emerald-300" />
-      </div>
-      <div className="md:col-span-2">
-        <EventScoring title="Ultimate Traveler" tableKey="ultimateTraveler" color="violet" accentClass="text-violet-300" />
-      </div>
     </div>
   );
 }

@@ -5,6 +5,8 @@ import fs from "fs";
 
 export const runtime = "nodejs";
 
+let _cache: { mtime: number; data: TablesData } | null = null;
+
 export type Task = {
   task: string;
   points: number;
@@ -86,6 +88,9 @@ export async function GET() {
     if (!fs.existsSync(filePath)) {
       return NextResponse.json({ error: "Workbook not found" }, { status: 500 });
     }
+    const mtime = fs.statSync(filePath).mtimeMs;
+    if (_cache && _cache.mtime === mtime) return NextResponse.json(_cache.data);
+
     const fileBuffer = await fs.promises.readFile(filePath);
     const wb = XLSX.read(fileBuffer, { type: "buffer", cellDates: true });
 
@@ -105,6 +110,7 @@ export async function GET() {
       ],
     };
 
+    _cache = { mtime, data: result };
     return NextResponse.json(result);
   } catch (error) {
     console.error("ceo-tables route failed", error);

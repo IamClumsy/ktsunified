@@ -40,7 +40,7 @@ export function CeoOutfit() {
   }, [tables, steps, from, to]);
 
   return (
-    <CalculatorSection title="CEO Outfit" note="*Bank Cards per Item (per outfit piece)" color="pink">
+    <CalculatorSection title="CEO Outfit" note="*Bank Cards per Item (per outfit piece). Refined and above: costs not yet added to spreadsheet." color="pink">
       <div className="grid grid-cols-2 gap-3">
         <DropdownInput label="From Step" value={from} options={steps} onChange={setFrom} />
         <DropdownInput label="To Step" value={to} options={steps} onChange={setTo} />
