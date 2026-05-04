@@ -18,13 +18,28 @@ const GRADE_GLOW: Record<string, string> = {
   F: "border-red-500/50 shadow-[0_0_10px_2px_rgba(239,68,68,0.20)]",
 };
 
+const GRADE_ORDER: Record<string, number> = { S: 0, A: 1, B: 2, C: 3, F: 4 };
+
+const LEGEND = [
+  { cls: "damage-to-player", color: "Gold", desc: "Best Skills (Damage to Player, 60%+ Attack Damage)" },
+  { cls: "skill-good", color: "Green", desc: "Good Skills (50% BA Damage, Skill Damage variants)" },
+  { cls: "blue-text", color: "Blue", desc: "Damage Reduction Skills" },
+  { cls: "violet-text", color: "Violet", desc: "Okay Skills (DPS Defending, Fan Gain)" },
+  { cls: "skill-specific-worst", color: "Red", desc: "Worst Skills (Drive Speed, World Building Guard)" },
+  { cls: "gold-text", color: "Orange", desc: "Gold Gathering" },
+  { cls: "skill-white", color: "White", desc: "Capacity Increase Skills" },
+];
+
 const selectClass =
   "w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-pink-400/70";
+
+type SortOption = "ranking" | "name" | "genre";
 
 export function NewArtistTab() {
   const artists = artistsData;
 
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [sortBy, setSortBy] = useState<SortOption>("ranking");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("");
@@ -79,6 +94,26 @@ export function NewArtistTab() {
     skillArrays,
   });
 
+  const sortedArtists = useMemo(() => {
+    const arr = [...filteredArtists];
+    if (sortBy === "name") {
+      arr.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortBy === "genre") {
+      arr.sort((a, b) => {
+        const gc = a.genre.localeCompare(b.genre);
+        return gc !== 0 ? gc : a.name.localeCompare(b.name);
+      });
+    } else {
+      arr.sort((a, b) => {
+        const diff =
+          (GRADE_ORDER[getLetterGrade(calculatePoints(a))] ?? 5) -
+          (GRADE_ORDER[getLetterGrade(calculatePoints(b))] ?? 5);
+        return diff !== 0 ? diff : a.name.localeCompare(b.name);
+      });
+    }
+    return arr;
+  }, [filteredArtists, sortBy, calculatePoints]);
+
   const activeFilterCount = [searchTerm, selectedRole, selectedGenre, selectedSkill, selectedSkill3, selectedRanking].filter(Boolean).length;
 
   function clearFilters() {
@@ -93,11 +128,11 @@ export function NewArtistTab() {
         <h1 className="mt-2 text-xl md:text-3xl font-bold bg-gradient-to-r from-pink-200 via-purple-200 to-fuchsia-200 bg-clip-text text-transparent">
           SSR Helper
         </h1>
-        <p className="mt-1 text-sm text-slate-400">{filteredArtists.length} artists</p>
+        <p className="mt-1 text-sm text-slate-400">{sortedArtists.length} artists</p>
       </header>
 
-      {/* Filter bar */}
-      <div className="mb-4 flex items-center justify-center gap-2">
+      {/* Controls row */}
+      <div className="mb-4 flex items-center justify-center gap-2 flex-wrap">
         <button
           onClick={() => setFiltersOpen((o) => !o)}
           className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-slate-700 bg-slate-900 text-sm text-slate-300 hover:border-pink-500/50 hover:text-white transition-colors"
@@ -118,11 +153,27 @@ export function NewArtistTab() {
             Clear all
           </button>
         )}
+        {/* Sort */}
+        <div className="flex items-center gap-1 rounded-lg border border-slate-700 bg-slate-900 overflow-hidden">
+          {(["ranking", "name", "genre"] as SortOption[]).map((opt) => (
+            <button
+              key={opt}
+              onClick={() => setSortBy(opt)}
+              className={`px-3 py-2.5 text-sm capitalize transition-colors ${
+                sortBy === opt
+                  ? "bg-pink-600 text-white font-semibold"
+                  : "text-slate-400 hover:text-slate-200"
+              }`}
+            >
+              {opt === "ranking" ? "Ranking" : opt === "name" ? "Name" : "Genre"}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Filter panel */}
       {filtersOpen && (
-        <div className="mb-6 p-4 rounded-xl border border-slate-700 bg-slate-900/60 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+        <div className="mb-6 p-4 rounded-xl border border-slate-700 bg-slate-900/60 grid grid-cols-2 md:grid-cols-3 gap-3">
           <div className="space-y-1">
             <label className="text-xs uppercase tracking-widest text-slate-400">Artist</label>
             <select value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className={selectClass}>
@@ -177,17 +228,17 @@ export function NewArtistTab() {
       )}
 
       {/* Cards */}
-      {filteredArtists.length === 0 ? (
+      {sortedArtists.length === 0 ? (
         <div className="text-center py-16 text-slate-400">No artists match the current filters.</div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-          {filteredArtists.map((artist) => {
+          {sortedArtists.map((artist) => {
             const points = calculatePoints(artist);
             const grade = getLetterGrade(points);
             return (
               <div
                 key={artist.id}
-                className={`rounded-xl border bg-gradient-to-br from-violet-900/60 via-fuchsia-900/40 to-slate-900/80 p-3 flex flex-col gap-2 ${GRADE_GLOW[grade] ?? GRADE_GLOW.F}`}
+                className={`rounded-xl border bg-gradient-to-br from-violet-900/60 via-fuchsia-900/40 to-slate-900/80 p-3 flex flex-col gap-2 transition-all duration-150 hover:scale-[1.02] hover:brightness-110 ${GRADE_GLOW[grade] ?? GRADE_GLOW.F}`}
               >
                 {/* Name + grade */}
                 <div className="flex items-center justify-between gap-2">
@@ -224,26 +275,43 @@ export function NewArtistTab() {
                   )}
                 </div>
 
-                {/* Build · Photos */}
-                <div className="flex flex-wrap gap-1 mt-auto pt-1">
-                  {artist.build ? (
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gradient-to-r from-purple-500 to-fuchsia-600 text-white">
-                      {artist.build}
-                    </span>
-                  ) : (
-                    <span />
-                  )}
-                  {artist.photos && (
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-slate-700 text-slate-300">
-                      {artist.photos}
-                    </span>
-                  )}
+                {/* Build · Photos — always 2 columns so Photos stays in slot 2 */}
+                <div className="grid grid-cols-2 gap-1 mt-auto pt-1">
+                  <div>
+                    {artist.build && (
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gradient-to-r from-purple-500 to-fuchsia-600 text-white">
+                        {artist.build}
+                      </span>
+                    )}
+                  </div>
+                  <div>
+                    {artist.photos && (
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-slate-700 text-slate-300">
+                        {artist.photos}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
             );
           })}
         </div>
       )}
+
+      {/* Skill colour legend */}
+      <div className="mt-10 px-6 py-4 rounded-2xl border border-fuchsia-400/30 bg-slate-900/60 shadow-[0_0_20px_rgba(192,38,211,0.2)]">
+        <h3 className="text-sm font-semibold text-white uppercase tracking-widest mb-3 text-center">Skill Colour Legend</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          {LEGEND.map(({ cls, color, desc }) => (
+            <div key={color} className="flex items-center gap-3">
+              <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-slate-600 to-slate-700 shrink-0 ${cls}`}>
+                {color}
+              </span>
+              <span className="text-slate-300 text-xs">{desc}</span>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
