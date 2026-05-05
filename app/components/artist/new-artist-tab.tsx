@@ -20,6 +20,16 @@ const GRADE_GLOW: Record<string, string> = {
 
 const GRADE_ORDER: Record<string, number> = { S: 0, A: 1, B: 2, C: 3, F: 4 };
 
+const PHOTO_CLASS: Record<string, string> = {
+  Universal:      "bg-teal-900/60 text-teal-300 border border-teal-500/40",
+  "Own Photos":   "bg-pink-900/60 text-pink-300 border border-pink-500/40",
+  Tokyo4:         "bg-violet-900/60 text-violet-300 border border-violet-500/40",
+  Rome3:          "bg-amber-900/60 text-amber-300 border border-amber-500/40",
+  Bali3:          "bg-emerald-900/60 text-emerald-300 border border-emerald-500/40",
+  Bali4:          "bg-emerald-900/60 text-emerald-200 border border-emerald-400/40",
+  "Not Released": "bg-red-900/60 text-red-400 border border-red-500/40",
+};
+
 const LEGEND = [
   { cls: "damage-to-player", color: "Gold", desc: "Best Skills (Damage to Player, 60%+ Attack Damage)" },
   { cls: "skill-good", color: "Green", desc: "Good Skills (50% BA Damage, Skill Damage variants)" },
@@ -104,10 +114,14 @@ export function NewArtistTab() {
       });
     } else {
       arr.sort((a, b) => {
-        const diff =
-          (GRADE_ORDER[getLetterGrade(calculatePoints(a))] ?? 5) -
-          (GRADE_ORDER[getLetterGrade(calculatePoints(b))] ?? 5);
-        return diff !== 0 ? diff : a.name.localeCompare(b.name);
+        const pa = calculatePoints(a);
+        const pb = calculatePoints(b);
+        const gradeDiff =
+          (GRADE_ORDER[getLetterGrade(pa)] ?? 5) -
+          (GRADE_ORDER[getLetterGrade(pb)] ?? 5);
+        if (gradeDiff !== 0) return gradeDiff;
+        if (pb !== pa) return pb - pa;
+        return a.name.localeCompare(b.name);
       });
     }
     return arr;
@@ -240,13 +254,25 @@ export function NewArtistTab() {
       )}
       </div>{/* end sticky wrapper */}
 
-      {/* Grade tally */}
-      <div className="flex items-center justify-center gap-4 text-xs mb-4 mt-1">
-        {(["S", "A", "B", "C", "F"] as const).map((g) => (
-          <span key={g} className={`font-bold ${g === "S" ? "ranking-a" : g === "A" ? "ranking-b" : g === "B" ? "ranking-c" : g === "C" ? "ranking-d" : "ranking-f"}`}>
-            {g}: {gradeCounts[g]}
-          </span>
-        ))}
+      {/* Grade tally — click to quick-filter by grade */}
+      <div className="flex items-center justify-center gap-3 text-xs mb-4 mt-1">
+        {(["S", "A", "B", "C", "F"] as const).map((g) => {
+          const colorClass = g === "S" ? "ranking-a" : g === "A" ? "ranking-b" : g === "B" ? "ranking-c" : g === "C" ? "ranking-d" : "ranking-f";
+          const isActive = selectedRanking === g;
+          return (
+            <button
+              key={g}
+              onClick={() => setSelectedRanking(isActive ? "" : g)}
+              className={`font-bold px-2 py-0.5 rounded-full transition-colors ${colorClass} ${
+                isActive
+                  ? "bg-slate-700 ring-1 ring-current"
+                  : "hover:bg-slate-800"
+              }`}
+            >
+              {g}: {gradeCounts[g]}
+            </button>
+          );
+        })}
       </div>
 
       {/* Cards */}
@@ -308,7 +334,7 @@ export function NewArtistTab() {
                   </div>
                   <div>
                     {artist.photos && (
-                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-slate-700 text-slate-300">
+                      <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${PHOTO_CLASS[artist.photos] ?? "bg-slate-700 text-slate-300"}`}>
                         {artist.photos}
                       </span>
                     )}
