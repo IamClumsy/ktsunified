@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
-import { useCalcTables, useCalcSummary } from "../calc-context";
+import { useState, useMemo } from "react";
+import { useCalcTables } from "../calc-context";
 import { vlookupDiff } from "../vlookup";
 import { CalculatorSection } from "../calculator-section";
 import { DropdownInput } from "../inputs/dropdown-input";
@@ -9,7 +9,6 @@ import { ResultDisplay } from "../result-display";
 
 export function CarParts() {
   const { tables } = useCalcTables();
-  const { registerResults } = useCalcSummary();
   const [from, setFrom] = useState("SS3");
   const [to, setTo] = useState("SS5");
 
@@ -28,12 +27,6 @@ export function CarParts() {
     return vlookupDiff(from, to, tables.carParts.data, 5);
   }, [tables, from, to]);
 
-  useEffect(() => {
-    registerResults("Car Parts", [
-      { label: "Parts", value: parts },
-      { label: "Advance Drawings", value: drawings },
-    ]);
-  }, [parts, drawings, registerResults]);
 
   return (
     <CalculatorSection title="Car Parts" note="*Available until SSS1" color="amber">

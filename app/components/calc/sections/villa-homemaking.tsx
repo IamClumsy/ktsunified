@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
-import { useCalcTables, useCalcSummary } from "../calc-context";
+import { useState, useMemo } from "react";
+import { useCalcTables } from "../calc-context";
 import { vlookupDiff } from "../vlookup";
 import { CalculatorSection } from "../calculator-section";
 import { DropdownInput } from "../inputs/dropdown-input";
@@ -13,7 +13,6 @@ const HQ_MULTIPLIER = 125;
 
 export function VillaHomemaking() {
   const { tables } = useCalcTables();
-  const { registerResults } = useCalcSummary();
   const [tier, setTier] = useState("5");
   const [from, setFrom] = useState(32);
   const [to, setTo] = useState(45);
@@ -31,12 +30,6 @@ export function VillaHomemaking() {
     return vlookupDiff(from - 1, to - 1, tables.homemaking.data, tierNum * 2 + 1);
   }, [tables, from, to, tierNum]);
 
-  useEffect(() => {
-    registerResults("Villa Homemaking", [
-      { label: isHQ ? "HQ Coins" : "Coins", value: coins },
-      { label: isHQ ? "HQ Keys" : "Keys", value: keys },
-    ]);
-  }, [coins, keys, isHQ, registerResults]);
 
   return (
     <CalculatorSection title="Villa Homemaking" color="emerald">

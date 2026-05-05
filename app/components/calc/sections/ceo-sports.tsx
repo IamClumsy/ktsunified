@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
-import { useCalcTables, useCalcSummary } from "../calc-context";
+import { useState, useMemo } from "react";
+import { useCalcTables } from "../calc-context";
 import { vlookupDiff } from "../vlookup";
 import { CalculatorSection } from "../calculator-section";
 import { DropdownInput } from "../inputs/dropdown-input";
@@ -13,7 +13,6 @@ const HQ_MULTIPLIER = 125;
 
 export function CeoSports() {
   const { tables } = useCalcTables();
-  const { registerResults } = useCalcSummary();
   const [tier, setTier] = useState("3");
   const [from, setFrom] = useState(1);
   const [to, setTo] = useState(60);
@@ -31,12 +30,6 @@ export function CeoSports() {
     return vlookupDiff(from - 1, to - 1, tables.ceoSports.data, tierNum * 2 + 1);
   }, [tables, from, to, tierNum]);
 
-  useEffect(() => {
-    registerResults("CEO Sports", [
-      { label: isHQ ? "HQ Energy Drink" : "Energy Drink", value: drinks },
-      { label: isHQ ? "HQ Protein Bar" : "Protein Bar", value: bars },
-    ]);
-  }, [drinks, bars, isHQ, registerResults]);
 
   return (
     <CalculatorSection title="CEO Sports" color="pink">

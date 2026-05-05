@@ -1,14 +1,13 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import { useCalcTables, useCalcSummary } from "../calc-context";
+import { useCalcTables } from "../calc-context";
 import { CalculatorSection } from "../calculator-section";
 import { DropdownInput } from "../inputs/dropdown-input";
 import { ResultDisplay } from "../result-display";
 
 export function CeoOutfit() {
   const { tables } = useCalcTables();
-  const { registerResults } = useCalcSummary();
 
   const steps = useMemo(() => {
     if (!tables?.ceoOutfit) return [];
@@ -39,13 +38,6 @@ export function CeoOutfit() {
     return { bankCards, droids, crownCards };
   }, [tables, steps, from, to]);
 
-  useEffect(() => {
-    registerResults("CEO Outfit", [
-      { label: "Bank Cards per Item", value: results?.bankCards ?? null },
-      { label: "Droids (all 4 items)", value: results?.droids ?? null },
-      { label: "Crown Cards", value: results?.crownCards ?? null },
-    ]);
-  }, [results, registerResults]);
 
   return (
     <CalculatorSection title="CEO Outfit" note="*Bank Cards per Item (per outfit piece). Refined and above: costs not yet added to spreadsheet." color="pink">

@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
-import { useCalcTables, useCalcSummary } from "../calc-context";
+import { useState, useMemo } from "react";
+import { useCalcTables } from "../calc-context";
 import { vlookupDiff, vlookup } from "../vlookup";
 import { CalculatorSection } from "../calculator-section";
 import { LevelRangeInput } from "../inputs/level-range-input";
@@ -10,7 +10,6 @@ import { ResultDisplay } from "../result-display";
 
 export function Blueprints() {
   const { tables } = useCalcTables();
-  const { registerResults } = useCalcSummary();
 
   // Main blueprints — tier total reference
   const [selectedTier, setSelectedTier] = useState("Tier 1");
@@ -47,13 +46,6 @@ export function Blueprints() {
     return vlookupDiff(expansionFrom, expansionTo, tables.blueprintsExpansion.data, 3);
   }, [tables, expansionFrom, expansionTo]);
 
-  useEffect(() => {
-    registerResults("Blueprints", [
-      { label: "Tier Total", value: tierTotal },
-      { label: "Group Battle", value: battleCost },
-      { label: "Expansion", value: expansionCost },
-    ]);
-  }, [tierTotal, battleCost, expansionCost, registerResults]);
 
   return (
     <CalculatorSection title="Blueprints" color="sky">

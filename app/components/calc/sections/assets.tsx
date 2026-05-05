@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
-import { useCalcTables, useCalcSummary } from "../calc-context";
+import { useState, useMemo } from "react";
+import { useCalcTables } from "../calc-context";
 import { vlookupDiff } from "../vlookup";
 import { CalculatorSection } from "../calculator-section";
 import { DropdownInput } from "../inputs/dropdown-input";
@@ -19,7 +19,6 @@ function assetCol(type: string, source: string): number {
 
 export function Assets() {
   const { tables } = useCalcTables();
-  const { registerResults } = useCalcSummary();
   const [type, setType] = useState("Jewelry");
   const [source, setSource] = useState("Standard");
   const [from, setFrom] = useState(32);
@@ -37,12 +36,6 @@ export function Assets() {
     return vlookupDiff(from - 1, to - 1, tables.sacrifices.data, 3);
   }, [tables, from, to]);
 
-  useEffect(() => {
-    registerResults("Assets", [
-      { label: "Asset Coins", value: assetCoins },
-      { label: "Extra Assets for Promotion", value: sacrifices },
-    ]);
-  }, [assetCoins, sacrifices, registerResults]);
 
   return (
     <CalculatorSection title="Assets" color="pink">
