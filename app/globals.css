@@ -24,8 +24,8 @@ body::before {
   background-image: url('/gametiles_com.a3.topgirl.gplay.jpg');
   background-size: cover;
   background-position: center;
-  opacity: 0.6;
-  filter: brightness(0.2) blur(6px);
+  opacity: 0.75;
+  filter: brightness(0.28) blur(4px);
   z-index: -1;
   pointer-events: none;
 }
