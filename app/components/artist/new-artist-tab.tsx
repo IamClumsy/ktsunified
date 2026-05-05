@@ -349,7 +349,7 @@ export function NewArtistTab() {
 
       {/* Skill colour legend */}
       <div className="mt-10 px-6 py-4 rounded-2xl border border-fuchsia-400/30 bg-slate-900/60 shadow-[0_0_20px_rgba(192,38,211,0.2)]">
-        <h3 className="text-sm font-semibold text-white uppercase tracking-widest mb-3 text-center">Skill Colour Legend</h3>
+        <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-3 text-center">Skill Colour Legend</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           {LEGEND.map(({ cls, color, desc }) => (
             <div key={color} className="flex items-center gap-3">
