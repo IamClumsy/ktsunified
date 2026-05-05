@@ -747,7 +747,7 @@
       "10% Rally Fan Capacity"
     ],
     "build": "Single Car, Rally",
-    "photos": "Not Released"
+    "photos": "Universal"
   },
   {
     "id": 51,
@@ -1034,7 +1034,7 @@
     "build": "Gold Gathering",
     "photos": "Universal"
   },
-   {
+  {
     "id": 70,
     "name": "Rhea",
     "group": "None",
@@ -1049,7 +1049,7 @@
     "build": "Rally",
     "photos": "Own Photos"
   },
-   {
+  {
     "id": 71,
     "name": "Belle",
     "group": "None",
@@ -1063,5 +1063,5 @@
     ],
     "build": "",
     "photos": "Universal"
-  }      
+  }
 ]
