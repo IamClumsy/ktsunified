@@ -18,7 +18,8 @@ export const getSkillClass = (skill: string): string => {
   if (
     trimmed === "60% Basic Attack Damage" ||
     trimmed === "60% Normal Attack Damage" ||
-    trimmed === "70% Basic Attack Damage"
+    trimmed === "70% Basic Attack Damage" ||
+    trimmed === "80% Basic Attack Damage"
   )
     return "basic-attack-60 bg-gradient-to-r from-slate-600 to-slate-700 border shadow-lg";
   if (

@@ -4,6 +4,7 @@ export const isGoodBuff = (skill: string): boolean => {
   if (t.includes("30%") && t.includes("skill damage")) return false;
   if (t.includes("28%") && t.includes("skill damage")) return false;
   if (t.includes("70%") && t.includes("basic attack damage")) return false;
+  if (t.includes("80%") && t.includes("basic attack damage")) return false;
   if (t.includes("24%") && t.includes("skill damage")) return false;
   if (t.includes("reduc")) return false;
   return (
@@ -57,6 +58,7 @@ export const isDirectDamage = (skill: string): boolean => {
   const t = (skill || "").toLowerCase();
   if (t.includes("60%") && (t.includes("basic attack damage") || t.includes("normal attack damage"))) return true;
   if (t.includes("70%") && t.includes("basic attack damage")) return true;
+  if (t.includes("80%") && t.includes("basic attack damage")) return true;
   if (t.includes("30%") && t.includes("skill damage")) return true;
   if (t.includes("28%") && t.includes("skill damage")) return true;
   if (t.includes("24%") && t.includes("skill damage")) return true;
