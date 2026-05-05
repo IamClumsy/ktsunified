@@ -1063,5 +1063,95 @@
     ],
     "build": "",
     "photos": "Universal"
+  },
+  {
+    "id": 72,
+    "name": "Kendell",
+    "group": "None",
+    "rank": "SSR",
+    "position": "",
+    "genre": "Hip-Hop",
+    "skills": [
+      "",
+      "",
+      ""
+    ],
+    "build": "",
+    "photos": "Rome4"
+  },
+  {
+    "id": 73,
+    "name": "Sloane",
+    "group": "None",
+    "rank": "SSR",
+    "position": "",
+    "genre": "Pop",
+    "skills": [
+      "",
+      "",
+      ""
+    ],
+    "build": "",
+    "photos": "Rome4"
+  },
+  {
+    "id": 74,
+    "name": "Valerie",
+    "group": "None",
+    "rank": "SSR",
+    "position": "",
+    "genre": "Rock",
+    "skills": [
+      "",
+      "",
+      ""
+    ],
+    "build": "",
+    "photos": "Rome4"
+  },
+  {
+    "id": 75,
+    "name": "Hana",
+    "group": "None",
+    "rank": "SSR",
+    "position": "",
+    "genre": "Pop",
+    "skills": [
+      "",
+      "",
+      ""
+    ],
+    "build": "",
+    "photos": "Tokyo5"
+  },
+  {
+    "id": 76,
+    "name": "Mio - Tk5",
+    "group": "None",
+    "rank": "SSR",
+    "position": "",
+    "genre": "EDM",
+    "skills": [
+      "",
+      "",
+      ""
+    ],
+    "build": "",
+    "photos": "Tokyo5"
+  },
+  {
+    "id": 77,
+    "name": "Rena",
+    "group": "None",
+    "rank": "SSR",
+    "position": "",
+    "genre": "R&B",
+    "skills": [
+      "",
+      "",
+      ""
+    ],
+    "build": "",
+    "photos": "Tokyo5"
   }
 ]
