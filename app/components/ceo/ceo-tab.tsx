@@ -89,6 +89,29 @@ export function CeoTab() {
             Enter how many items you plan to use to calculate your event points
           </p>
         </header>
+
+        {/* How it works */}
+        <div className="mb-6 rounded-2xl border border-slate-700 bg-slate-900/60 px-5 py-4 text-sm text-slate-300 space-y-2">
+          <p className="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-3">How It Works</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div className="flex gap-2">
+              <span className="text-violet-400 font-bold shrink-0">Score</span>
+              <span className="text-slate-400">Quantity used × points per task. Each category shows a subtotal; all categories sum to your total event points.</span>
+            </div>
+            <div className="flex gap-2">
+              <span className="text-cyan-400 font-bold shrink-0">EXP Cards</span>
+              <span className="text-slate-400">EXP Card x24 tasks divide by 24 — enter the raw number of cards, the calculator converts to uses automatically.</span>
+            </div>
+            <div className="flex gap-2">
+              <span className="text-emerald-400 font-bold shrink-0">Events</span>
+              <span className="text-slate-400">Each tab is a separate event type. Use the Reset button to clear all quantities for the current event.</span>
+            </div>
+            <div className="flex gap-2">
+              <span className="text-amber-400 font-bold shrink-0">Total</span>
+              <span className="text-slate-400">The grand total at the bottom is your projected event point score based on the quantities entered.</span>
+            </div>
+          </div>
+        </div>
         <CeoContent />
       </div>
     </CeoTablesProvider>
