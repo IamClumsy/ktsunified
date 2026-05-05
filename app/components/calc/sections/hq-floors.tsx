@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { useCalcTables } from "../calc-context";
+import { useState, useMemo, useEffect } from "react";
+import { useCalcTables, useCalcSummary } from "../calc-context";
 import { vlookupDiff } from "../vlookup";
 import { CalculatorSection } from "../calculator-section";
 import { DropdownInput } from "../inputs/dropdown-input";
@@ -13,6 +13,7 @@ const HQ_MULTIPLIER = 125;
 
 export function HqFloors() {
   const { tables } = useCalcTables();
+  const { registerResults } = useCalcSummary();
   const [tier, setTier] = useState("3");
   const [from, setFrom] = useState(1);
   const [to, setTo] = useState(60);
@@ -29,6 +30,13 @@ export function HqFloors() {
     if (!tables?.floors) return null;
     return vlookupDiff(from - 1, to - 1, tables.floors.data, tierNum * 2 + 1);
   }, [tables, from, to, tierNum]);
+
+  useEffect(() => {
+    registerResults("HQ Floors", [
+      { label: isHQ ? "HQ Wood" : "Wood", value: wood },
+      { label: isHQ ? "HQ Steel" : "Steel", value: steel },
+    ]);
+  }, [wood, steel, isHQ, registerResults]);
 
   return (
     <CalculatorSection

@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { useCalcTables } from "../calc-context";
+import { useState, useMemo, useEffect } from "react";
+import { useCalcTables, useCalcSummary } from "../calc-context";
 import { vlookupDiff } from "../vlookup";
 import { CalculatorSection } from "../calculator-section";
 import { LevelRangeInput } from "../inputs/level-range-input";
@@ -9,6 +9,7 @@ import { ResultDisplay } from "../result-display";
 
 export function HqGlass() {
   const { tables } = useCalcTables();
+  const { registerResults } = useCalcSummary();
   const [from, setFrom] = useState(273);
   const [to, setTo] = useState(370);
 
@@ -16,6 +17,10 @@ export function HqGlass() {
     if (!tables?.glass) return null;
     return vlookupDiff(from - 1, to - 1, tables.glass.data, 3);
   }, [tables, from, to]);
+
+  useEffect(() => {
+    registerResults("HQ Glass", [{ label: "Glass", value: glass }]);
+  }, [glass, registerResults]);
 
   return (
     <CalculatorSection title="HQ Glass" note="*Available up to level 600" color="violet">

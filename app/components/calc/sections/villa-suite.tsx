@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { useCalcTables } from "../calc-context";
+import { useState, useMemo, useEffect } from "react";
+import { useCalcTables, useCalcSummary } from "../calc-context";
 import { vlookupDiff } from "../vlookup";
 import { CalculatorSection } from "../calculator-section";
 import { DropdownInput } from "../inputs/dropdown-input";
@@ -9,6 +9,7 @@ import { ResultDisplay } from "../result-display";
 
 export function VillaSuite() {
   const { tables } = useCalcTables();
+  const { registerResults } = useCalcSummary();
   const [from, setFrom] = useState("Summit Villa-1");
   const [to, setTo] = useState("Summit Villa-3");
 
@@ -26,6 +27,13 @@ export function VillaSuite() {
     if (!tables?.villa) return null;
     return vlookupDiff(from, to, tables.villa.data, 5);
   }, [tables, from, to]);
+
+  useEffect(() => {
+    registerResults("Villa Suite", [
+      { label: "Drones", value: drones },
+      { label: "Design Drafts", value: drafts },
+    ]);
+  }, [drones, drafts, registerResults]);
 
   return (
     <CalculatorSection title="Villa Suite" note="*Until Urban Heights-0" color="emerald">

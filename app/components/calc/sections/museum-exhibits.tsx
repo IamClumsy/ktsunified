@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { useCalcTables } from "../calc-context";
+import { useState, useMemo, useEffect } from "react";
+import { useCalcTables, useCalcSummary } from "../calc-context";
 import { vlookupDiff } from "../vlookup";
 import { CalculatorSection } from "../calculator-section";
 import { DropdownInput } from "../inputs/dropdown-input";
@@ -13,6 +13,7 @@ const HQ_MULTIPLIER = 125;
 
 export function MuseumExhibits() {
   const { tables } = useCalcTables();
+  const { registerResults } = useCalcSummary();
   const [tier, setTier] = useState("1");
   const [from, setFrom] = useState(1);
   const [to, setTo] = useState(2);
@@ -29,6 +30,13 @@ export function MuseumExhibits() {
     if (!tables?.exhibits) return null;
     return vlookupDiff(from - 1, to - 1, tables.exhibits.data, tierNum * 2 + 1);
   }, [tables, from, to, tierNum]);
+
+  useEffect(() => {
+    registerResults("Museum Exhibits", [
+      { label: isHQ ? "HQ Sandstone" : "Sandstone", value: sandstone },
+      { label: isHQ ? "HQ Tiles" : "Tiles", value: tile },
+    ]);
+  }, [sandstone, tile, isHQ, registerResults]);
 
   return (
     <CalculatorSection title="Museum Exhibits" color="sky">

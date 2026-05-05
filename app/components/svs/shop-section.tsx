@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import type { ShopData } from "./svs-context";
 
 type ItemState = { quantity: number };
@@ -28,7 +28,7 @@ function fmt(v: number): string {
   return v.toLocaleString();
 }
 
-export function ShopSection({ shop, color }: { shop: ShopData; color: ColorScheme }) {
+export function ShopSection({ shop, color, onTotalChange }: { shop: ShopData; color: ColorScheme; onTotalChange?: (total: number) => void }) {
   const scheme = schemes[color];
   const [items, setItems] = useState<ItemState[]>(() =>
     shop.items.map((item) => ({ quantity: item.quantity }))
@@ -38,6 +38,8 @@ export function ShopSection({ shop, color }: { shop: ShopData; color: ColorSchem
     () => items.reduce((sum, state, i) => sum + state.quantity * shop.items[i].price, 0),
     [items, shop.items]
   );
+
+  useEffect(() => { onTotalChange?.(total); }, [total, onTotalChange]);
 
   function setQty(idx: number, qty: number) {
     setItems((prev) => prev.map((s, i) => (i === idx ? { quantity: Math.max(0, qty) } : s)));

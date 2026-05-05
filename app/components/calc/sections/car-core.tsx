@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { useCalcTables } from "../calc-context";
+import { useState, useMemo, useEffect } from "react";
+import { useCalcTables, useCalcSummary } from "../calc-context";
 import { vlookup, vlookupDiff } from "../vlookup";
 import { CalculatorSection } from "../calculator-section";
 import { DropdownInput } from "../inputs/dropdown-input";
@@ -13,6 +13,7 @@ const HQ_MULTIPLIER = 125;
 
 export function CarCore() {
   const { tables } = useCalcTables();
+  const { registerResults } = useCalcSummary();
   const [rank, setRank] = useState("A");
   const [from, setFrom] = useState(38);
   const [to, setTo] = useState(60);
@@ -33,6 +34,13 @@ export function CarCore() {
     if (!tables?.carCore || tierNum == null) return null;
     return vlookupDiff(from - 1, to - 1, tables.carCore.data, tierNum * 2 + 1);
   }, [tables, from, to, tierNum]);
+
+  useEffect(() => {
+    registerResults("Car Core", [
+      { label: isEnhanced ? "Enhanced Plugs" : "Plugs", value: plugs },
+      { label: isEnhanced ? "Enhanced Coils" : "Coils", value: coils },
+    ]);
+  }, [plugs, coils, isEnhanced, registerResults]);
 
   return (
     <CalculatorSection title="Car Core" color="amber">

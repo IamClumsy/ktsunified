@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { useCalcTables } from "../calc-context";
+import { useState, useMemo, useEffect } from "react";
+import { useCalcTables, useCalcSummary } from "../calc-context";
 import { vlookupDiff } from "../vlookup";
 import { CalculatorSection } from "../calculator-section";
 import { LevelRangeInput } from "../inputs/level-range-input";
@@ -10,6 +10,7 @@ import { DropdownInput } from "../inputs/dropdown-input";
 
 export function Artists() {
   const { tables } = useCalcTables();
+  const { registerResults } = useCalcSummary();
   const [from, setFrom] = useState(1);
   const [to, setTo] = useState(160);
   const [artist, setArtist] = useState("None");
@@ -50,6 +51,13 @@ export function Artists() {
     const base = vlookupDiff(from - 1, to - 1, tables.artists.data, 5);
     return base == null ? null : Math.ceil(base * modifier);
   }, [tables, from, to, modifier]);
+
+  useEffect(() => {
+    registerResults("Artists", [
+      { label: "EXP Cards", value: exp },
+      { label: "Promotion Cards", value: promo },
+    ]);
+  }, [exp, promo, registerResults]);
 
   return (
     <CalculatorSection title="Artists" color="pink">
