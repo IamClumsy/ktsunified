@@ -56,24 +56,6 @@ function SvsContent() {
 
   return (
     <div className="space-y-6">
-      {/* Budget input */}
-      <div className="rounded-2xl border border-slate-700 bg-slate-900/80 px-5 py-4 flex flex-wrap items-center gap-4">
-        <label className="text-sm uppercase tracking-widest text-slate-400 shrink-0">Budget</label>
-        <input
-          type="number"
-          min={0}
-          value={budget}
-          onChange={(e) => setBudget(e.target.value === "" ? "" : Number(e.target.value))}
-          placeholder="Enter coin budget…"
-          className="flex-1 min-w-[160px] rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-amber-400/60"
-        />
-        {remaining !== null && (
-          <span className={`text-sm font-semibold tabular-nums ${remaining >= 0 ? "text-green-400" : "text-red-400"}`}>
-            {remaining >= 0 ? `${fmt(remaining)} remaining` : `${fmt(-remaining)} over budget`}
-          </span>
-        )}
-      </div>
-
       {/* Shop tab nav */}
       <div className="flex gap-2">
         {SHOP_TABS.map((tab) => {
@@ -93,6 +75,24 @@ function SvsContent() {
             </button>
           );
         })}
+      </div>
+
+      {/* Budget input */}
+      <div className="rounded-2xl border border-slate-700 bg-slate-900/80 px-5 py-4 flex flex-wrap items-center gap-4">
+        <label className="text-sm uppercase tracking-widest text-slate-400 shrink-0">Budget</label>
+        <input
+          type="number"
+          min={0}
+          value={budget}
+          onChange={(e) => setBudget(e.target.value === "" ? "" : Number(e.target.value))}
+          placeholder="Enter coin budget…"
+          className="flex-1 min-w-[160px] rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-amber-400/60"
+        />
+        {remaining !== null && (
+          <span className={`text-sm font-semibold tabular-nums ${remaining >= 0 ? "text-green-400" : "text-red-400"}`}>
+            {remaining >= 0 ? `${fmt(remaining)} remaining` : `${fmt(-remaining)} over budget`}
+          </span>
+        )}
       </div>
 
       {/* Active shop — keep all mounted so totals stay accurate */}
