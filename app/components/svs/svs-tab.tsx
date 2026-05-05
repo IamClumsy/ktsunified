@@ -93,6 +93,20 @@ function SvsContent() {
             {remaining >= 0 ? `${fmt(remaining)} remaining` : `${fmt(-remaining)} over budget`}
           </span>
         )}
+        {typeof budget === "number" && budget > 0 && (
+          <div className="w-full mt-1">
+            <div className="h-2 w-full rounded-full bg-slate-800 overflow-hidden">
+              <div
+                className={`h-full rounded-full transition-all duration-300 ${grandTotal > budget ? "bg-red-500" : "bg-green-500"}`}
+                style={{ width: `${Math.min((grandTotal / budget) * 100, 100)}%` }}
+              />
+            </div>
+            <div className="flex justify-between text-xs text-slate-500 mt-1">
+              <span>{Math.round(Math.min((grandTotal / budget) * 100, 100))}% spent</span>
+              <span>{fmt(budget)} total</span>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Active shop — keep all mounted so totals stay accurate */}
