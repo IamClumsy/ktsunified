@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { CalcTablesProvider, useCalcTables } from "./calc-context";
 import { Artists } from "./sections/artists";
 import { Assets } from "./sections/assets";
@@ -16,14 +17,14 @@ import { CeoSports } from "./sections/ceo-sports";
 import { HqBuilding } from "./sections/hq-building";
 import { Blueprints } from "./sections/blueprints";
 
-function CalcContent() {
+function CalcContent({ resetKey }: { resetKey: number }) {
   const { loading, error } = useCalcTables();
 
   if (loading) return <div className="flex items-center justify-center py-24"><p className="text-slate-400">Loading calculator data…</p></div>;
   if (error) return <div className="flex items-center justify-center py-24"><p className="text-red-400">Error: {error}</p></div>;
 
   return (
-    <div className="grid gap-6 md:grid-cols-2">
+    <div key={resetKey} className="grid gap-6 md:grid-cols-2">
       <Artists />
       <Assets />
       <HqGlass />
@@ -43,6 +44,8 @@ function CalcContent() {
 }
 
 export function CalcTab() {
+  const [resetKey, setResetKey] = useState(0);
+
   return (
     <CalcTablesProvider>
       <div className="mx-auto max-w-6xl px-4 py-10">
@@ -52,8 +55,14 @@ export function CalcTab() {
           </p>
           <h1 className="mt-4 text-2xl md:text-4xl font-bold text-white">Level Progression Cost Calculator</h1>
           <p className="mt-2 text-slate-300">Only complete levels are available</p>
+          <button
+            onClick={() => setResetKey((k) => k + 1)}
+            className="mt-4 text-xs text-slate-500 hover:text-slate-300 transition-colors px-4 py-2 rounded-lg border border-slate-700 hover:border-slate-500"
+          >
+            Reset All
+          </button>
         </header>
-        <CalcContent />
+        <CalcContent resetKey={resetKey} />
       </div>
     </CalcTablesProvider>
   );
