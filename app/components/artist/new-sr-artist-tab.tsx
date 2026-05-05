@@ -182,16 +182,24 @@ export function NewSrArtistTab() {
   }, [artists, searchTerm, selectedRank, selectedRole, selectedGenre, selectedGroup, selectedSkill, selectedSkill3, selectedRanking, calculatePoints]);
 
   const sortedArtists = useMemo(() => {
+    const rankOrder = (r: string) => (r === "SR" ? 0 : 1);
     const arr = [...filteredArtists];
     if (sortBy === "name") {
-      arr.sort((a, b) => a.name.localeCompare(b.name));
+      arr.sort((a, b) => {
+        const rd = rankOrder(a.rank) - rankOrder(b.rank);
+        return rd !== 0 ? rd : a.name.localeCompare(b.name);
+      });
     } else if (sortBy === "genre") {
       arr.sort((a, b) => {
+        const rd = rankOrder(a.rank) - rankOrder(b.rank);
+        if (rd !== 0) return rd;
         const gc = a.genre.localeCompare(b.genre);
         return gc !== 0 ? gc : a.name.localeCompare(b.name);
       });
     } else {
       arr.sort((a, b) => {
+        const rd = rankOrder(a.rank) - rankOrder(b.rank);
+        if (rd !== 0) return rd;
         const pa = calculatePoints(a);
         const pb = calculatePoints(b);
         const gradeDiff =
