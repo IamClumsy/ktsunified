@@ -14,22 +14,16 @@ type Tab = "artists" | "sr-artists" | "new-artists" | "resource-calc" | "ceo-eve
 
 const TABS: { id: Tab; label: string; accent: string; activeClass: string }[] = [
   {
-    id: "artists",
-    label: "Artist Info",
-    accent: "pink",
-    activeClass: "bg-gradient-to-r from-pink-600 to-fuchsia-600 text-white border-pink-500",
+    id: "new-artists",
+    label: "SSR Artists",
+    accent: "rose",
+    activeClass: "bg-gradient-to-r from-rose-600 to-pink-600 text-white border-rose-500",
   },
   {
     id: "sr-artists",
     label: "SR Artists",
     accent: "purple",
     activeClass: "bg-gradient-to-r from-purple-600 to-violet-600 text-white border-purple-500",
-  },
-  {
-    id: "new-artists",
-    label: "Possible New Artist Layout",
-    accent: "rose",
-    activeClass: "bg-gradient-to-r from-rose-600 to-pink-600 text-white border-rose-500",
   },
   {
     id: "resource-calc",
@@ -66,9 +60,9 @@ const TabContent = memo(function TabContent({ id }: { id: Tab }) {
 });
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<Tab>("artists");
+  const [activeTab, setActiveTab] = useState<Tab>("new-artists");
   // Track which tabs have ever been visited so they stay mounted (CSS-hidden) after first render
-  const [mounted, setMounted] = useState<Set<Tab>>(new Set(["artists"]));
+  const [mounted, setMounted] = useState<Set<Tab>>(new Set(["new-artists"]));
   const [isPending, startTransition] = useTransition();
 
   function switchTab(tab: Tab) {
