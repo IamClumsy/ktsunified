@@ -440,7 +440,7 @@ export function NewSrArtistTab() {
                       </span>
                     )}
                   </div>
-                  <div>
+                  <div className="flex justify-end">
                     {artist.photos && (
                       <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${PHOTO_CLASS[artist.photos] ?? "bg-slate-700 text-slate-300"}`}>
                         {artist.photos}
