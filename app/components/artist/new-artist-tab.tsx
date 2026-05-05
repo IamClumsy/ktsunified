@@ -371,7 +371,7 @@ export function NewArtistTab() {
             <span className="damage-to-player bg-gradient-to-r from-slate-600 to-slate-700 px-2 py-0.5 rounded-full">Best: 10 pts</span>
             <span className="basic-attack-50 bg-gradient-to-r from-slate-700 to-slate-800 px-2 py-0.5 rounded-full">Good: 6 pts</span>
             <span className="text-slate-300 bg-slate-700 px-2 py-0.5 rounded-full">Okay: 3 pts</span>
-            <span className="text-slate-400 bg-slate-700 px-2 py-0.5 rounded-full">Bad: 0 pts</span>
+            <span className="text-slate-300 bg-slate-700 px-2 py-0.5 rounded-full">Bad: 0 pts</span>
             <span className="skill-specific-worst bg-gradient-to-r from-slate-600 to-slate-700 px-2 py-0.5 rounded-full">Worst: −1 pt</span>
           </div>
           <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs">
