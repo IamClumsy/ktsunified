@@ -1,10 +1,10 @@
 "use client";
 
-import { Suspense, useState, useTransition, lazy } from "react";
+import { Suspense, useState, useTransition, lazy, memo } from "react";
 
 // Code-split each tab — only loads when first visited
 const ArtistTab = lazy(() => import("@/app/components/artist/artist-tab").then((m) => ({ default: m.ArtistTab })));
-const SrArtistTab = lazy(() => import("@/app/components/artist/sr-artist-tab").then((m) => ({ default: m.SrArtistTab })));
+const NewSrArtistTab = lazy(() => import("@/app/components/artist/new-sr-artist-tab").then((m) => ({ default: m.NewSrArtistTab })));
 const NewArtistTab = lazy(() => import("@/app/components/artist/new-artist-tab").then((m) => ({ default: m.NewArtistTab })));
 const CalcTab = lazy(() => import("@/app/components/calc/calc-tab").then((m) => ({ default: m.CalcTab })));
 const CeoTab = lazy(() => import("@/app/components/ceo/ceo-tab").then((m) => ({ default: m.CeoTab })));
@@ -51,6 +51,20 @@ const TABS: { id: Tab; label: string; accent: string; activeClass: string }[] = 
   },
 ];
 
+// Memoized so switching tabs doesn't re-render already-mounted tab subtrees
+const TabContent = memo(function TabContent({ id }: { id: Tab }) {
+  return (
+    <Suspense fallback={<Loading />}>
+      {id === "artists" && <ArtistTab />}
+      {id === "sr-artists" && <NewSrArtistTab />}
+      {id === "new-artists" && <NewArtistTab />}
+      {id === "resource-calc" && <CalcTab />}
+      {id === "ceo-event" && <CeoTab />}
+      {id === "svs-store" && <SvsTab />}
+    </Suspense>
+  );
+});
+
 export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>("artists");
   // Track which tabs have ever been visited so they stay mounted (CSS-hidden) after first render
@@ -58,8 +72,10 @@ export default function Home() {
   const [isPending, startTransition] = useTransition();
 
   function switchTab(tab: Tab) {
-    setMounted((prev) => (prev.has(tab) ? prev : new Set([...prev, tab])));
-    startTransition(() => setActiveTab(tab));
+    startTransition(() => {
+      setMounted((prev) => (prev.has(tab) ? prev : new Set([...prev, tab])));
+      setActiveTab(tab);
+    });
   }
 
   return (
@@ -101,16 +117,7 @@ export default function Home() {
       <main>
         {TABS.map((tab) => (
           <div key={tab.id} hidden={activeTab !== tab.id}>
-            {mounted.has(tab.id) && (
-              <Suspense fallback={<Loading />}>
-                {tab.id === "artists" && <ArtistTab />}
-                {tab.id === "sr-artists" && <SrArtistTab />}
-                {tab.id === "new-artists" && <NewArtistTab />}
-                {tab.id === "resource-calc" && <CalcTab />}
-                {tab.id === "ceo-event" && <CeoTab />}
-                {tab.id === "svs-store" && <SvsTab />}
-              </Suspense>
-            )}
+            {mounted.has(tab.id) && <TabContent id={tab.id} />}
           </div>
         ))}
       </main>
