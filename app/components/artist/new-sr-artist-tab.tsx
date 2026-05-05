@@ -381,7 +381,7 @@ export function NewSrArtistTab() {
             return (
               <div
                 key={artist.id}
-                className={`rounded-xl border bg-gradient-to-br from-purple-900/60 via-violet-900/40 to-slate-900/80 p-3 flex flex-col gap-2 transition-all duration-150 hover:scale-[1.02] hover:brightness-110 ${GRADE_GLOW[grade] ?? GRADE_GLOW.F}`}
+                className={`rounded-xl border bg-gradient-to-br from-teal-900/60 via-cyan-900/40 to-slate-900/80 p-3 flex flex-col gap-2 transition-all duration-150 hover:scale-[1.02] hover:brightness-110 ${GRADE_GLOW[grade] ?? GRADE_GLOW.F}`}
               >
                 {/* Name + grade + rank badge */}
                 <div className="flex items-center justify-between gap-2">
@@ -411,12 +411,12 @@ export function NewSrArtistTab() {
 
                 {/* Skills */}
                 <div className="flex flex-col gap-1">
-                  {artist.skills[1] && (
+                  {artist.skills[1] && artist.skills[1] !== "None" && (
                     <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs ${getSkillClass(artist.skills[1])}`}>
                       {artist.skills[1]}
                     </span>
                   )}
-                  {artist.skills[2] && (
+                  {artist.skills[2] && artist.skills[2] !== "None" && (
                     <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs ${getSkillClass(artist.skills[2])}`}>
                       {artist.skills[2]}
                     </span>
