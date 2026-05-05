@@ -33,6 +33,8 @@ function NumericInput({
     setDisplay(String(value));
   }, [value]);
 
+  const isOverMax = value > max;
+
   return (
     <div className="space-y-1">
       <label htmlFor={id} className="text-xs uppercase tracking-widest text-slate-400">{label}</label>
@@ -52,10 +54,23 @@ function NumericInput({
         }}
         onBlur={() => {
           const n = parseInt(display, 10);
-          if (isNaN(n)) setDisplay(String(value));
+          if (isNaN(n)) {
+            setDisplay(String(value));
+          } else if (n > max) {
+            setDisplay(String(max));
+            onChange(max);
+          } else if (n < min) {
+            setDisplay(String(min));
+            onChange(min);
+          }
         }}
-        className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-white"
+        className={`w-full rounded-lg border bg-slate-950 px-3 py-2 text-white ${
+          isOverMax ? "border-amber-500/70" : "border-slate-700"
+        }`}
       />
+      {isOverMax && (
+        <p className="text-xs text-amber-400">Max is {max.toLocaleString()}</p>
+      )}
     </div>
   );
 }

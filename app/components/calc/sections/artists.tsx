@@ -54,7 +54,7 @@ export function Artists() {
 
   return (
     <CalculatorSection title="Artists" color="pink">
-      <LevelRangeInput from={from} to={to} onFromChange={setFrom} onToChange={setTo} />
+      <LevelRangeInput from={from} to={to} onFromChange={setFrom} onToChange={setTo} max={160} />
       <DropdownInput label="Artist" value={artist} options={artistOptions} optionLabels={artistOptionLabels} onChange={setArtist} />
       <ResultDisplay
         accentClass="text-pink-300"

@@ -38,7 +38,7 @@ export function HqFloors() {
       color="violet"
     >
       <DropdownInput label="Floor" value={tier} options={FLOOR_OPTIONS} onChange={setTier} />
-      <LevelRangeInput from={from} to={to} onFromChange={setFrom} onToChange={setTo} />
+      <LevelRangeInput from={from} to={to} onFromChange={setFrom} onToChange={setTo} max={60} />
       <ResultDisplay
         accentClass="text-violet-300"
         results={[

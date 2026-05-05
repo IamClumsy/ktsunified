@@ -20,7 +20,7 @@ export function HqGlass() {
 
   return (
     <CalculatorSection title="HQ Glass" note="*Available up to level 600" color="violet">
-      <LevelRangeInput from={from} to={to} onFromChange={setFrom} onToChange={setTo} />
+      <LevelRangeInput from={from} to={to} onFromChange={setFrom} onToChange={setTo} max={600} />
       <ResultDisplay results={[{ label: "Glass", value: glass }]} accentClass="text-violet-300" />
     </CalculatorSection>
   );

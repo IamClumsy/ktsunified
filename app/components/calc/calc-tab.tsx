@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { CalcTablesProvider, useCalcTables } from "./calc-context";
 import { Artists } from "./sections/artists";
 import { Assets } from "./sections/assets";
@@ -17,6 +17,20 @@ import { CeoSports } from "./sections/ceo-sports";
 import { HqBuilding } from "./sections/hq-building";
 import { Blueprints } from "./sections/blueprints";
 
+function SectionGroup({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center gap-3">
+        <span className="text-xs uppercase tracking-[0.25em] text-slate-500 font-semibold">{label}</span>
+        <div className="flex-1 h-px bg-slate-700/60" />
+      </div>
+      <div className="grid gap-6 md:grid-cols-2">
+        {children}
+      </div>
+    </div>
+  );
+}
+
 function CalcContent({ resetKey }: { resetKey: number }) {
   const { loading, error } = useCalcTables();
 
@@ -24,21 +38,35 @@ function CalcContent({ resetKey }: { resetKey: number }) {
   if (error) return <div className="flex items-center justify-center py-24"><p className="text-red-400">Error: {error}</p></div>;
 
   return (
-    <div key={resetKey} className="grid gap-6 md:grid-cols-2">
-      <Artists />
-      <Assets />
-      <HqGlass />
-      <HqFloors />
-      <CollectionGems />
-      <MuseumExhibits />
-      <CarParts />
-      <CarCore />
-      <VillaSuite />
-      <VillaHomemaking />
-      <CeoOutfit />
-      <CeoSports />
-      <HqBuilding />
-      <Blueprints />
+    <div key={resetKey} className="space-y-10">
+      <SectionGroup label="Artist">
+        <Artists />
+        <Assets />
+      </SectionGroup>
+      <SectionGroup label="HQ">
+        <HqGlass />
+        <HqFloors />
+        <HqBuilding />
+      </SectionGroup>
+      <SectionGroup label="Collection">
+        <CollectionGems />
+        <MuseumExhibits />
+      </SectionGroup>
+      <SectionGroup label="Car">
+        <CarParts />
+        <CarCore />
+      </SectionGroup>
+      <SectionGroup label="Villa">
+        <VillaSuite />
+        <VillaHomemaking />
+      </SectionGroup>
+      <SectionGroup label="CEO">
+        <CeoOutfit />
+        <CeoSports />
+      </SectionGroup>
+      <SectionGroup label="Other">
+        <Blueprints />
+      </SectionGroup>
     </div>
   );
 }

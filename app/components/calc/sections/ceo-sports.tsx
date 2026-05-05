@@ -34,7 +34,7 @@ export function CeoSports() {
   return (
     <CalculatorSection title="CEO Sports" color="pink">
       <DropdownInput label="Tier" value={tier} options={TIER_OPTIONS} onChange={setTier} />
-      <LevelRangeInput from={from} to={to} onFromChange={setFrom} onToChange={setTo} />
+      <LevelRangeInput from={from} to={to} onFromChange={setFrom} onToChange={setTo} max={60} />
       <ResultDisplay
         accentClass="text-pink-300"
         results={[
