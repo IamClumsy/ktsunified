@@ -1,12 +1,14 @@
 "use client";
 
-import { Suspense, useState, useTransition } from "react";
-import { CeoTab } from "@/app/components/ceo/ceo-tab";
-import { SvsTab } from "@/app/components/svs/svs-tab";
-import { CalcTab } from "@/app/components/calc/calc-tab";
-import { ArtistTab } from "@/app/components/artist/artist-tab";
-import { SrArtistTab } from "@/app/components/artist/sr-artist-tab";
-import { NewArtistTab } from "@/app/components/artist/new-artist-tab";
+import { Suspense, useState, useTransition, lazy } from "react";
+
+// Code-split each tab — only loads when first visited
+const ArtistTab = lazy(() => import("@/app/components/artist/artist-tab").then((m) => ({ default: m.ArtistTab })));
+const SrArtistTab = lazy(() => import("@/app/components/artist/sr-artist-tab").then((m) => ({ default: m.SrArtistTab })));
+const NewArtistTab = lazy(() => import("@/app/components/artist/new-artist-tab").then((m) => ({ default: m.NewArtistTab })));
+const CalcTab = lazy(() => import("@/app/components/calc/calc-tab").then((m) => ({ default: m.CalcTab })));
+const CeoTab = lazy(() => import("@/app/components/ceo/ceo-tab").then((m) => ({ default: m.CeoTab })));
+const SvsTab = lazy(() => import("@/app/components/svs/svs-tab").then((m) => ({ default: m.SvsTab })));
 
 type Tab = "artists" | "sr-artists" | "new-artists" | "resource-calc" | "ceo-event" | "svs-store";
 
@@ -51,7 +53,14 @@ const TABS: { id: Tab; label: string; accent: string; activeClass: string }[] = 
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>("artists");
+  // Track which tabs have ever been visited so they stay mounted (CSS-hidden) after first render
+  const [mounted, setMounted] = useState<Set<Tab>>(new Set(["artists"]));
   const [isPending, startTransition] = useTransition();
+
+  function switchTab(tab: Tab) {
+    setMounted((prev) => (prev.has(tab) ? prev : new Set([...prev, tab])));
+    startTransition(() => setActiveTab(tab));
+  }
 
   return (
     <div className="min-h-screen text-white">
@@ -73,7 +82,7 @@ export default function Home() {
               return (
                 <button
                   key={tab.id}
-                  onClick={() => startTransition(() => setActiveTab(tab.id))}
+                  onClick={() => switchTab(tab.id)}
                   className={`px-3 py-2.5 rounded-lg text-sm font-semibold border transition-all duration-200 cursor-pointer
                     ${isActive
                       ? `${tab.activeClass} ${isPending ? "opacity-70" : ""}`
@@ -88,16 +97,22 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Tab content */}
+      {/* Tab content — tabs stay mounted once visited, hidden via CSS to avoid remount cost */}
       <main>
-        <Suspense fallback={<Loading />}>
-          {activeTab === "artists" && <ArtistTab />}
-          {activeTab === "sr-artists" && <SrArtistTab />}
-          {activeTab === "new-artists" && <NewArtistTab />}
-          {activeTab === "resource-calc" && <CalcTab />}
-          {activeTab === "ceo-event" && <CeoTab />}
-          {activeTab === "svs-store" && <SvsTab />}
-        </Suspense>
+        {TABS.map((tab) => (
+          <div key={tab.id} hidden={activeTab !== tab.id}>
+            {mounted.has(tab.id) && (
+              <Suspense fallback={<Loading />}>
+                {tab.id === "artists" && <ArtistTab />}
+                {tab.id === "sr-artists" && <SrArtistTab />}
+                {tab.id === "new-artists" && <NewArtistTab />}
+                {tab.id === "resource-calc" && <CalcTab />}
+                {tab.id === "ceo-event" && <CeoTab />}
+                {tab.id === "svs-store" && <SvsTab />}
+              </Suspense>
+            )}
+          </div>
+        ))}
       </main>
     </div>
   );
