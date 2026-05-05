@@ -1,23 +1,23 @@
-Name,Group,Rank,Position,Genre,Skill 1,Skill 2,Skill 3,Micks Thoughts are they Good
-Eleanor,DreamCatcher,SR,Center,Electronic,10 sec/800 Damage,30% Gold Brick Gather Speed,20% Normal Attack Damage,No
-Victoria,Fantasy Vibes,SR,Center,Electronic,10 sec/800 Damage,10% Skill Damage,2% Fan Capacity,No
-Luna,Fantasy Vibes,SR,Dancer,Electronic,10 sec/800 Damage,5% Reduce Normal Damage Taken,40% Drive Speed Increase,No
-Madison,Fantasy Vibes,SR,Vocalist,Electronic,10 sec/800 Damage,5% Reduce Skill Damage Taken,15% Damage Increase World Building Guard,No
-Lily,Luna,SR,Center,Hip Hop,10 sec/800 Damage,5% Reduce Normal Damage Taken,2% Fan Capacity,No
-Ella,WildFlower,SR,Dancer,Hip Hop,10 sec/800 Damage,10% Skill Damage,40% Drive Speed Increase,No
-Sarah,Luna,SR,Dancer,Hip Hop,10 sec/800 Damage,30% Gold Brick Gather Speed,40% Drive Speed Increase,No
-Violet,Luna,SR,Vocalist,Hip Hop,10 sec/800 Damage,20% Normal Attack Damage,15% Damage Increase World Building Guard,No
-Stella,WildFlower,SR,Vocalist,Hip Hop,10 sec/800 Damage,30% Gold Brick Gather Speed,20% Normal Attack Damage,No
-Evelyn,Echo,SR,Center,Pop,10 sec/800 Damage,20% Normal Attack Damage,2% Fan Capacity,No
-Natalie,Sparkle Artists,SR,Center,Pop,10 sec/800 Damage,30% Gold Brick Gather Speed,10% Skill Damage,No
-Emily,Echo,SR,Dancer,Pop,10 sec/800 Damage,5% Reduce Skill Damage Taken,15% Damage Increase World Building Guard,No
-Abigail,Sparkle Artists,SR,Vocalist,Pop,10 sec/800 Damage,10% Skill Damage,15% Damage Increase World Building Guard,No
-Angelina,Echo,SR,Vocalist,Pop,10 sec/800 Damage,30% Gold Brick Gather Speed,20% Normal Attack Damage,No
-Penelope,Radiance,SR,Center,R&B,10 sec/800 Damage,20% Normal Attack Damage,2% Fan Capacity,No
-Samantha,Radiance,SR,Dancer,R&B,10 sec/800 Damage,5% Reduce Skill Damage Taken,40% Drive Speed Increase,No
-Hazel,DreamCatcher,SR,Vocalist,R&B,10 sec/800 Damage,30% Gold Brick Gather Speed,10% Skill Damage,No
-Aria,Radiance,SR,Vocalist,R&B,10 sec/800 Damage,20% Normal Attack Damage,15% Damage Increase World Building Guard,No
-Scarlett,Neon,SR,Center,Rock,10 sec/800 Damage,5% Reduce Skill Damage Taken,2% Fan Capacity,No
-Chloe,Neon,SR,Dancer,Rock,10 sec/800 Damage,20% Normal Attack Damage,40% Drive Speed Increase,No
-Hailey,Neon,SR,Dancer,Rock,10 sec/800 Damage,30% Gold Brick Gather Speed,10% Skill Damage,No
-Grace,Sparkle Artists,SR,Vocalist,Rock,10 sec/800 Damage,5% Reduce Normal Damage Taken,15% Damage Increase World Building Guard,No
+Name,Group,Rank,Position,Genre,Skill 1,Skill 2,Skill 3
+Eleanor,DreamCatcher,SR,Center,Electronic,10 sec/800 Damage,30% Gold Brick Gather Speed,20% Normal Attack Damage
+Victoria,Fantasy Vibes,SR,Center,Electronic,10 sec/800 Damage,10% Skill Damage,2% Fan Capacity
+Luna,Fantasy Vibes,SR,Dancer,Electronic,10 sec/800 Damage,5% Reduce Normal Damage Taken,40% Drive Speed Increase
+Madison,Fantasy Vibes,SR,Vocalist,Electronic,10 sec/800 Damage,5% Reduce Skill Damage Taken,15% Damage Increase World Building Guard
+Lily,Luna,SR,Center,Hip Hop,10 sec/800 Damage,5% Reduce Normal Damage Taken,2% Fan Capacity
+Ella,WildFlower,SR,Dancer,Hip Hop,10 sec/800 Damage,10% Skill Damage,40% Drive Speed Increase
+Sarah,Luna,SR,Dancer,Hip Hop,10 sec/800 Damage,30% Gold Brick Gather Speed,40% Drive Speed Increase
+Violet,Luna,SR,Vocalist,Hip Hop,10 sec/800 Damage,20% Normal Attack Damage,15% Damage Increase World Building Guard
+Stella,WildFlower,SR,Vocalist,Hip Hop,10 sec/800 Damage,30% Gold Brick Gather Speed,20% Normal Attack Damage
+Evelyn,Echo,SR,Center,Pop,10 sec/800 Damage,20% Normal Attack Damage,2% Fan Capacity
+Natalie,Sparkle Artists,SR,Center,Pop,10 sec/800 Damage,30% Gold Brick Gather Speed,10% Skill Damage
+Emily,Echo,SR,Dancer,Pop,10 sec/800 Damage,5% Reduce Skill Damage Taken,15% Damage Increase World Building Guard
+Abigail,Sparkle Artists,SR,Vocalist,Pop,10 sec/800 Damage,10% Skill Damage,15% Damage Increase World Building Guard
+Angelina,Echo,SR,Vocalist,Pop,10 sec/800 Damage,30% Gold Brick Gather Speed,20% Normal Attack Damage
+Penelope,Radiance,SR,Center,R&B,10 sec/800 Damage,20% Normal Attack Damage,2% Fan Capacity
+Samantha,Radiance,SR,Dancer,R&B,10 sec/800 Damage,5% Reduce Skill Damage Taken,40% Drive Speed Increase
+Hazel,DreamCatcher,SR,Vocalist,R&B,10 sec/800 Damage,30% Gold Brick Gather Speed,10% Skill Damage
+Aria,Radiance,SR,Vocalist,R&B,10 sec/800 Damage,20% Normal Attack Damage,15% Damage Increase World Building Guard
+Scarlett,Neon,SR,Center,Rock,10 sec/800 Damage,5% Reduce Skill Damage Taken,2% Fan Capacity
+Chloe,Neon,SR,Dancer,Rock,10 sec/800 Damage,20% Normal Attack Damage,40% Drive Speed Increase
+Hailey,Neon,SR,Dancer,Rock,10 sec/800 Damage,30% Gold Brick Gather Speed,10% Skill Damage
+Grace,Sparkle Artists,SR,Vocalist,Rock,10 sec/800 Damage,5% Reduce Normal Damage Taken,15% Damage Increase World Building Guard
