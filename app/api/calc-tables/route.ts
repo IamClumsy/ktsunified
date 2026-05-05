@@ -229,6 +229,61 @@ export async function GET() {
       if (goldData.length > 0) result.buildingGold = { headers: ["Level", "Gold", "Accum"], data: goldData };
     }
 
+    // Parse Blueprints sheet
+    const blueprintsWs = wb.Sheets["Blueprints"];
+    if (blueprintsWs) {
+      const bpRaw = XLSX.utils.sheet_to_json(blueprintsWs, { header: 1 }) as unknown[][];
+      const tierHeaders = (bpRaw[1] as unknown[])?.slice(1, 12).map((v) => String(v)) ?? [];
+
+      // Main blueprints: accumulate per-step costs per tier until the 'Total' row
+      const tierAccum = new Array(11).fill(0);
+      for (let r = 2; r < bpRaw.length; r++) {
+        const row = bpRaw[r] as unknown[];
+        if (!Array.isArray(row)) continue;
+        if (typeof row[0] === "string") break; // hit 'Total' or a section header
+        for (let t = 0; t < 11; t++) {
+          if (typeof row[t + 1] === "number") tierAccum[t] += row[t + 1] as number;
+        }
+      }
+      const bpMainData: unknown[][] = tierHeaders.map((h, i) => [h, tierAccum[i]]);
+      result.blueprintsMain = { headers: ["Tier", "Total Cost"], data: bpMainData };
+
+      // Find Group Battle and Expansion section start rows
+      let battleDataStart = -1;
+      let expansionDataStart = -1;
+      for (let r = 0; r < bpRaw.length; r++) {
+        const row = bpRaw[r] as unknown[];
+        if (!Array.isArray(row)) continue;
+        if (typeof row[0] === "string" && row[0].includes("GROUP BATTLE")) battleDataStart = r + 2;
+        if (typeof row[0] === "string" && row[0].includes("EXPANSION")) expansionDataStart = r + 2;
+      }
+
+      const parseMasterSection = (startRow: number): unknown[][] => {
+        const rows: unknown[][] = [];
+        let accum = 0;
+        for (let r = startRow; r < bpRaw.length; r++) {
+          const row = bpRaw[r] as unknown[];
+          if (!Array.isArray(row) || typeof row[0] !== "number") break;
+          const levelCost = (row.slice(1, 12) as unknown[]).reduce(
+            (s: number, v) => s + (typeof v === "number" ? v : 0),
+            0
+          );
+          accum += levelCost;
+          rows.push([row[0], levelCost, accum]);
+        }
+        return rows;
+      };
+
+      if (battleDataStart >= 0) {
+        const data = parseMasterSection(battleDataStart);
+        if (data.length) result.blueprintsBattle = { headers: ["Level", "Cost", "Accum"], data };
+      }
+      if (expansionDataStart >= 0) {
+        const data = parseMasterSection(expansionDataStart);
+        if (data.length) result.blueprintsExpansion = { headers: ["Level", "Cost", "Accum"], data };
+      }
+    }
+
     // Parse CEO Sports from dedicated Floors sheet (columns 41–48)
     const floorsWs = wb.Sheets["Floors,Exhibits,Homemaking,CarC"];
     if (floorsWs) {
