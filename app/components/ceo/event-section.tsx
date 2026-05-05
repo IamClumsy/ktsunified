@@ -3,15 +3,14 @@
 import { useState, useMemo } from "react";
 import type { EventData } from "./ceo-context";
 
-type TaskState = { included: boolean; used: number };
+type TaskState = { used: number };
 type ColorScheme = "violet" | "cyan" | "emerald" | "amber";
 
-const schemes: Record<ColorScheme, { card: string; title: string; total: string; check: string; catHeader: string; subtotal: string }> = {
+const schemes: Record<ColorScheme, { card: string; title: string; total: string; catHeader: string; subtotal: string }> = {
   violet: {
     card: "bg-gradient-to-b from-violet-900/30 to-slate-900/70 border-violet-700/40",
     title: "text-violet-300",
     total: "text-violet-200",
-    check: "accent-violet-400",
     catHeader: "text-violet-400",
     subtotal: "text-violet-300",
   },
@@ -19,7 +18,6 @@ const schemes: Record<ColorScheme, { card: string; title: string; total: string;
     card: "bg-gradient-to-b from-cyan-900/30 to-slate-900/70 border-cyan-700/40",
     title: "text-cyan-300",
     total: "text-cyan-200",
-    check: "accent-cyan-400",
     catHeader: "text-cyan-400",
     subtotal: "text-cyan-300",
   },
@@ -27,7 +25,6 @@ const schemes: Record<ColorScheme, { card: string; title: string; total: string;
     card: "bg-gradient-to-b from-emerald-900/30 to-slate-900/70 border-emerald-700/40",
     title: "text-emerald-300",
     total: "text-emerald-200",
-    check: "accent-emerald-400",
     catHeader: "text-emerald-400",
     subtotal: "text-emerald-300",
   },
@@ -35,7 +32,6 @@ const schemes: Record<ColorScheme, { card: string; title: string; total: string;
     card: "bg-gradient-to-b from-amber-900/30 to-slate-900/70 border-amber-700/40",
     title: "text-amber-300",
     total: "text-amber-200",
-    check: "accent-amber-400",
     catHeader: "text-amber-400",
     subtotal: "text-amber-300",
   },
@@ -64,7 +60,7 @@ export function EventSection({ event, color, id, onReset }: Props) {
 
   const [taskStates, setTaskStates] = useState<TaskState[][]>(() =>
     event.categories.map((cat) =>
-      cat.tasks.map((t) => ({ included: true, used: t.used }))
+      cat.tasks.map((t) => ({ used: t.used }))
     )
   );
 
@@ -72,26 +68,17 @@ export function EventSection({ event, color, id, onReset }: Props) {
     let total = 0;
     event.categories.forEach((cat, ci) => {
       cat.tasks.forEach((task, ti) => {
-        const state = taskStates[ci][ti];
-        if (state.included) total += calcScore(task.task, task.points, state.used);
+        total += calcScore(task.task, task.points, taskStates[ci][ti].used);
       });
     });
     return total;
   }, [taskStates, event.categories]);
 
-  function toggleTask(ci: number, ti: number) {
-    setTaskStates((prev) =>
-      prev.map((cat, c) =>
-        c === ci ? cat.map((s, t) => (t === ti ? { ...s, included: !s.included } : s)) : cat
-      )
-    );
-  }
-
   function setUsed(ci: number, ti: number, val: number) {
     setTaskStates((prev) =>
       prev.map((cat, c) =>
         c === ci
-          ? cat.map((s, t) => (t === ti ? { ...s, used: Math.max(0, val) } : s))
+          ? cat.map((s, t) => (t === ti ? { used: Math.max(0, val) } : s))
           : cat
       )
     );
@@ -112,10 +99,10 @@ export function EventSection({ event, color, id, onReset }: Props) {
 
       <div className="space-y-3">
         {event.categories.map((cat, ci) => {
-          const catTotal = cat.tasks.reduce((sum, task, ti) => {
-            const state = taskStates[ci][ti];
-            return state.included ? sum + calcScore(task.task, task.points, state.used) : sum;
-          }, 0);
+          const catTotal = cat.tasks.reduce(
+            (sum, task, ti) => sum + calcScore(task.task, task.points, taskStates[ci][ti].used),
+            0
+          );
 
           return (
             <div key={cat.name}>
@@ -126,7 +113,6 @@ export function EventSection({ event, color, id, onReset }: Props) {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-slate-700 text-slate-400 text-xs uppercase tracking-widest">
-                      <th className="pb-2 text-left w-6"></th>
                       <th className="pb-2 text-left">Task</th>
                       <th className="pb-2 text-right pr-2">Points</th>
                       <th className="pb-2 text-right">Used</th>
@@ -136,18 +122,9 @@ export function EventSection({ event, color, id, onReset }: Props) {
                   <tbody className="divide-y divide-slate-800/60">
                     {cat.tasks.map((task, ti) => {
                       const state = taskStates[ci][ti];
-                      const score = state.included ? calcScore(task.task, task.points, state.used) : 0;
+                      const score = calcScore(task.task, task.points, state.used);
                       return (
-                        <tr key={ti} className="transition-opacity">
-                          <td className="py-1 pr-2">
-                            <input
-                              type="checkbox"
-                              checked={state.included}
-                              onChange={() => toggleTask(ci, ti)}
-                              aria-label={`Include ${task.task}`}
-                              className={`w-4 h-4 cursor-pointer ${scheme.check}`}
-                            />
-                          </td>
+                        <tr key={ti}>
                           <td className="py-1 text-slate-200">{task.task}</td>
                           <td className="py-1 text-right text-slate-500 tabular-nums text-xs pr-2">
                             {fmt(task.points)}
@@ -158,13 +135,12 @@ export function EventSection({ event, color, id, onReset }: Props) {
                               min={0}
                               value={state.used}
                               onChange={(e) => setUsed(ci, ti, Number(e.target.value))}
-                              disabled={!state.included}
                               aria-label={`Amount used for ${task.task}`}
-                              className="w-full sm:w-24 rounded border border-slate-700 bg-slate-950 px-2 py-1.5 text-right text-white text-xs disabled:opacity-30 disabled:cursor-not-allowed"
+                              className="w-full sm:w-24 rounded border border-slate-700 bg-slate-950 px-2 py-1.5 text-right text-white text-xs"
                             />
                           </td>
-                          <td className={`py-1 text-right font-medium tabular-nums ${state.included ? scheme.total : "text-slate-700"}`}>
-                            {state.included ? fmt(score) : "—"}
+                          <td className={`py-1 text-right font-medium tabular-nums ${scheme.total}`}>
+                            {fmt(score)}
                           </td>
                         </tr>
                       );

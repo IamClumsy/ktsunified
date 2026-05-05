@@ -3,27 +3,24 @@
 import { useState, useMemo } from "react";
 import type { ShopData } from "./svs-context";
 
-type ItemState = { inCart: boolean; quantity: number };
+type ItemState = { quantity: number };
 type ColorScheme = "amber" | "slate" | "orange";
 
-const schemes: Record<ColorScheme, { card: string; title: string; total: string; check: string }> = {
+const schemes: Record<ColorScheme, { card: string; title: string; total: string }> = {
   amber: {
     card: "bg-gradient-to-b from-amber-900/30 to-slate-900/70 border-amber-700/40",
     title: "text-amber-300",
     total: "text-amber-200",
-    check: "accent-amber-400",
   },
   slate: {
     card: "bg-gradient-to-b from-slate-700/30 to-slate-900/70 border-slate-500/40",
     title: "text-slate-200",
     total: "text-slate-100",
-    check: "accent-slate-400",
   },
   orange: {
     card: "bg-gradient-to-b from-orange-900/30 to-slate-900/70 border-orange-700/40",
     title: "text-orange-300",
     total: "text-orange-200",
-    check: "accent-orange-400",
   },
 };
 
@@ -34,24 +31,20 @@ function fmt(v: number): string {
 export function ShopSection({ shop, color }: { shop: ShopData; color: ColorScheme }) {
   const scheme = schemes[color];
   const [items, setItems] = useState<ItemState[]>(() =>
-    shop.items.map((item) => ({ inCart: item.inCart, quantity: item.quantity }))
+    shop.items.map((item) => ({ quantity: item.quantity }))
   );
 
   const total = useMemo(
-    () => items.reduce((sum, state, i) => (!state.inCart ? sum : sum + state.quantity * shop.items[i].price), 0),
+    () => items.reduce((sum, state, i) => sum + state.quantity * shop.items[i].price, 0),
     [items, shop.items]
   );
 
-  function toggleCart(idx: number) {
-    setItems((prev) => prev.map((s, i) => (i === idx ? { ...s, inCart: !s.inCart } : s)));
-  }
-
   function setQty(idx: number, qty: number) {
-    setItems((prev) => prev.map((s, i) => (i === idx ? { ...s, quantity: Math.max(0, qty) } : s)));
+    setItems((prev) => prev.map((s, i) => (i === idx ? { quantity: Math.max(0, qty) } : s)));
   }
 
   function reset() {
-    setItems(shop.items.map((item) => ({ inCart: item.inCart, quantity: item.quantity })));
+    setItems(shop.items.map((item) => ({ quantity: item.quantity })));
   }
 
   return (
@@ -69,7 +62,6 @@ export function ShopSection({ shop, color }: { shop: ShopData; color: ColorSchem
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-slate-700 text-slate-400 text-xs uppercase tracking-widest">
-              <th className="pb-2 text-left w-8"></th>
               <th className="pb-2 text-left">Item</th>
               <th className="pb-2 text-right">Qty</th>
               <th className="pb-2 text-right pr-1">Price</th>
@@ -79,17 +71,9 @@ export function ShopSection({ shop, color }: { shop: ShopData; color: ColorSchem
           <tbody className="divide-y divide-slate-800/60">
             {shop.items.map((item, i) => {
               const state = items[i];
-              const subtotal = state.inCart ? state.quantity * item.price : 0;
+              const subtotal = state.quantity * item.price;
               return (
-                <tr key={item.item} className="transition-opacity">
-                  <td className="py-2 pr-2">
-                    <input
-                      type="checkbox"
-                      checked={state.inCart}
-                      onChange={() => toggleCart(i)}
-                      className={`w-4 h-4 cursor-pointer ${scheme.check}`}
-                    />
-                  </td>
+                <tr key={item.item}>
                   <td className="py-2 text-slate-200">{item.item}</td>
                   <td className="py-2 text-right">
                     <input
@@ -97,13 +81,12 @@ export function ShopSection({ shop, color }: { shop: ShopData; color: ColorSchem
                       min={0}
                       value={state.quantity}
                       onChange={(e) => setQty(i, Number(e.target.value))}
-                      disabled={!state.inCart}
-                      className="w-full sm:w-20 rounded border border-slate-700 bg-slate-950 px-2 py-1.5 text-right text-white text-xs disabled:opacity-30 disabled:cursor-not-allowed"
+                      className="w-full sm:w-20 rounded border border-slate-700 bg-slate-950 px-2 py-1.5 text-right text-white text-xs"
                     />
                   </td>
                   <td className="py-2 text-right text-slate-400 tabular-nums pr-1">{fmt(item.price)}</td>
-                  <td className={`py-2 text-right font-medium tabular-nums ${state.inCart ? scheme.total : "text-slate-700"}`}>
-                    {state.inCart ? fmt(subtotal) : "—"}
+                  <td className={`py-2 text-right font-medium tabular-nums ${scheme.total}`}>
+                    {fmt(subtotal)}
                   </td>
                 </tr>
               );
