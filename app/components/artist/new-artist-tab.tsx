@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useTransition } from "react";
 import artistsDataRaw from "@/src/data/artists.json";
 import { Artist } from "./types";
 import { categorizeSkills } from "./utils/skillCategorization";
@@ -49,6 +49,7 @@ export function NewArtistTab() {
   const artists = artistsData;
 
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [, startTransition] = useTransition();
   const [sortBy, setSortBy] = useState<SortOption>("ranking");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
@@ -157,7 +158,7 @@ export function NewArtistTab() {
       <div className="sticky top-24 z-40 -mx-4 px-4 pb-3 pt-2 bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/40 mb-4">
       <div className="flex items-center justify-center gap-2 flex-wrap">
         <button
-          onClick={() => setFiltersOpen((o) => !o)}
+          onClick={() => startTransition(() => setFiltersOpen((o) => !o))}
           className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-slate-700 bg-slate-900 text-sm text-slate-300 hover:border-pink-500/50 hover:text-white transition-colors"
         >
           <span>Filters</span>
