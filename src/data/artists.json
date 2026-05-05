@@ -777,7 +777,7 @@
       "12% Reduction Basic Attack Damage"
     ],
     "build": "Damage Reduction",
-    "photos": "Tokyo4"
+    "photos": "Tokyo4 - Dice"
   },
   {
     "id": 53,
@@ -792,7 +792,7 @@
       "12% Reduction Basic Attack Damage"
     ],
     "build": "Damage Reduction",
-    "photos": "Tokyo4"
+    "photos": "Tokyo4 - Shop"
   },
   {
     "id": 54,
@@ -807,7 +807,7 @@
       "12% Skill Damage Reduction"
     ],
     "build": "Damage Reduction",
-    "photos": "Bali4"
+    "photos": "Bali4 - Warmup"
   },
   {
     "id": 55,
@@ -822,7 +822,7 @@
       "14% Fan Capacity"
     ],
     "build": "Single Car",
-    "photos": "Bali4"
+    "photos": "Bali4 - Dice"
   },
   {
     "id": 56,
@@ -837,7 +837,7 @@
       "12% Reduction Basic Attack Damage"
     ],
     "build": "Single Car",
-    "photos": "Bali4"
+    "photos": "Bali4 - Shop"
   },
   {
     "id": 57,
@@ -867,7 +867,7 @@
       "12% Skill Damage Reduction"
     ],
     "build": "",
-    "photos": "Bali3"
+    "photos": "Bali3 - Warmup"
   },
   {
     "id": 59,
@@ -942,7 +942,7 @@
       "12% Fan Capacity"
     ],
     "build": "Single Car",
-    "photos": "Bali3"
+    "photos": "Bali3 - Dice"
   },
   {
     "id": 64,
@@ -1002,7 +1002,7 @@
       "12% Skill Damage Reduction"
     ],
     "build": "HQ Defense",
-    "photos": "Bali3"
+    "photos": "Bali3 - Shop"
   },
   {
     "id": 68,
@@ -1061,67 +1061,67 @@
       "10% Rally Fan Capacity",
       "50% Basic Attack Damage"
     ],
-    "build": "",
+    "build": "Rally",
     "photos": "Universal"
   },
   {
     "id": 72,
     "name": "Kendell",
-    "group": "None",
+    "group": "Allura",
     "rank": "SSR",
-    "position": "",
+    "position": "Vocalist",
     "genre": "Hip-Hop",
     "skills": [
-      "",
-      "",
-      ""
+      "10 sec/1800 Damage",
+      "28% Damage to Player",
+      "14% Fan Capacity"
     ],
-    "build": "",
-    "photos": "Rome4"
+    "build": "Single Car",
+    "photos": "Rome4 - Dice"
   },
   {
     "id": 73,
     "name": "Sloane",
-    "group": "None",
+    "group": "Allura",
     "rank": "SSR",
-    "position": "",
+    "position": "Center",
     "genre": "Pop",
     "skills": [
-      "",
-      "",
-      ""
+      "10 sec/1800 Damage",
+      "28% Damage to Player",
+      "28% Skill Damage"
     ],
     "build": "",
-    "photos": "Rome4"
+    "photos": "Rome4 - Warmup"
   },
   {
     "id": 74,
     "name": "Valerie",
-    "group": "None",
+    "group": "Allura",
     "rank": "SSR",
-    "position": "",
+    "position": "Dancer",
     "genre": "Rock",
     "skills": [
-      "",
-      "",
-      ""
+      "10 sec/1800 Damage",
+      "28% Skill Damage",
+      "12% Reduction Basic Attack Damage"
     ],
-    "build": "",
-    "photos": "Rome4"
+    "build": "Damage Reduction",
+    "photos": "Rome4 - Shop"
   },
   {
     "id": 75,
     "name": "Hana",
     "group": "None",
     "rank": "SSR",
-    "position": "",
+    "position": "Dancer",
     "genre": "Pop",
     "skills": [
-      "",
-      "",
-      ""
+      "10 sec/1800 Damage",
+      "80% Basic Attack Damage",
+      "12% Reduction Basic Attack Damage"
     ],
-    "build": "",
+    "build": "Damage Reduction",
     "photos": "Tokyo5"
   },
   {
@@ -1129,14 +1129,14 @@
     "name": "Mio - Tk5",
     "group": "None",
     "rank": "SSR",
-    "position": "",
+    "position": "Center",
     "genre": "EDM",
     "skills": [
-      "",
-      "",
-      ""
+      "10 sec/1800 Damage",
+      "80% Basic Attack Damage",
+      "16% Fan Capacity"
     ],
-    "build": "",
+    "build": "Single Car",
     "photos": "Tokyo5"
   },
   {
@@ -1147,9 +1147,9 @@
     "position": "",
     "genre": "R&B",
     "skills": [
-      "",
-      "",
-      ""
+      "10 sec/1800 Damage",
+      "12% Reduction Basic Attack Damage",
+      "32% Damage to Player"
     ],
     "build": "",
     "photos": "Tokyo5"
