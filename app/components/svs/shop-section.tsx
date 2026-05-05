@@ -28,7 +28,14 @@ function fmt(v: number): string {
   return v.toLocaleString();
 }
 
-export function ShopSection({ shop, color, onTotalChange }: { shop: ShopData; color: ColorScheme; onTotalChange?: (total: number) => void }) {
+type Props = {
+  shop: ShopData;
+  color: ColorScheme;
+  onTotalChange?: (total: number) => void;
+  remaining: number | null;
+};
+
+export function ShopSection({ shop, color, onTotalChange, remaining }: Props) {
   const scheme = schemes[color];
   const [items, setItems] = useState<ItemState[]>(() =>
     shop.items.map(() => ({ quantity: 0 }))
@@ -47,6 +54,11 @@ export function ShopSection({ shop, color, onTotalChange }: { shop: ShopData; co
 
   function reset() {
     setItems(shop.items.map(() => ({ quantity: 0 })));
+  }
+
+  function rowHighlight(qty: number): string {
+    if (qty === 0 || remaining === null) return "";
+    return remaining >= 0 ? "bg-green-900/20" : "bg-red-900/20";
   }
 
   return (
@@ -75,7 +87,7 @@ export function ShopSection({ shop, color, onTotalChange }: { shop: ShopData; co
               const state = items[i];
               const subtotal = state.quantity * item.price;
               return (
-                <tr key={item.item}>
+                <tr key={item.item} className={`transition-colors ${rowHighlight(state.quantity)}`}>
                   <td className="py-2 text-slate-200">{item.item}</td>
                   <td className="py-2 text-right">
                     <input
