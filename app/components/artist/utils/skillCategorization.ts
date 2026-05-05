@@ -40,6 +40,7 @@ export const isWorstSkill = (skill: string): boolean => {
 
 export const isBadSkill = (skill: string): boolean => {
   const t = (skill || "").toLowerCase();
+  const trimmed = (skill || "").trim();
   const isDefendingDps =
     (t.includes("200/dps") || t.includes("240/dps")) &&
     (t.includes("defending") || t.includes("hq") || t.includes("gh") || t.includes("club") || t.includes("lm"));
@@ -48,6 +49,8 @@ export const isBadSkill = (skill: string): boolean => {
     !isWorstSkill(skill) &&
     (isDefendingDps ||
       is240DpsAttacking ||
+      trimmed === "10% Basic Attack Damage" ||
+      trimmed === "5% Skill Damage" ||
       t.includes("gold brick gathering") ||
       t.includes("gold brick gather speed") ||
       (t.includes("fan capacity") && !t.includes("10% rally fan capacity") && !t.includes("rally")))
