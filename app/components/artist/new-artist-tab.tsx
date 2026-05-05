@@ -49,7 +49,6 @@ export function NewArtistTab() {
 
   const roles = useMemo(() => [...new Set(artists.map((a) => a.position))], [artists]);
   const genres = useMemo(() => [...new Set(artists.map((a) => a.genre))], [artists]);
-  const artistNames = useMemo(() => [...new Set(artists.map((a) => a.name))].sort(), [artists]);
 
   const allSkills = useMemo(
     () => [...new Set(artists.map((a) => a.skills[1]).filter(Boolean))],
@@ -114,6 +113,15 @@ export function NewArtistTab() {
     return arr;
   }, [filteredArtists, sortBy, calculatePoints]);
 
+  const gradeCounts = useMemo(() => {
+    const counts = { S: 0, A: 0, B: 0, C: 0, F: 0 };
+    sortedArtists.forEach((a) => {
+      const g = getLetterGrade(calculatePoints(a)) as keyof typeof counts;
+      counts[g] = (counts[g] ?? 0) + 1;
+    });
+    return counts;
+  }, [sortedArtists, calculatePoints]);
+
   const activeFilterCount = [searchTerm, selectedRole, selectedGenre, selectedSkill, selectedSkill3, selectedRanking].filter(Boolean).length;
 
   function clearFilters() {
@@ -131,8 +139,9 @@ export function NewArtistTab() {
         <p className="mt-1 text-sm text-slate-400">{sortedArtists.length} artists</p>
       </header>
 
-      {/* Controls row */}
-      <div className="mb-4 flex items-center justify-center gap-2 flex-wrap">
+      {/* Controls row — sticky under the page header */}
+      <div className="sticky top-24 z-40 -mx-4 px-4 pb-3 pt-2 bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/40 mb-4">
+      <div className="flex items-center justify-center gap-2 flex-wrap">
         <button
           onClick={() => setFiltersOpen((o) => !o)}
           className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-slate-700 bg-slate-900 text-sm text-slate-300 hover:border-pink-500/50 hover:text-white transition-colors"
@@ -173,13 +182,16 @@ export function NewArtistTab() {
 
       {/* Filter panel */}
       {filtersOpen && (
-        <div className="mb-6 p-4 rounded-xl border border-slate-700 bg-slate-900/60 grid grid-cols-2 md:grid-cols-3 gap-3">
+        <div className="mt-3 p-4 rounded-xl border border-slate-700 bg-slate-900/60 grid grid-cols-2 md:grid-cols-3 gap-3">
           <div className="space-y-1">
             <label className="text-xs uppercase tracking-widest text-slate-400">Artist</label>
-            <select value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className={selectClass}>
-              <option value="">All Artists</option>
-              {artistNames.map((n) => <option key={n} value={n}>{n}</option>)}
-            </select>
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search by name…"
+              className={selectClass}
+            />
           </div>
           <div className="space-y-1">
             <label className="text-xs uppercase tracking-widest text-slate-400">Genre</label>
@@ -226,6 +238,16 @@ export function NewArtistTab() {
           </div>
         </div>
       )}
+      </div>{/* end sticky wrapper */}
+
+      {/* Grade tally */}
+      <div className="flex items-center justify-center gap-4 text-xs mb-4 mt-1">
+        {(["S", "A", "B", "C", "F"] as const).map((g) => (
+          <span key={g} className={`font-bold ${g === "S" ? "ranking-a" : g === "A" ? "ranking-b" : g === "B" ? "ranking-c" : g === "C" ? "ranking-d" : "ranking-f"}`}>
+            {g}: {gradeCounts[g]}
+          </span>
+        ))}
+      </div>
 
       {/* Cards */}
       {sortedArtists.length === 0 ? (
@@ -310,6 +332,28 @@ export function NewArtistTab() {
               <span className="text-slate-300 text-xs">{desc}</span>
             </div>
           ))}
+        </div>
+
+        {/* Ranking explanation */}
+        <div className="mt-5 pt-4 border-t border-slate-700/60">
+          <h4 className="text-xs font-semibold text-white uppercase tracking-widest mb-2 text-center">How Rankings Work</h4>
+          <p className="text-slate-400 text-xs text-center mb-3">
+            Skill 2 and Skill 3 are each scored, then added together.
+          </p>
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs mb-3">
+            <span className="damage-to-player bg-gradient-to-r from-slate-600 to-slate-700 px-2 py-0.5 rounded-full">Best: 10 pts</span>
+            <span className="basic-attack-50 bg-gradient-to-r from-slate-700 to-slate-800 px-2 py-0.5 rounded-full">Good: 6 pts</span>
+            <span className="text-slate-300 bg-slate-700 px-2 py-0.5 rounded-full">Okay: 3 pts</span>
+            <span className="text-slate-400 bg-slate-700 px-2 py-0.5 rounded-full">Bad: 0 pts</span>
+            <span className="skill-specific-worst bg-gradient-to-r from-slate-600 to-slate-700 px-2 py-0.5 rounded-full">Worst: −1 pt</span>
+          </div>
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs">
+            <span><span className="ranking-a font-bold">S</span> <span className="text-slate-400">≥ 16 pts</span></span>
+            <span><span className="ranking-b font-bold">A</span> <span className="text-slate-400">≥ 11 pts</span></span>
+            <span><span className="ranking-c font-bold">B</span> <span className="text-slate-400">≥ 6 pts</span></span>
+            <span><span className="ranking-d font-bold">C</span> <span className="text-slate-400">≥ 2 pts</span></span>
+            <span><span className="ranking-f font-bold">F</span> <span className="text-slate-400">&lt; 2 pts</span></span>
+          </div>
         </div>
       </div>
     </div>

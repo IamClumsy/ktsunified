@@ -57,7 +57,7 @@ export const useArtistFilters = ({
   const filteredArtists = useMemo(() => {
     return artists
       .filter((artist) => {
-        const matchesSearch = filters.searchTerm === "" || artist.name === filters.searchTerm;
+        const matchesSearch = filters.searchTerm === "" || artist.name.toLowerCase().includes(filters.searchTerm.toLowerCase());
         const matchesGroup = filters.selectedGroup === "" || artist.group === filters.selectedGroup;
         const matchesRole = filters.selectedRole === "" || artist.position === filters.selectedRole;
         const matchesGenre = filters.selectedGenre === "" || artist.genre === filters.selectedGenre;
