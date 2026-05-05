@@ -31,7 +31,7 @@ function fmt(v: number): string {
 export function ShopSection({ shop, color, onTotalChange }: { shop: ShopData; color: ColorScheme; onTotalChange?: (total: number) => void }) {
   const scheme = schemes[color];
   const [items, setItems] = useState<ItemState[]>(() =>
-    shop.items.map((item) => ({ quantity: item.quantity }))
+    shop.items.map(() => ({ quantity: 0 }))
   );
 
   const total = useMemo(
@@ -46,7 +46,7 @@ export function ShopSection({ shop, color, onTotalChange }: { shop: ShopData; co
   }
 
   function reset() {
-    setItems(shop.items.map((item) => ({ quantity: item.quantity })));
+    setItems(shop.items.map(() => ({ quantity: 0 })));
   }
 
   return (
