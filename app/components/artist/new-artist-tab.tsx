@@ -221,7 +221,7 @@ export function NewArtistTab() {
                 {activeFilterCount}
               </span>
             )}
-            <span className="text-slate-500 text-xs">{filtersOpen ? "▲" : "▼"}</span>
+            <span className="text-slate-400 text-xs">{filtersOpen ? "▲" : "▼"}</span>
           </button>
           {activeFilterCount > 0 && (
             <button
@@ -273,7 +273,7 @@ export function NewArtistTab() {
                 key={f.label}
                 className="inline-flex items-center gap-1 pl-2 pr-1 py-0.5 rounded-full text-xs bg-slate-800 border border-slate-600 text-slate-300"
               >
-                <span className="text-slate-500">{f.label}:</span>
+                <span className="text-slate-400">{f.label}:</span>
                 <span className="max-w-[140px] truncate">{f.value}</span>
                 <button
                   onClick={f.clear}
@@ -379,11 +379,11 @@ export function NewArtistTab() {
                 </div>
                 <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-xs">
                   <span className="text-pink-300">{artist.genre}</span>
-                  <span className="text-slate-500">·</span>
+                  <span className="text-slate-400" aria-hidden="true">·</span>
                   <span className="text-purple-300">{artist.position}</span>
                   {artist.group && artist.group !== "None" && (
                     <>
-                      <span className="text-slate-500">·</span>
+                      <span className="text-slate-400" aria-hidden="true">·</span>
                       <span className="text-fuchsia-300 truncate">{artist.group}</span>
                     </>
                   )}
@@ -434,7 +434,7 @@ export function NewArtistTab() {
                 <span className={`inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-bold bg-gradient-to-r from-slate-600 to-slate-700 shrink-0 ${getRankingClass(grade)}`}>
                   {grade}
                 </span>
-                <span className="hidden sm:block text-xs text-slate-500 shrink-0 w-32 truncate">{artist.genre} · {artist.position}</span>
+                <span className="hidden sm:block text-xs text-slate-400 shrink-0 w-32 truncate">{artist.genre} · {artist.position}</span>
                 <div className="flex flex-1 flex-wrap gap-x-3 gap-y-0.5 min-w-0">
                   {artist.skills[1] && (
                     <span className={`text-xs ${getSkillClass(artist.skills[1])}`}>{artist.skills[1]}</span>

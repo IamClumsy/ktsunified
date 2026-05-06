@@ -71,7 +71,7 @@ function SvsContent() {
             >
               {tab.label}
               {shopTotal > 0 && (
-                <span className="ml-1.5 text-xs opacity-75">({fmt(shopTotal)})</span>
+                <span className="ml-1.5 text-xs text-slate-300">({fmt(shopTotal)})</span>
               )}
             </button>
           );
@@ -102,7 +102,7 @@ function SvsContent() {
                 style={{ width: `${Math.min((grandTotal / budget) * 100, 100)}%` }}
               />
             </div>
-            <div className="flex justify-between text-xs text-slate-500 mt-1">
+            <div className="flex justify-between text-xs text-slate-400 mt-1">
               <span>{Math.round(Math.min((grandTotal / budget) * 100, 100))}% spent</span>
               <span>{fmt(budget)} total</span>
             </div>
