@@ -42,6 +42,7 @@ function SvsContent() {
   const [selectedShop, setSelectedShop] = useState<ShopKey>("GOLD");
   const [budget, setBudget] = useState<number | "">("");
   const [totals, setTotals] = useState<Record<ShopKey, number>>({ GOLD: 0, SILVER: 0, BRONZE: 0 });
+  const [resetKey, setResetKey] = useState(0);
 
   const grandTotal = Object.values(totals).reduce((s, v) => s + v, 0);
   const remaining = typeof budget === "number" ? budget - grandTotal : null;
@@ -111,21 +112,29 @@ function SvsContent() {
 
       {/* Active shop — keep all mounted so totals stay accurate */}
       <div hidden={selectedShop !== "GOLD"}>
-        {tables.GOLD && <ShopSection shop={tables.GOLD} color="amber" onTotalChange={setGold} remaining={remaining} />}
+        {tables.GOLD && <ShopSection key={`GOLD-${resetKey}`} shop={tables.GOLD} color="amber" onTotalChange={setGold} remaining={remaining} />}
       </div>
       <div hidden={selectedShop !== "SILVER"}>
-        {tables.SILVER && <ShopSection shop={tables.SILVER} color="slate" onTotalChange={setSilver} remaining={remaining} />}
+        {tables.SILVER && <ShopSection key={`SILVER-${resetKey}`} shop={tables.SILVER} color="slate" onTotalChange={setSilver} remaining={remaining} />}
       </div>
       <div hidden={selectedShop !== "BRONZE"}>
-        {tables.BRONZE && <ShopSection shop={tables.BRONZE} color="orange" onTotalChange={setBronze} remaining={remaining} />}
+        {tables.BRONZE && <ShopSection key={`BRONZE-${resetKey}`} shop={tables.BRONZE} color="orange" onTotalChange={setBronze} remaining={remaining} />}
       </div>
 
       {/* Grand total footer */}
       <div className="rounded-2xl border border-slate-700 bg-slate-900/80 px-5 py-4 flex items-center justify-between">
-        <span className="text-sm uppercase tracking-widest text-slate-400">Grand Total</span>
-        <span className={`text-2xl font-bold tabular-nums ${remaining !== null && remaining < 0 ? "text-red-400" : "text-white"}`}>
-          {fmt(grandTotal)}
-        </span>
+        <button
+          onClick={() => setResetKey((k) => k + 1)}
+          className="text-xs text-slate-500 hover:text-slate-300 transition-colors px-3 py-2 rounded border border-slate-700 hover:border-slate-500"
+        >
+          Reset All
+        </button>
+        <div className="flex items-center gap-3">
+          <span className="text-sm uppercase tracking-widest text-slate-400">Grand Total</span>
+          <span className={`text-2xl font-bold tabular-nums ${remaining !== null && remaining < 0 ? "text-red-400" : "text-white"}`}>
+            {fmt(grandTotal)}
+          </span>
+        </div>
       </div>
     </div>
   );

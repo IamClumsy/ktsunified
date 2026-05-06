@@ -133,6 +133,7 @@ export function NewSrArtistTab() {
   const [selectedSkill, setSelectedSkill] = useState("");
   const [selectedSkill3, setSelectedSkill3] = useState("");
   const [selectedRanking, setSelectedRanking] = useState("");
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -150,6 +151,12 @@ export function NewSrArtistTab() {
         setLoading(false);
       }
     })();
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => setShowScrollTop(window.scrollY > 400);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const roles = useMemo(() => [...new Set(artists.map((a) => a.position))].sort(), [artists]);
@@ -236,19 +243,21 @@ export function NewSrArtistTab() {
 
   const activeFilters = [
     searchTerm      && { label: "Name",    value: searchTerm,      clear: () => setSearchTerm("") },
-    selectedGenre   && { label: "Genre",   value: selectedGenre,   clear: () => setSelectedGenre("") },
-    selectedRole    && { label: "Role",    value: selectedRole,    clear: () => setSelectedRole("") },
-    selectedGroup   && { label: "Group",   value: selectedGroup,   clear: () => setSelectedGroup("") },
-    selectedRank    && { label: "Rank",    value: selectedRank,    clear: () => setSelectedRank("") },
-    selectedSkill   && { label: "Skill 2", value: selectedSkill,   clear: () => setSelectedSkill("") },
-    selectedSkill3  && { label: "Skill 3", value: selectedSkill3,  clear: () => setSelectedSkill3("") },
-    selectedRanking && { label: "Grade",   value: selectedRanking, clear: () => setSelectedRanking("") },
+    selectedGenre   && { label: "Genre",   value: selectedGenre,   clear: () => startTransition(() => setSelectedGenre("")) },
+    selectedRole    && { label: "Role",    value: selectedRole,    clear: () => startTransition(() => setSelectedRole("")) },
+    selectedGroup   && { label: "Group",   value: selectedGroup,   clear: () => startTransition(() => setSelectedGroup("")) },
+    selectedRank    && { label: "Rank",    value: selectedRank,    clear: () => startTransition(() => setSelectedRank("")) },
+    selectedSkill   && { label: "Skill 2", value: selectedSkill,   clear: () => startTransition(() => setSelectedSkill("")) },
+    selectedSkill3  && { label: "Skill 3", value: selectedSkill3,  clear: () => startTransition(() => setSelectedSkill3("")) },
+    selectedRanking && { label: "Grade",   value: selectedRanking, clear: () => startTransition(() => setSelectedRanking("")) },
   ].filter(Boolean) as { label: string; value: string; clear: () => void }[];
 
   function clearFilters() {
-    setSearchTerm(""); setSelectedRank(""); setSelectedRole("");
-    setSelectedGenre(""); setSelectedGroup(""); setSelectedSkill("");
-    setSelectedSkill3(""); setSelectedRanking("");
+    setSearchTerm("");
+    startTransition(() => {
+      setSelectedRank(""); setSelectedRole(""); setSelectedGenre("");
+      setSelectedGroup(""); setSelectedSkill(""); setSelectedSkill3(""); setSelectedRanking("");
+    });
   }
 
   if (loading) {
@@ -262,12 +271,24 @@ export function NewSrArtistTab() {
         <h1 className="mt-2 text-xl md:text-3xl font-bold bg-gradient-to-r from-purple-200 via-fuchsia-200 to-pink-200 bg-clip-text text-transparent">
           SR and S Artist Helper
         </h1>
-        <p className="mt-1 text-sm text-slate-400">{sortedArtists.length} artists</p>
+        <p className="mt-1 text-sm text-slate-400">
+          {sortedArtists.length === artists.length
+            ? `${artists.length} artists`
+            : `${sortedArtists.length} of ${artists.length} artists`}
+        </p>
       </header>
 
       {/* Sticky controls */}
       <div className="sticky top-24 z-40 -mx-4 px-4 pb-3 pt-2 bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/40 mb-4">
         <div className="flex items-center justify-center gap-2 flex-wrap">
+          {/* Always-visible search */}
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search artists…"
+            className="min-w-[140px] max-w-[200px] rounded-lg border border-slate-700 bg-slate-900 px-3 py-2.5 text-white text-sm placeholder-slate-500 focus:outline-none focus:border-purple-500/60"
+          />
           <button
             onClick={() => startTransition(() => setFiltersOpen((o) => !o))}
             className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-slate-700 bg-slate-900 text-sm text-slate-300 hover:border-purple-500/50 hover:text-white transition-colors"
@@ -347,46 +368,36 @@ export function NewSrArtistTab() {
         {filtersOpen && (
           <div className="mt-3 p-4 rounded-xl border border-slate-700 bg-slate-900/60 grid grid-cols-2 md:grid-cols-4 gap-3">
             <div className="space-y-1">
-              <label className="text-xs uppercase tracking-widest text-slate-400">Artist</label>
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search by name…"
-                className={selectClass}
-              />
-            </div>
-            <div className="space-y-1">
               <label className="text-xs uppercase tracking-widest text-slate-400">Genre</label>
-              <select value={selectedGenre} onChange={(e) => setSelectedGenre(e.target.value)} className={selectClass}>
+              <select value={selectedGenre} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedGenre(v)); }} className={selectClass}>
                 <option value="">All Genres</option>
                 {genres.map((g) => <option key={g} value={g}>{g}</option>)}
               </select>
             </div>
             <div className="space-y-1">
               <label className="text-xs uppercase tracking-widest text-slate-400">Role</label>
-              <select value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)} className={selectClass}>
+              <select value={selectedRole} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedRole(v)); }} className={selectClass}>
                 <option value="">All Roles</option>
                 {roles.map((r) => <option key={r} value={r}>{r}</option>)}
               </select>
             </div>
             <div className="space-y-1">
               <label className="text-xs uppercase tracking-widest text-slate-400">Group</label>
-              <select value={selectedGroup} onChange={(e) => setSelectedGroup(e.target.value)} className={selectClass}>
+              <select value={selectedGroup} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedGroup(v)); }} className={selectClass}>
                 <option value="">All Groups</option>
                 {groups.map((g) => <option key={g} value={g}>{g}</option>)}
               </select>
             </div>
             <div className="space-y-1">
               <label className="text-xs uppercase tracking-widest text-slate-400">Rank</label>
-              <select value={selectedRank} onChange={(e) => setSelectedRank(e.target.value)} className={selectClass}>
+              <select value={selectedRank} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedRank(v)); }} className={selectClass}>
                 <option value="">SR &amp; R</option>
                 {ranks.map((r) => <option key={r} value={r}>{r}</option>)}
               </select>
             </div>
             <div className="space-y-1">
               <label className="text-xs uppercase tracking-widest text-slate-400">Skill 2</label>
-              <select value={selectedSkill} onChange={(e) => setSelectedSkill(e.target.value)} className={selectClass}>
+              <select value={selectedSkill} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedSkill(v)); }} className={selectClass}>
                 <option value="">All Skills</option>
                 <optgroup label="Best">{skill2Categories.bestSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
                 <optgroup label="Good">{skill2Categories.goodSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
@@ -397,7 +408,7 @@ export function NewSrArtistTab() {
             </div>
             <div className="space-y-1">
               <label className="text-xs uppercase tracking-widest text-slate-400">Skill 3</label>
-              <select value={selectedSkill3} onChange={(e) => setSelectedSkill3(e.target.value)} className={selectClass}>
+              <select value={selectedSkill3} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedSkill3(v)); }} className={selectClass}>
                 <option value="">All Skills</option>
                 <optgroup label="Best">{skill3Categories.bestSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
                 <optgroup label="Good">{skill3Categories.goodSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
@@ -408,7 +419,7 @@ export function NewSrArtistTab() {
             </div>
             <div className="space-y-1">
               <label className="text-xs uppercase tracking-widest text-slate-400">Ranking</label>
-              <select value={selectedRanking} onChange={(e) => setSelectedRanking(e.target.value)} className={selectClass}>
+              <select value={selectedRanking} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedRanking(v)); }} className={selectClass}>
                 <option value="">All Rankings</option>
                 {["S", "A", "B", "C", "F"].map((r) => <option key={r} value={r}>{r}</option>)}
               </select>
@@ -438,7 +449,10 @@ export function NewSrArtistTab() {
 
       {/* Cards / List */}
       {sortedArtists.length === 0 ? (
-        <div className="text-center py-16 text-slate-400">No artists match the current filters.</div>
+        <div className="text-center py-16 text-slate-400">
+          <p>No artists match the current filters.</p>
+          <button onClick={clearFilters} className="mt-3 text-sm text-purple-400 hover:text-purple-300 underline">Clear all filters</button>
+        </div>
       ) : viewMode === "cards" ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
           {sortedArtists.map((artist) => {
@@ -449,7 +463,6 @@ export function NewSrArtistTab() {
                 key={artist.id}
                 className={`rounded-xl border bg-gradient-to-br from-teal-900/60 via-cyan-900/40 to-slate-900/80 p-3 flex flex-col gap-2 transition-all duration-150 hover:scale-[1.02] hover:brightness-110 ${GRADE_GLOW[grade] ?? GRADE_GLOW.F}`}
               >
-                {/* Name + grade + rank badge */}
                 <div className="flex items-center justify-between gap-2">
                   <span className="font-semibold text-white text-sm truncate">{artist.name}</span>
                   <div className="flex items-center gap-1 shrink-0">
@@ -461,8 +474,6 @@ export function NewSrArtistTab() {
                     </span>
                   </div>
                 </div>
-
-                {/* Genre · Role · Group */}
                 <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-xs">
                   <span className="text-pink-300">{artist.genre}</span>
                   <span className="text-slate-500">·</span>
@@ -474,8 +485,6 @@ export function NewSrArtistTab() {
                     </>
                   )}
                 </div>
-
-                {/* Skills */}
                 <div className="flex flex-col gap-1">
                   {artist.skills[1] && artist.skills[1] !== "None" && (
                     <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs ${getSkillClass(artist.skills[1])}`}>
@@ -488,8 +497,6 @@ export function NewSrArtistTab() {
                     </span>
                   )}
                 </div>
-
-                {/* Build · Photos */}
                 <div className="grid grid-cols-2 gap-1 mt-auto pt-1">
                   <div>
                     {artist.build && (
@@ -555,13 +562,9 @@ export function NewSrArtistTab() {
             </div>
           ))}
         </div>
-
-        {/* Ranking explanation */}
         <div className="mt-5 pt-4 border-t border-slate-700/60">
           <h4 className="text-xs font-semibold text-white uppercase tracking-widest mb-2 text-center">How Rankings Work</h4>
-          <p className="text-slate-400 text-xs text-center mb-3">
-            Skill 2 and Skill 3 are each scored, then added together.
-          </p>
+          <p className="text-slate-400 text-xs text-center mb-3">Skill 2 and Skill 3 are each scored, then added together.</p>
           <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs mb-3">
             <span className="damage-to-player bg-gradient-to-r from-slate-600 to-slate-700 px-2 py-0.5 rounded-full">Best: 10 pts</span>
             <span className="basic-attack-50 bg-gradient-to-r from-slate-700 to-slate-800 px-2 py-0.5 rounded-full">Good: 6 pts</span>
@@ -578,6 +581,17 @@ export function NewSrArtistTab() {
           </div>
         </div>
       </div>
+
+      {/* Scroll-to-top */}
+      {showScrollTop && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="fixed bottom-6 right-6 z-50 w-10 h-10 rounded-full bg-slate-800 border border-slate-600 text-white text-lg flex items-center justify-center shadow-xl hover:bg-slate-700 transition-colors"
+          aria-label="Scroll to top"
+        >
+          ↑
+        </button>
+      )}
     </div>
   );
 }
