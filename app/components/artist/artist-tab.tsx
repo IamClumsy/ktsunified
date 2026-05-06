@@ -103,7 +103,7 @@ export function ArtistTab() {
           </div>
         </header>
 
-        <main className="w-fit flex flex-col items-center bg-gradient-to-br from-violet-800/80 via-fuchsia-800/80 to-pink-700/80 rounded-2xl text-white shadow-[0_0_60px_rgba(219,39,119,0.6)] border-2 border-fuchsia-500/50 backdrop-blur-xl transition-all duration-300 mx-auto table-card">
+        <div className="w-fit flex flex-col items-center bg-gradient-to-br from-violet-800/80 via-fuchsia-800/80 to-pink-700/80 rounded-2xl text-white shadow-[0_0_60px_rgba(219,39,119,0.6)] border-2 border-fuchsia-500/50 backdrop-blur-xl transition-all duration-300 mx-auto table-card">
           <div className="overflow-x-auto w-full px-2 py-4 table-wrapper">
             <table
               className="table-fixed table-force-white table-with-spacing italic"
@@ -190,7 +190,7 @@ export function ArtistTab() {
               </div>
             </div>
           </div>
-        </main>
+        </div>
 
         <footer className="mt-8 py-4 w-full flex justify-center items-center text-sm relative z-10">
           <p className="text-white font-medium">© {new Date().getFullYear()} Mick</p>

@@ -3,7 +3,6 @@
 import { Suspense, useState, useTransition, lazy, memo } from "react";
 
 // Code-split each tab — only loads when first visited
-const ArtistTab = lazy(() => import("@/app/components/artist/artist-tab").then((m) => ({ default: m.ArtistTab })));
 const NewSrArtistTab = lazy(() => import("@/app/components/artist/new-sr-artist-tab").then((m) => ({ default: m.NewSrArtistTab })));
 const NewArtistTab = lazy(() => import("@/app/components/artist/new-artist-tab").then((m) => ({ default: m.NewArtistTab })));
 const CalcTab = lazy(() => import("@/app/components/calc/calc-tab").then((m) => ({ default: m.CalcTab })));
@@ -49,7 +48,6 @@ const TABS: { id: Tab; label: string; accent: string; activeClass: string }[] = 
 const TabContent = memo(function TabContent({ id }: { id: Tab }) {
   return (
     <Suspense fallback={<Loading />}>
-      {id === "artists" && <ArtistTab />}
       {id === "sr-artists" && <NewSrArtistTab />}
       {id === "new-artists" && <NewArtistTab />}
       {id === "resource-calc" && <CalcTab />}
