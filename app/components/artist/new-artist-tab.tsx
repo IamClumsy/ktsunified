@@ -54,6 +54,19 @@ const selectClass =
 type SortOption = "ranking" | "name" | "genre";
 type ViewMode = "cards" | "list";
 
+function HighlightedName({ name, term }: { name: string; term: string }) {
+  if (!term) return <>{name}</>;
+  const idx = name.toLowerCase().indexOf(term.toLowerCase());
+  if (idx === -1) return <>{name}</>;
+  return (
+    <>
+      {name.slice(0, idx)}
+      <mark className="bg-pink-500/30 text-pink-200 rounded-sm not-italic">{name.slice(idx, idx + term.length)}</mark>
+      {name.slice(idx + term.length)}
+    </>
+  );
+}
+
 export function NewArtistTab() {
   const artists = artistsData;
 
@@ -359,7 +372,7 @@ export function NewArtistTab() {
                 className={`rounded-xl border bg-gradient-to-br from-violet-900/60 via-fuchsia-900/40 to-slate-900/80 p-3 flex flex-col gap-2 transition-all duration-150 hover:scale-[1.02] hover:brightness-110 ${GRADE_GLOW[grade] ?? GRADE_GLOW.F}`}
               >
                 <div className="flex items-center justify-between gap-2">
-                  <span className="font-semibold text-white text-sm truncate">{artist.name}</span>
+                  <span className="font-semibold text-white text-sm truncate"><HighlightedName name={artist.name} term={searchTerm} /></span>
                   <span className={`inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-bold bg-gradient-to-r from-slate-600 to-slate-700 shrink-0 ${getRankingClass(grade)}`}>
                     {grade}
                   </span>
@@ -417,7 +430,7 @@ export function NewArtistTab() {
                 key={artist.id}
                 className={`flex items-center gap-3 py-2 px-3 bg-slate-900/60 hover:bg-slate-800/40 transition-colors border-l-4 ${GRADE_BORDER[grade] ?? "border-slate-700"}`}
               >
-                <span className="w-28 font-semibold text-white text-sm truncate shrink-0">{artist.name}</span>
+                <span className="w-28 font-semibold text-white text-sm truncate shrink-0"><HighlightedName name={artist.name} term={searchTerm} /></span>
                 <span className={`inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-bold bg-gradient-to-r from-slate-600 to-slate-700 shrink-0 ${getRankingClass(grade)}`}>
                   {grade}
                 </span>

@@ -20,7 +20,7 @@ import { Blueprints } from "./sections/blueprints";
 function SectionGroup({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="space-y-4">
-      <div className="flex items-center gap-3">
+      <div className="sticky top-16 z-20 -mx-4 px-4 py-1.5 bg-slate-950/95 backdrop-blur-sm flex items-center gap-3">
         <span className="text-xs uppercase tracking-[0.25em] text-slate-500 font-semibold">{label}</span>
         <div className="flex-1 h-px bg-slate-700/60" />
       </div>
