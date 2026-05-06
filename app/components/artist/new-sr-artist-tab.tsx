@@ -293,7 +293,7 @@ export function NewSrArtistTab() {
             {(["ranking", "name", "genre"] as SortOption[]).map((opt) => (
               <button
                 key={opt}
-                onClick={() => setSortBy(opt)}
+                onClick={() => startTransition(() => setSortBy(opt))}
                 className={`px-3 py-2.5 text-sm capitalize transition-colors ${
                   sortBy === opt
                     ? "bg-purple-600 text-white font-semibold"
@@ -309,7 +309,7 @@ export function NewSrArtistTab() {
             {(["cards", "list"] as ViewMode[]).map((mode) => (
               <button
                 key={mode}
-                onClick={() => setViewMode(mode)}
+                onClick={() => startTransition(() => setViewMode(mode))}
                 className={`px-3 py-2.5 text-sm transition-colors ${
                   viewMode === mode
                     ? "bg-purple-600 text-white font-semibold"
@@ -425,7 +425,7 @@ export function NewSrArtistTab() {
           return (
             <button
               key={g}
-              onClick={() => setSelectedRanking(isActive ? "" : g)}
+              onClick={() => startTransition(() => setSelectedRanking(isActive ? "" : g))}
               className={`font-bold px-2 py-0.5 rounded-full transition-colors ${colorClass} ${
                 isActive ? "bg-slate-700 ring-1 ring-current" : "hover:bg-slate-800"
               }`}
