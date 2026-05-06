@@ -108,7 +108,7 @@ export default function Home() {
       {/* Tab content — tabs stay mounted once visited, hidden via CSS to avoid remount cost */}
       <main>
         {TABS.map((tab) => (
-          <div key={tab.id} hidden={activeTab !== tab.id}>
+          <div key={tab.id} hidden={activeTab !== tab.id} inert={activeTab !== tab.id || undefined}>
             {mounted.has(tab.id) && <TabContent id={tab.id} />}
           </div>
         ))}
