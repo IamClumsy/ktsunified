@@ -18,6 +18,14 @@ const GRADE_GLOW: Record<string, string> = {
   F: "border-red-500/50 shadow-[0_0_10px_2px_rgba(239,68,68,0.20)]",
 };
 
+const GRADE_BORDER: Record<string, string> = {
+  S: "border-yellow-400",
+  A: "border-emerald-400",
+  B: "border-sky-400",
+  C: "border-slate-400",
+  F: "border-red-500",
+};
+
 const GRADE_ORDER: Record<string, number> = { S: 0, A: 1, B: 2, C: 3, F: 4 };
 
 const PHOTO_CLASS: Record<string, string> = {
@@ -44,6 +52,7 @@ const selectClass =
   "w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-pink-400/70";
 
 type SortOption = "ranking" | "name" | "genre";
+type ViewMode = "cards" | "list";
 
 export function NewArtistTab() {
   const artists = artistsData;
@@ -51,6 +60,7 @@ export function NewArtistTab() {
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [, startTransition] = useTransition();
   const [sortBy, setSortBy] = useState<SortOption>("ranking");
+  const [viewMode, setViewMode] = useState<ViewMode>("cards");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("");
@@ -139,6 +149,15 @@ export function NewArtistTab() {
 
   const activeFilterCount = [searchTerm, selectedRole, selectedGenre, selectedSkill, selectedSkill3, selectedRanking].filter(Boolean).length;
 
+  const activeFilters = [
+    searchTerm    && { label: "Name",    value: searchTerm,    clear: () => setSearchTerm("") },
+    selectedGenre && { label: "Genre",   value: selectedGenre, clear: () => setSelectedGenre("") },
+    selectedRole  && { label: "Role",    value: selectedRole,  clear: () => setSelectedRole("") },
+    selectedSkill && { label: "Skill 2", value: selectedSkill, clear: () => setSelectedSkill("") },
+    selectedSkill3 && { label: "Skill 3", value: selectedSkill3, clear: () => setSelectedSkill3("") },
+    selectedRanking && { label: "Grade", value: selectedRanking, clear: () => setSelectedRanking("") },
+  ].filter(Boolean) as { label: string; value: string; clear: () => void }[];
+
   function clearFilters() {
     setSearchTerm(""); setSelectedRole(""); setSelectedGenre("");
     setSelectedSkill(""); setSelectedSkill3(""); setSelectedRanking("");
@@ -156,103 +175,140 @@ export function NewArtistTab() {
 
       {/* Controls row — sticky under the page header */}
       <div className="sticky top-24 z-40 -mx-4 px-4 pb-3 pt-2 bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/40 mb-4">
-      <div className="flex items-center justify-center gap-2 flex-wrap">
-        <button
-          onClick={() => startTransition(() => setFiltersOpen((o) => !o))}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-slate-700 bg-slate-900 text-sm text-slate-300 hover:border-pink-500/50 hover:text-white transition-colors"
-        >
-          <span>Filters</span>
-          {activeFilterCount > 0 && (
-            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pink-600 text-white text-xs font-bold">
-              {activeFilterCount}
-            </span>
-          )}
-          <span className="text-slate-500 text-xs">{filtersOpen ? "▲" : "▼"}</span>
-        </button>
-        {activeFilterCount > 0 && (
+        <div className="flex items-center justify-center gap-2 flex-wrap">
           <button
-            onClick={clearFilters}
-            className="px-3 py-2.5 rounded-lg border border-slate-700 bg-slate-900 text-sm text-slate-400 hover:text-red-400 hover:border-red-500/50 transition-colors"
+            onClick={() => startTransition(() => setFiltersOpen((o) => !o))}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-slate-700 bg-slate-900 text-sm text-slate-300 hover:border-pink-500/50 hover:text-white transition-colors"
           >
-            Clear all
+            <span>Filters</span>
+            {activeFilterCount > 0 && (
+              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-pink-600 text-white text-xs font-bold">
+                {activeFilterCount}
+              </span>
+            )}
+            <span className="text-slate-500 text-xs">{filtersOpen ? "▲" : "▼"}</span>
           </button>
-        )}
-        {/* Sort */}
-        <div className="flex items-center gap-1 rounded-lg border border-slate-700 bg-slate-900 overflow-hidden">
-          {(["ranking", "name", "genre"] as SortOption[]).map((opt) => (
+          {activeFilterCount > 0 && (
             <button
-              key={opt}
-              onClick={() => setSortBy(opt)}
-              className={`px-3 py-2.5 text-sm capitalize transition-colors ${
-                sortBy === opt
-                  ? "bg-pink-600 text-white font-semibold"
-                  : "text-slate-400 hover:text-slate-200"
-              }`}
+              onClick={clearFilters}
+              className="px-3 py-2.5 rounded-lg border border-slate-700 bg-slate-900 text-sm text-slate-400 hover:text-red-400 hover:border-red-500/50 transition-colors"
             >
-              {opt === "ranking" ? "Ranking" : opt === "name" ? "Name" : "Genre"}
+              Clear all
             </button>
-          ))}
+          )}
+          {/* Sort */}
+          <div className="flex items-center gap-1 rounded-lg border border-slate-700 bg-slate-900 overflow-hidden">
+            {(["ranking", "name", "genre"] as SortOption[]).map((opt) => (
+              <button
+                key={opt}
+                onClick={() => setSortBy(opt)}
+                className={`px-3 py-2.5 text-sm capitalize transition-colors ${
+                  sortBy === opt
+                    ? "bg-pink-600 text-white font-semibold"
+                    : "text-slate-400 hover:text-slate-200"
+                }`}
+              >
+                {opt === "ranking" ? "Ranking" : opt === "name" ? "Name" : "Genre"}
+              </button>
+            ))}
+          </div>
+          {/* View mode */}
+          <div className="flex items-center gap-1 rounded-lg border border-slate-700 bg-slate-900 overflow-hidden">
+            {(["cards", "list"] as ViewMode[]).map((mode) => (
+              <button
+                key={mode}
+                onClick={() => setViewMode(mode)}
+                className={`px-3 py-2.5 text-sm transition-colors ${
+                  viewMode === mode
+                    ? "bg-pink-600 text-white font-semibold"
+                    : "text-slate-400 hover:text-slate-200"
+                }`}
+              >
+                {mode === "cards" ? "Cards" : "List"}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* Filter panel */}
-      {filtersOpen && (
-        <div className="mt-3 p-4 rounded-xl border border-slate-700 bg-slate-900/60 grid grid-cols-2 md:grid-cols-3 gap-3">
-          <div className="space-y-1">
-            <label className="text-xs uppercase tracking-widest text-slate-400">Artist</label>
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search by name…"
-              className={selectClass}
-            />
+        {/* Active filter pills */}
+        {activeFilters.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mt-2 justify-center">
+            {activeFilters.map((f) => (
+              <span
+                key={f.label}
+                className="inline-flex items-center gap-1 pl-2 pr-1 py-0.5 rounded-full text-xs bg-slate-800 border border-slate-600 text-slate-300"
+              >
+                <span className="text-slate-500">{f.label}:</span>
+                <span className="max-w-[140px] truncate">{f.value}</span>
+                <button
+                  onClick={f.clear}
+                  className="ml-0.5 w-4 h-4 inline-flex items-center justify-center rounded-full hover:bg-slate-600 text-slate-400 hover:text-white transition-colors"
+                >
+                  ×
+                </button>
+              </span>
+            ))}
           </div>
-          <div className="space-y-1">
-            <label className="text-xs uppercase tracking-widest text-slate-400">Genre</label>
-            <select value={selectedGenre} onChange={(e) => setSelectedGenre(e.target.value)} className={selectClass}>
-              <option value="">All Genres</option>
-              {genres.map((g) => <option key={g} value={g}>{g}</option>)}
-            </select>
+        )}
+
+        {/* Filter panel */}
+        {filtersOpen && (
+          <div className="mt-3 p-4 rounded-xl border border-slate-700 bg-slate-900/60 grid grid-cols-2 md:grid-cols-3 gap-3">
+            <div className="space-y-1">
+              <label className="text-xs uppercase tracking-widest text-slate-400">Artist</label>
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Search by name…"
+                className={selectClass}
+              />
+            </div>
+            <div className="space-y-1">
+              <label className="text-xs uppercase tracking-widest text-slate-400">Genre</label>
+              <select value={selectedGenre} onChange={(e) => setSelectedGenre(e.target.value)} className={selectClass}>
+                <option value="">All Genres</option>
+                {genres.map((g) => <option key={g} value={g}>{g}</option>)}
+              </select>
+            </div>
+            <div className="space-y-1">
+              <label className="text-xs uppercase tracking-widest text-slate-400">Role</label>
+              <select value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)} className={selectClass}>
+                <option value="">All Roles</option>
+                {roles.map((r) => <option key={r} value={r}>{r}</option>)}
+              </select>
+            </div>
+            <div className="space-y-1">
+              <label className="text-xs uppercase tracking-widest text-slate-400">Skill 2</label>
+              <select value={selectedSkill} onChange={(e) => setSelectedSkill(e.target.value)} className={selectClass}>
+                <option value="">All Skills</option>
+                <optgroup label="Best">{skill2Categories.bestSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+                <optgroup label="Good">{skill2Categories.goodSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+                <optgroup label="Okay">{skill2Categories.okaySkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+                <optgroup label="Bad">{skill2Categories.badSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+                <optgroup label="Worst">{skill2Categories.worstSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+              </select>
+            </div>
+            <div className="space-y-1">
+              <label className="text-xs uppercase tracking-widest text-slate-400">Skill 3</label>
+              <select value={selectedSkill3} onChange={(e) => setSelectedSkill3(e.target.value)} className={selectClass}>
+                <option value="">All Skills</option>
+                <optgroup label="Best">{skill3Categories.bestSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+                <optgroup label="Good">{skill3Categories.goodSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+                <optgroup label="Okay">{skill3Categories.okaySkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+                <optgroup label="Bad">{skill3Categories.badSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+                <optgroup label="Worst">{skill3Categories.worstSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+              </select>
+            </div>
+            <div className="space-y-1">
+              <label className="text-xs uppercase tracking-widest text-slate-400">Ranking</label>
+              <select value={selectedRanking} onChange={(e) => setSelectedRanking(e.target.value)} className={selectClass}>
+                <option value="">All Rankings</option>
+                {["S", "A", "B", "C", "F"].map((r) => <option key={r} value={r}>{r}</option>)}
+              </select>
+            </div>
           </div>
-          <div className="space-y-1">
-            <label className="text-xs uppercase tracking-widest text-slate-400">Role</label>
-            <select value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)} className={selectClass}>
-              <option value="">All Roles</option>
-              {roles.map((r) => <option key={r} value={r}>{r}</option>)}
-            </select>
-          </div>
-          <div className="space-y-1">
-            <label className="text-xs uppercase tracking-widest text-slate-400">Skill 2</label>
-            <select value={selectedSkill} onChange={(e) => setSelectedSkill(e.target.value)} className={selectClass}>
-              <option value="">All Skills</option>
-              <optgroup label="Best">{skill2Categories.bestSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-              <optgroup label="Good">{skill2Categories.goodSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-              <optgroup label="Okay">{skill2Categories.okaySkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-              <optgroup label="Bad">{skill2Categories.badSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-              <optgroup label="Worst">{skill2Categories.worstSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-            </select>
-          </div>
-          <div className="space-y-1">
-            <label className="text-xs uppercase tracking-widest text-slate-400">Skill 3</label>
-            <select value={selectedSkill3} onChange={(e) => setSelectedSkill3(e.target.value)} className={selectClass}>
-              <option value="">All Skills</option>
-              <optgroup label="Best">{skill3Categories.bestSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-              <optgroup label="Good">{skill3Categories.goodSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-              <optgroup label="Okay">{skill3Categories.okaySkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-              <optgroup label="Bad">{skill3Categories.badSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-              <optgroup label="Worst">{skill3Categories.worstSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-            </select>
-          </div>
-          <div className="space-y-1">
-            <label className="text-xs uppercase tracking-widest text-slate-400">Ranking</label>
-            <select value={selectedRanking} onChange={(e) => setSelectedRanking(e.target.value)} className={selectClass}>
-              <option value="">All Rankings</option>
-              {["S", "A", "B", "C", "F"].map((r) => <option key={r} value={r}>{r}</option>)}
-            </select>
-          </div>
-        </div>
-      )}
+        )}
       </div>{/* end sticky wrapper */}
 
       {/* Grade tally — click to quick-filter by grade */}
@@ -276,10 +332,10 @@ export function NewArtistTab() {
         })}
       </div>
 
-      {/* Cards */}
+      {/* Cards / List */}
       {sortedArtists.length === 0 ? (
         <div className="text-center py-16 text-slate-400">No artists match the current filters.</div>
-      ) : (
+      ) : viewMode === "cards" ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
           {sortedArtists.map((artist) => {
             const points = calculatePoints(artist);
@@ -324,7 +380,7 @@ export function NewArtistTab() {
                   )}
                 </div>
 
-                {/* Build · Photos — always 2 columns so Photos stays in slot 2 */}
+                {/* Build · Photos */}
                 <div className="grid grid-cols-2 gap-1 mt-auto pt-1">
                   <div>
                     {artist.build && (
@@ -340,6 +396,33 @@ export function NewArtistTab() {
                       </span>
                     )}
                   </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="divide-y divide-slate-800/60 rounded-xl overflow-hidden border border-slate-800">
+          {sortedArtists.map((artist) => {
+            const points = calculatePoints(artist);
+            const grade = getLetterGrade(points);
+            return (
+              <div
+                key={artist.id}
+                className={`flex items-center gap-3 py-2 px-3 bg-slate-900/60 hover:bg-slate-800/40 transition-colors border-l-4 ${GRADE_BORDER[grade] ?? "border-slate-700"}`}
+              >
+                <span className="w-28 font-semibold text-white text-sm truncate shrink-0">{artist.name}</span>
+                <span className={`inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-bold bg-gradient-to-r from-slate-600 to-slate-700 shrink-0 ${getRankingClass(grade)}`}>
+                  {grade}
+                </span>
+                <span className="hidden sm:block text-xs text-slate-500 shrink-0 w-32 truncate">{artist.genre} · {artist.position}</span>
+                <div className="flex flex-1 flex-wrap gap-x-3 gap-y-0.5 min-w-0">
+                  {artist.skills[1] && (
+                    <span className={`text-xs ${getSkillClass(artist.skills[1])}`}>{artist.skills[1]}</span>
+                  )}
+                  {artist.skills[2] && (
+                    <span className={`text-xs ${getSkillClass(artist.skills[2])}`}>{artist.skills[2]}</span>
+                  )}
                 </div>
               </div>
             );
