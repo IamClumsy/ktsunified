@@ -206,6 +206,7 @@ export function NewArtistTab() {
           {/* Always-visible search */}
           <input
             type="text"
+            aria-label="Search artists"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search artists…"
@@ -290,22 +291,22 @@ export function NewArtistTab() {
         {filtersOpen && (
           <div className="mt-3 p-4 rounded-xl border border-slate-700 bg-slate-900/60 grid grid-cols-2 md:grid-cols-3 gap-3">
             <div className="space-y-1">
-              <label className="text-xs uppercase tracking-widest text-slate-400">Genre</label>
-              <select value={selectedGenre} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedGenre(v)); }} className={selectClass}>
+              <label htmlFor="ssr-filter-genre" className="text-xs uppercase tracking-widest text-slate-400">Genre</label>
+              <select id="ssr-filter-genre" value={selectedGenre} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedGenre(v)); }} className={selectClass}>
                 <option value="">All Genres</option>
                 {genres.map((g) => <option key={g} value={g}>{g}</option>)}
               </select>
             </div>
             <div className="space-y-1">
-              <label className="text-xs uppercase tracking-widest text-slate-400">Role</label>
-              <select value={selectedRole} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedRole(v)); }} className={selectClass}>
+              <label htmlFor="ssr-filter-role" className="text-xs uppercase tracking-widest text-slate-400">Role</label>
+              <select id="ssr-filter-role" value={selectedRole} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedRole(v)); }} className={selectClass}>
                 <option value="">All Roles</option>
                 {roles.map((r) => <option key={r} value={r}>{r}</option>)}
               </select>
             </div>
             <div className="space-y-1">
-              <label className="text-xs uppercase tracking-widest text-slate-400">Skill 2</label>
-              <select value={selectedSkill} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedSkill(v)); }} className={selectClass}>
+              <label htmlFor="ssr-filter-skill2" className="text-xs uppercase tracking-widest text-slate-400">Skill 2</label>
+              <select id="ssr-filter-skill2" value={selectedSkill} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedSkill(v)); }} className={selectClass}>
                 <option value="">All Skills</option>
                 <optgroup label="Best">{skill2Categories.bestSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
                 <optgroup label="Good">{skill2Categories.goodSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
@@ -315,8 +316,8 @@ export function NewArtistTab() {
               </select>
             </div>
             <div className="space-y-1">
-              <label className="text-xs uppercase tracking-widest text-slate-400">Skill 3</label>
-              <select value={selectedSkill3} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedSkill3(v)); }} className={selectClass}>
+              <label htmlFor="ssr-filter-skill3" className="text-xs uppercase tracking-widest text-slate-400">Skill 3</label>
+              <select id="ssr-filter-skill3" value={selectedSkill3} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedSkill3(v)); }} className={selectClass}>
                 <option value="">All Skills</option>
                 <optgroup label="Best">{skill3Categories.bestSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
                 <optgroup label="Good">{skill3Categories.goodSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
@@ -326,8 +327,8 @@ export function NewArtistTab() {
               </select>
             </div>
             <div className="space-y-1">
-              <label className="text-xs uppercase tracking-widest text-slate-400">Ranking</label>
-              <select value={selectedRanking} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedRanking(v)); }} className={selectClass}>
+              <label htmlFor="ssr-filter-ranking" className="text-xs uppercase tracking-widest text-slate-400">Ranking</label>
+              <select id="ssr-filter-ranking" value={selectedRanking} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedRanking(v)); }} className={selectClass}>
                 <option value="">All Rankings</option>
                 {["S", "A", "B", "C", "F"].map((r) => <option key={r} value={r}>{r}</option>)}
               </select>

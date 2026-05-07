@@ -80,8 +80,9 @@ function SvsContent() {
 
       {/* Budget input */}
       <div className="rounded-2xl border border-slate-700 bg-slate-900/80 px-5 py-4 flex flex-wrap items-center gap-4">
-        <label className="text-sm uppercase tracking-widest text-slate-400 shrink-0">Budget</label>
+        <label htmlFor="svs-budget" className="text-sm uppercase tracking-widest text-slate-400 shrink-0">Budget</label>
         <input
+          id="svs-budget"
           type="number"
           min={0}
           value={budget}

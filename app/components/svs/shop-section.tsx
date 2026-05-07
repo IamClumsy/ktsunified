@@ -95,6 +95,7 @@ export function ShopSection({ shop, color, onTotalChange, remaining }: Props) {
                       min={0}
                       value={state.quantity}
                       onChange={(e) => setQty(i, Number(e.target.value))}
+                      aria-label={`Quantity for ${item.item}`}
                       className="w-full sm:w-20 rounded border border-slate-700 bg-slate-950 px-2 py-1.5 text-right text-white text-xs"
                     />
                   </td>
