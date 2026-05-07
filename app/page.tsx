@@ -1,15 +1,13 @@
 "use client";
 
-import { Suspense, useState, useTransition, lazy, memo } from "react";
+import { useState, useTransition, memo } from "react";
+import { NewSrArtistTab } from "@/app/components/artist/new-sr-artist-tab";
+import { NewArtistTab } from "@/app/components/artist/new-artist-tab";
+import { CalcTab } from "@/app/components/calc/calc-tab";
+import { CeoTab } from "@/app/components/ceo/ceo-tab";
+import { SvsTab } from "@/app/components/svs/svs-tab";
 
-// Code-split each tab — only loads when first visited
-const NewSrArtistTab = lazy(() => import("@/app/components/artist/new-sr-artist-tab").then((m) => ({ default: m.NewSrArtistTab })));
-const NewArtistTab = lazy(() => import("@/app/components/artist/new-artist-tab").then((m) => ({ default: m.NewArtistTab })));
-const CalcTab = lazy(() => import("@/app/components/calc/calc-tab").then((m) => ({ default: m.CalcTab })));
-const CeoTab = lazy(() => import("@/app/components/ceo/ceo-tab").then((m) => ({ default: m.CeoTab })));
-const SvsTab = lazy(() => import("@/app/components/svs/svs-tab").then((m) => ({ default: m.SvsTab })));
-
-type Tab = "artists" | "sr-artists" | "new-artists" | "resource-calc" | "ceo-event" | "svs-store";
+type Tab = "sr-artists" | "new-artists" | "resource-calc" | "ceo-event" | "svs-store";
 
 const TABS: { id: Tab; label: string; accent: string; activeClass: string }[] = [
   {
@@ -46,15 +44,12 @@ const TABS: { id: Tab; label: string; accent: string; activeClass: string }[] = 
 
 // Memoized so switching tabs doesn't re-render already-mounted tab subtrees
 const TabContent = memo(function TabContent({ id }: { id: Tab }) {
-  return (
-    <Suspense fallback={<Loading />}>
-      {id === "sr-artists" && <NewSrArtistTab />}
-      {id === "new-artists" && <NewArtistTab />}
-      {id === "resource-calc" && <CalcTab />}
-      {id === "ceo-event" && <CeoTab />}
-      {id === "svs-store" && <SvsTab />}
-    </Suspense>
-  );
+  if (id === "sr-artists") return <NewSrArtistTab />;
+  if (id === "new-artists") return <NewArtistTab />;
+  if (id === "resource-calc") return <CalcTab />;
+  if (id === "ceo-event") return <CeoTab />;
+  if (id === "svs-store") return <SvsTab />;
+  return null;
 });
 
 export default function Home() {
@@ -105,7 +100,7 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Tab content — tabs stay mounted once visited, hidden via CSS to avoid remount cost */}
+      {/* Tab content — tabs stay mounted once visited, hidden via inert to avoid remount cost */}
       <main>
         {TABS.map((tab) => (
           <div key={tab.id} hidden={activeTab !== tab.id} inert={activeTab !== tab.id || undefined}>
@@ -113,14 +108,6 @@ export default function Home() {
           </div>
         ))}
       </main>
-    </div>
-  );
-}
-
-function Loading() {
-  return (
-    <div className="flex items-center justify-center py-32">
-      <p className="text-slate-400">Loading…</p>
     </div>
   );
 }
