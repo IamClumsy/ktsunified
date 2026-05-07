@@ -576,7 +576,7 @@ export function NewSrArtistTab() {
           ))}
         </div>
         <div className="mt-5 pt-4 border-t border-slate-700/60">
-          <h4 className="text-xs font-semibold text-white uppercase tracking-widest mb-2 text-center">How Rankings Work</h4>
+          <h3 className="text-xs font-semibold text-white uppercase tracking-widest mb-2 text-center">How Rankings Work</h3>
           <p className="text-slate-400 text-xs text-center mb-3">Skill 2 and Skill 3 are each scored, then added together.</p>
           <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs mb-3">
             <span className="damage-to-player bg-gradient-to-r from-slate-600 to-slate-700 px-2 py-0.5 rounded-full">Best: 10 pts</span>
