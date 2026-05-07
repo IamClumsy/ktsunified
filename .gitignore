@@ -24,3 +24,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# generated static data (rebuilt from Excel at build time via prebuild)
+public/data/

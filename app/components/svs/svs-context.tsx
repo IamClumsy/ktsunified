@@ -38,7 +38,7 @@ export function SvsTablesProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch("/api/svs-tables");
+        const res = await fetch("/data/svs-tables.json");
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         if (data.error) throw new Error(data.error);

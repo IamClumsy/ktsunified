@@ -1,11 +1,13 @@
 "use client";
 
-import { useState, useTransition, memo } from "react";
-import { NewSrArtistTab } from "@/app/components/artist/new-sr-artist-tab";
-import { NewArtistTab } from "@/app/components/artist/new-artist-tab";
-import { CalcTab } from "@/app/components/calc/calc-tab";
-import { CeoTab } from "@/app/components/ceo/ceo-tab";
-import { SvsTab } from "@/app/components/svs/svs-tab";
+import { Suspense, useState, useTransition, lazy, memo } from "react";
+
+// Code-split each tab — chunks are cached at Vercel's CDN edge
+const NewSrArtistTab = lazy(() => import("@/app/components/artist/new-sr-artist-tab").then((m) => ({ default: m.NewSrArtistTab })));
+const NewArtistTab = lazy(() => import("@/app/components/artist/new-artist-tab").then((m) => ({ default: m.NewArtistTab })));
+const CalcTab = lazy(() => import("@/app/components/calc/calc-tab").then((m) => ({ default: m.CalcTab })));
+const CeoTab = lazy(() => import("@/app/components/ceo/ceo-tab").then((m) => ({ default: m.CeoTab })));
+const SvsTab = lazy(() => import("@/app/components/svs/svs-tab").then((m) => ({ default: m.SvsTab })));
 
 type Tab = "sr-artists" | "new-artists" | "resource-calc" | "ceo-event" | "svs-store";
 
@@ -44,17 +46,20 @@ const TABS: { id: Tab; label: string; accent: string; activeClass: string }[] = 
 
 // Memoized so switching tabs doesn't re-render already-mounted tab subtrees
 const TabContent = memo(function TabContent({ id }: { id: Tab }) {
-  if (id === "sr-artists") return <NewSrArtistTab />;
-  if (id === "new-artists") return <NewArtistTab />;
-  if (id === "resource-calc") return <CalcTab />;
-  if (id === "ceo-event") return <CeoTab />;
-  if (id === "svs-store") return <SvsTab />;
-  return null;
+  return (
+    <Suspense fallback={<Loading />}>
+      {id === "sr-artists" && <NewSrArtistTab />}
+      {id === "new-artists" && <NewArtistTab />}
+      {id === "resource-calc" && <CalcTab />}
+      {id === "ceo-event" && <CeoTab />}
+      {id === "svs-store" && <SvsTab />}
+    </Suspense>
+  );
 });
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>("new-artists");
-  // Track which tabs have ever been visited so they stay mounted (CSS-hidden) after first render
+  // Track which tabs have ever been visited so they stay mounted (hidden via inert) after first render
   const [mounted, setMounted] = useState<Set<Tab>>(new Set(["new-artists"]));
   const [isPending, startTransition] = useTransition();
 
@@ -108,6 +113,14 @@ export default function Home() {
           </div>
         ))}
       </main>
+    </div>
+  );
+}
+
+function Loading() {
+  return (
+    <div className="flex items-center justify-center py-32">
+      <p className="text-slate-400">Loading…</p>
     </div>
   );
 }
