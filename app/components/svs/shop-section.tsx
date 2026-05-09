@@ -49,7 +49,8 @@ export function ShopSection({ shop, color, onTotalChange, remaining }: Props) {
   useEffect(() => { onTotalChange?.(total); }, [total, onTotalChange]);
 
   function setQty(idx: number, qty: number) {
-    setItems((prev) => prev.map((s, i) => (i === idx ? { quantity: Math.max(0, qty) } : s)));
+    const max = shop.items[idx].quantity;
+    setItems((prev) => prev.map((s, i) => (i === idx ? { quantity: Math.min(max, Math.max(0, qty)) } : s)));
   }
 
   function reset() {
@@ -77,7 +78,7 @@ export function ShopSection({ shop, color, onTotalChange, remaining }: Props) {
           <thead>
             <tr className="border-b border-slate-700 text-slate-400 text-xs uppercase tracking-widest">
               <th className="pb-2 text-left">Item</th>
-              <th className="pb-2 text-right">Qty</th>
+              <th className="pb-2 text-right">Qty / Max</th>
               <th className="pb-2 text-right pr-1">Price</th>
               <th className="pb-2 text-right">Subtotal</th>
             </tr>
@@ -86,18 +87,25 @@ export function ShopSection({ shop, color, onTotalChange, remaining }: Props) {
             {shop.items.map((item, i) => {
               const state = items[i];
               const subtotal = state.quantity * item.price;
+              const atMax = state.quantity === item.quantity;
               return (
                 <tr key={item.item} className={`transition-colors ${rowHighlight(state.quantity)}`}>
                   <td className="py-2 text-slate-200">{item.item}</td>
                   <td className="py-2 text-right">
-                    <input
-                      type="number"
-                      min={0}
-                      value={state.quantity}
-                      onChange={(e) => setQty(i, Number(e.target.value))}
-                      aria-label={`Quantity for ${item.item}`}
-                      className="w-full sm:w-20 rounded border border-slate-700 bg-slate-950 px-2 py-1.5 text-right text-white text-xs"
-                    />
+                    <div className="inline-flex items-center gap-1 justify-end">
+                      <input
+                        type="number"
+                        min={0}
+                        max={item.quantity}
+                        value={state.quantity}
+                        onChange={(e) => setQty(i, Number(e.target.value))}
+                        aria-label={`Quantity for ${item.item} (max ${item.quantity})`}
+                        className={`w-16 rounded border bg-slate-950 px-2 py-1.5 text-right text-white text-xs ${
+                          atMax ? "border-green-500/60" : "border-slate-700"
+                        }`}
+                      />
+                      <span className="text-slate-500 text-xs tabular-nums">/ {fmt(item.quantity)}</span>
+                    </div>
                   </td>
                   <td className="py-2 text-right text-slate-400 tabular-nums pr-1">{fmt(item.price)}</td>
                   <td className={`py-2 text-right font-medium tabular-nums ${scheme.total}`}>
