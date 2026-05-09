@@ -78,7 +78,7 @@ export function ShopSection({ shop, color, onTotalChange, remaining }: Props) {
           <thead>
             <tr className="border-b border-slate-700 text-slate-400 text-xs uppercase tracking-widest">
               <th className="pb-2 text-left">Item</th>
-              <th className="pb-2 text-right">Qty / Max</th>
+              <th className="pb-2 text-left">Qty / Max</th>
               <th className="pb-2 text-right pr-1">Price</th>
               <th className="pb-2 text-right">Subtotal</th>
             </tr>
@@ -91,8 +91,8 @@ export function ShopSection({ shop, color, onTotalChange, remaining }: Props) {
               return (
                 <tr key={item.item} className={`transition-colors ${rowHighlight(state.quantity)}`}>
                   <td className="py-2 text-slate-200">{item.item}</td>
-                  <td className="py-2 text-right">
-                    <div className="inline-flex items-center gap-1 justify-end">
+                  <td className="py-2 text-left">
+                    <div className="inline-flex items-center gap-1">
                       <input
                         type="number"
                         min={0}
