@@ -139,6 +139,60 @@ export function TeamBuilderTab() {
         </div>
       ) : (
         <>
+          {/* Best team recommendation */}
+          {genreArtists.length >= TEAM_SIZE && (() => {
+            const best = genreArtists.slice(0, TEAM_SIZE);
+            const bestScore = best.reduce((s, a) => s + calcPoints(a), 0);
+            const bestAvg = getLetterGrade(Math.round(bestScore / TEAM_SIZE));
+            return (
+              <div className="rounded-2xl border border-emerald-700/40 bg-gradient-to-b from-emerald-900/20 to-slate-900/60 p-5 mb-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <h2 className="text-sm font-semibold text-emerald-400 uppercase tracking-widest">Recommended Team</h2>
+                    <p className="text-xs text-slate-500 mt-0.5">Top 5 by score for {selectedGenre}</p>
+                  </div>
+                  <div className="flex items-center gap-6 text-right">
+                    <div>
+                      <p className="text-xs text-slate-500 uppercase tracking-widest">Score</p>
+                      <p className="text-xl font-bold tabular-nums text-white">{bestScore}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-slate-500 uppercase tracking-widest">Avg Grade</p>
+                      <p className={`text-xl font-bold ${getRankingClass(bestAvg)}`}>{bestAvg}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-5 gap-3">
+                  {best.map((a, i) => {
+                    const pts = calcPoints(a);
+                    const gr = getLetterGrade(pts);
+                    return (
+                      <div key={a.id} className="rounded-xl border border-slate-700/60 bg-slate-900/60 p-3 flex flex-col gap-1.5">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-slate-500">#{i + 1}</span>
+                          <span className={`text-xs font-bold px-2 py-0.5 rounded-full border ${GRADE_BADGE[gr]}`}>{gr}</span>
+                        </div>
+                        <span className="text-sm font-semibold text-white truncate">{a.name}</span>
+                        <span className="text-xs text-slate-400">{a.position}</span>
+                        <div className="flex flex-col gap-1 mt-1">
+                          {a.skills[1] && (
+                            <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs ${getSkillClass(a.skills[1])}`}>{a.skills[1]}</span>
+                          )}
+                          {a.skills[2] && (
+                            <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs ${getSkillClass(a.skills[2])}`}>{a.skills[2]}</span>
+                          )}
+                        </div>
+                        <div className="mt-auto pt-2 border-t border-slate-700/40 text-right">
+                          <span className="text-xs font-bold tabular-nums text-emerald-300">{pts} pts</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })()}
+
           {/* 5 slots */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
             {team.map((artist, slotIdx) => {
