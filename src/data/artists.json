@@ -140,7 +140,7 @@
     "group": "WildFlower",
     "rank": "SSR",
     "position": "Center",
-    "genre": "Hip Hop",
+    "genre": "Hip-Hop",
     "skills": [
       "10 sec/1800 Damage",
       "30% Damage World Building Guard",
@@ -155,7 +155,7 @@
     "group": "Luna",
     "rank": "SSR",
     "position": "Dancer",
-    "genre": "Hip Hop",
+    "genre": "Hip-Hop",
     "skills": [
       "10 sec/1800 Damage",
       "12% Skill Damage Reduction",
@@ -170,7 +170,7 @@
     "group": "Tokyo48",
     "rank": "SSR",
     "position": "Vocalist",
-    "genre": "Hip Hop",
+    "genre": "Hip-Hop",
     "skills": [
       "10 sec/1800 Damage",
       "12% Reduction Basic Attack Damage",
@@ -185,7 +185,7 @@
     "group": "Luna",
     "rank": "SSR VIP",
     "position": "Vocalist",
-    "genre": "Hip Hop",
+    "genre": "Hip-Hop",
     "skills": [
       "10 sec/1800 Damage",
       "20% Skill Damage",
@@ -470,7 +470,7 @@
     "group": "Coral",
     "rank": "SSR",
     "position": "Dancer",
-    "genre": "Hip Hop",
+    "genre": "Hip-Hop",
     "skills": [
       "10 sec/1800 Damage",
       "20% Skill Damage",
@@ -500,7 +500,7 @@
     "group": "VenuLux",
     "rank": "SSR",
     "position": "Vocalist",
-    "genre": "Hip Hop",
+    "genre": "Hip-Hop",
     "skills": [
       "10 sec/1800 Damage",
       "20% Skill Damage",
@@ -560,7 +560,7 @@
     "group": "WildFlower",
     "rank": "SSR",
     "position": "Dancer",
-    "genre": "Hip Hop",
+    "genre": "Hip-Hop",
     "skills": [
       "10 sec/1800 Damage",
       "40% Gold Brick Gathering Speed",
@@ -575,7 +575,7 @@
     "group": "Rina",
     "rank": "SSR",
     "position": "Center",
-    "genre": "Hip Hop",
+    "genre": "Hip-Hop",
     "skills": [
       "10 sec/1800 Damage",
       "60% Basic Attack Damage",
@@ -650,7 +650,7 @@
     "group": "Breezara",
     "rank": "SSR",
     "position": "Dancer",
-    "genre": "Hip Hop",
+    "genre": "Hip-Hop",
     "skills": [
       "10 sec/1800 Damage",
       "240/DPS Attacking Enemy Company",
@@ -695,7 +695,7 @@
     "group": "WildFlower",
     "rank": "SSR",
     "position": "Center",
-    "genre": "Hip Hop",
+    "genre": "Hip-Hop",
     "skills": [
       "10 sec/1800 Damage",
       "10% Rally Fan Capacity",
@@ -785,7 +785,7 @@
     "group": "None",
     "rank": "SSR",
     "position": "Dancer",
-    "genre": "Hip Hop",
+    "genre": "Hip-Hop",
     "skills": [
       "10 sec/1800 Damage",
       "70% Basic Attack Damage",
@@ -935,7 +935,7 @@
     "group": "None",
     "rank": "SSR",
     "position": "Vocalist",
-    "genre": "Hip Hop",
+    "genre": "Hip-Hop",
     "skills": [
       "10 sec/1800 Damage",
       "240/DPS Attacking Group Center, Club, Landmark",
@@ -950,7 +950,7 @@
     "group": "None",
     "rank": "SSR",
     "position": "Vocalist",
-    "genre": "Hip Hop",
+    "genre": "Hip-Hop",
     "skills": [
       "10 sec/1800 Damage",
       "24% Damage to Player",
@@ -1040,7 +1040,7 @@
     "group": "None",
     "rank": "SSR",
     "position": "Vocalist",
-    "genre": "Hip Hop",
+    "genre": "Hip-Hop",
     "skills": [
       "10 sec/1800 Damage",
       "40% Damage to Player",
@@ -1144,7 +1144,7 @@
     "name": "Rena",
     "group": "None",
     "rank": "SSR",
-    "position": "",
+    "position": "Vocalist",
     "genre": "R&B",
     "skills": [
       "10 sec/1800 Damage",
@@ -1153,5 +1153,35 @@
     ],
     "build": "",
     "photos": "Tokyo5"
+  },
+    {
+    "id": 78,
+    "name": "Landy",
+    "group": "Kalani",
+    "rank": "SSR",
+    "position": "Center",
+    "genre": "Hip-Hop",
+    "skills": [
+      "10 sec/1800 Damage",
+      "80% Basic Attack Damage",
+      "12% Skill Damage"
+    ],
+    "build": "",
+    "photos": "Bali 5 - Warmup"
+  },
+    {
+    "id": 79,
+    "name": "Momosaki",
+    "group": "Kalani",
+    "rank": "SSR",
+    "position": "Vocalist",
+    "genre": "Rock",
+    "skills": [
+      "10 sec/1800 Damage",
+      "12% Reduction Basic Attack Damage",
+      "36% Damage World Building Guard"
+    ],
+    "build": "",
+    "photos": "Bali 5"
   }
 ]
