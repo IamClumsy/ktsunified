@@ -35,7 +35,7 @@ export function ShopsTablesProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch("/data/shops-tables.json");
+        const res = await fetch("/data/shops-tables.json", { cache: "no-store" });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         setState({ tables: data, loading: false, error: null });
