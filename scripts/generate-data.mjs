@@ -444,10 +444,70 @@ function generateCeoTables() {
   write("ceo-tables", result);
 }
 
+// ─── SHOP TABLES ─────────────────────────────────────────────────────────────
+
+function generateShopTables() {
+  const result = {};
+
+  function parseSimpleShop(filePath, sheetName, title, currency) {
+    if (!fs.existsSync(filePath)) { console.warn(`  ⚠ skip ${title}: file not found`); return null; }
+    const wb = XLSX.read(fs.readFileSync(filePath), { type: "buffer" });
+    const ws = wb.Sheets[sheetName];
+    if (!ws) { console.warn(`  ⚠ skip ${title}: sheet not found`); return null; }
+    const raw = XLSX.utils.sheet_to_json(ws, { header: 1 });
+    const items = [];
+    // Header at row 5, data from row 6: [Yes/No, item, qty, maxQty, price, subtotal]
+    for (let r = 6; r < raw.length; r++) {
+      const row = raw[r];
+      if (!Array.isArray(row) || !row[1]) continue;
+      const itemName = String(row[1]);
+      const maxQty = typeof row[3] === "number" ? row[3] : Number(row[3]) || 0;
+      const price = typeof row[4] === "number" ? row[4] : Number(row[4]) || 0;
+      if (!itemName || price === 0) continue;
+      items.push({ item: itemName, quantity: maxQty, price });
+    }
+    return { title, currency, items };
+  }
+
+  function parseVipShop() {
+    const filePath = path.join(SRC, "VIP Shop Calculator.xlsx");
+    if (!fs.existsSync(filePath)) { console.warn(`  ⚠ skip VIP shop: file not found`); return null; }
+    const wb = XLSX.read(fs.readFileSync(filePath), { type: "buffer" });
+    const ws = wb.Sheets["VIP"];
+    if (!ws) { console.warn(`  ⚠ skip VIP shop: sheet not found`); return null; }
+    const raw = XLSX.utils.sheet_to_json(ws, { header: 1 });
+    const items = [];
+    // Header at row 6, data from row 7: [Yes/No, vipLevel, item, qty, maxQty, price, subtotal]
+    for (let r = 7; r < raw.length; r++) {
+      const row = raw[r];
+      if (!Array.isArray(row) || !row[2]) continue;
+      const vipLevel = typeof row[1] === "number" ? row[1] : Number(row[1]) || 0;
+      const itemName = String(row[2]);
+      const maxQty = typeof row[4] === "number" ? row[4] : Number(row[4]) || 0;
+      const price = typeof row[5] === "number" ? row[5] : Number(row[5]) || 0;
+      if (!itemName || price === 0) continue;
+      items.push({ item: itemName, quantity: maxQty, price, vipLevel });
+    }
+    return { title: "VIP Shop", currency: "Diamonds", items };
+  }
+
+  const vip = parseVipShop();
+  if (vip) result.VIP = vip;
+
+  const abroad = parseSimpleShop(path.join(SRC, "Abroad Shop Calculator.xlsx"), "ABROAD", "Abroad Shop", "Abroad Coins");
+  if (abroad) result.ABROAD = abroad;
+
+  const parking = parseSimpleShop(path.join(SRC, "Parking Shop Calculator.xlsx"), "PARKING", "Parking Shop", "Parking Coins");
+  if (parking) result.PARKING = parking;
+
+  write("shops-tables", result);
+}
+
 // ─── RUN ──────────────────────────────────────────────────────────────────────
 
 console.log("Generating static data files…");
 generateCalcTables();
 generateSvsTables();
 generateCeoTables();
+generateShopTables();
 console.log("Done.");

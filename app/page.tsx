@@ -9,8 +9,9 @@ const CalcTab = lazy(() => import("@/app/components/calc/calc-tab").then((m) => 
 const CeoTab = lazy(() => import("@/app/components/ceo/ceo-tab").then((m) => ({ default: m.CeoTab })));
 const SvsTab = lazy(() => import("@/app/components/svs/svs-tab").then((m) => ({ default: m.SvsTab })));
 const TeamBuilderTab = lazy(() => import("@/app/components/team-builder/team-builder-tab").then((m) => ({ default: m.TeamBuilderTab })));
+const ShopsTab = lazy(() => import("@/app/components/shops/shops-tab").then((m) => ({ default: m.ShopsTab })));
 
-type Tab = "sr-artists" | "new-artists" | "resource-calc" | "ceo-event" | "svs-store" | "team-builder";
+type Tab = "sr-artists" | "new-artists" | "resource-calc" | "ceo-event" | "svs-store" | "team-builder" | "shops";
 
 const TABS: { id: Tab; label: string; accent: string; activeClass: string }[] = [
   {
@@ -49,6 +50,12 @@ const TABS: { id: Tab; label: string; accent: string; activeClass: string }[] = 
     accent: "emerald",
     activeClass: "bg-gradient-to-r from-emerald-600 to-teal-600 text-white border-emerald-500",
   },
+  {
+    id: "shops",
+    label: "Shops",
+    accent: "violet",
+    activeClass: "bg-gradient-to-r from-violet-600 to-purple-600 text-white border-violet-500",
+  },
 ];
 
 // Memoized so switching tabs doesn't re-render already-mounted tab subtrees
@@ -61,6 +68,7 @@ const TabContent = memo(function TabContent({ id }: { id: Tab }) {
       {id === "ceo-event" && <CeoTab />}
       {id === "svs-store" && <SvsTab />}
       {id === "team-builder" && <TeamBuilderTab />}
+      {id === "shops" && <ShopsTab />}
     </Suspense>
   );
 });
