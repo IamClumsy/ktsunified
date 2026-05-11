@@ -44,7 +44,7 @@ export function ShopSection({ shop, color, onTotalChange, remaining }: Props) {
     [shop.items, hasVipLevel],
   );
   const [myVipLevel, setMyVipLevel] = useState<number>(
-    hasVipLevel ? Math.max(...vipLevels) : 0,
+    hasVipLevel && vipLevels.length > 0 ? vipLevels[vipLevels.length - 1] : 0,
   );
   const [quantities, setQuantities] = useState<number[]>(() => shop.items.map(() => 0));
 

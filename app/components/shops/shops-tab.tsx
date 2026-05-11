@@ -102,7 +102,7 @@ function ShopsContent() {
           onChange={(e) =>
             setBudgets((p) => ({ ...p, [selectedShop]: e.target.value === "" ? "" : Number(e.target.value) }))
           }
-          placeholder={`Enter ${tables[selectedShop].currency} budget…`}
+          placeholder={`Enter ${tables[selectedShop]?.currency ?? "coins"} budget…`}
           className="flex-1 min-w-[160px] rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-violet-400/60"
         />
         {remaining !== null && (
@@ -171,7 +171,7 @@ function ShopsContent() {
         </button>
         <div className="flex items-center gap-3">
           <span className="text-sm uppercase tracking-widest text-slate-400">
-            Total {tables[selectedShop].currency}
+            Total {tables[selectedShop]?.currency ?? "coins"}
           </span>
           <span className={`text-2xl font-bold tabular-nums ${remaining !== null && remaining < 0 ? "text-red-400" : "text-white"}`}>
             {fmt(shopTotal)}
