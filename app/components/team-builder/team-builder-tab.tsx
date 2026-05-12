@@ -28,7 +28,6 @@ const GENRE_STYLE: Record<string, { inactive: string; active: string }> = {
   "Pop":        { inactive: "text-pink-400 border-slate-700 hover:border-pink-500/50",     active: "bg-gradient-to-r from-pink-600 to-rose-600 text-white border-pink-500" },
   "Hip-Hop":    { inactive: "text-purple-400 border-slate-700 hover:border-purple-500/50", active: "bg-gradient-to-r from-purple-600 to-violet-600 text-white border-purple-500" },
   "R&B":        { inactive: "text-amber-400 border-slate-700 hover:border-amber-500/50",   active: "bg-gradient-to-r from-amber-500 to-orange-500 text-white border-amber-500" },
-  "EDM":        { inactive: "text-cyan-400 border-slate-700 hover:border-cyan-500/50",     active: "bg-gradient-to-r from-cyan-600 to-sky-600 text-white border-cyan-500" },
   "Electronic": { inactive: "text-sky-400 border-slate-700 hover:border-sky-500/50",       active: "bg-gradient-to-r from-sky-600 to-blue-600 text-white border-sky-500" },
   "Rock":       { inactive: "text-orange-400 border-slate-700 hover:border-orange-500/50", active: "bg-gradient-to-r from-orange-600 to-red-600 text-white border-orange-500" },
 };
