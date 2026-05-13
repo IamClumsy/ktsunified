@@ -377,10 +377,12 @@ export function NewSrArtistTab() {
             ))}
           </div>
         )}
+      </div>
 
-        {/* Filter panel */}
-        {filtersOpen && (
-          <div className="mt-3 p-4 rounded-xl border border-slate-700 bg-slate-900/60 grid grid-cols-2 md:grid-cols-4 gap-3">
+      {/* Filter panel — outside sticky so it doesn't consume viewport on mobile */}
+      {filtersOpen && (
+        <div className="-mx-4 px-4 pb-4 pt-3 border-b border-slate-700 bg-slate-900/80 mb-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <div className="space-y-1">
               <label htmlFor="sr-filter-genre" className="text-xs uppercase tracking-widest text-slate-400">Genre</label>
               <select id="sr-filter-genre" value={selectedGenre} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedGenre(v)); }} className={selectClass}>
@@ -439,8 +441,8 @@ export function NewSrArtistTab() {
               </select>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Grade tally */}
       <div className="flex items-center justify-center gap-3 text-xs mb-4 mt-1">
