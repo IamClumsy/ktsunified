@@ -63,6 +63,32 @@ const TIER_ORDER = ["Best", "Good", "Okay", "Bad", "Worst"];
 
 const TEAM_SIZE = 5;
 
+type TeamStats = {
+  dmgFactor: number;
+  skillDmg: number;
+  basicAtk: number;
+  resistance: number;
+  sResist: number;
+  fanCap: number;
+  rallyCap: number;
+};
+
+function parseSkillContrib(skill: string): Partial<TeamStats> {
+  if (!skill) return {};
+  const t = skill.toLowerCase();
+  const m = skill.match(/(\d+)%/);
+  const pct = m ? parseInt(m[1], 10) : 0;
+  if (!pct) return {};
+  if (t.includes("damage to player")) return { dmgFactor: pct };
+  if (t.includes("skill damage reduction")) return { sResist: pct };
+  if (t.includes("skill damage") && !t.includes("reduc")) return { skillDmg: pct };
+  if (t.includes("basic attack") && t.includes("reduc")) return { resistance: pct };
+  if (t.includes("basic attack damage")) return { basicAtk: pct };
+  if (t.includes("rally fan capacity")) return { rallyCap: pct };
+  if (t.includes("fan capacity")) return { fanCap: pct };
+  return {};
+}
+
 export function TeamBuilderTab() {
   const [selectedGenre, setSelectedGenre] = useState("");
   const [team, setTeam] = useState<(Artist | null)[]>(Array(TEAM_SIZE).fill(null));
@@ -119,6 +145,18 @@ export function TeamBuilderTab() {
       }
     });
     return counts;
+  }, [team]);
+
+  const teamStats = useMemo(() => {
+    const s: TeamStats = { dmgFactor: 0, skillDmg: 0, basicAtk: 0, resistance: 0, sResist: 0, fanCap: 0, rallyCap: 0 };
+    team.forEach((artist) => {
+      if (!artist) return;
+      artist.skills.forEach((skill) => {
+        const contrib = parseSkillContrib(skill);
+        (Object.keys(contrib) as (keyof TeamStats)[]).forEach((k) => { s[k] += contrib[k] ?? 0; });
+      });
+    });
+    return s;
   }, [team]);
 
   function setSlot(slotIdx: number, artistId: string) {
@@ -396,6 +434,31 @@ export function TeamBuilderTab() {
                     {tier} ×{skillComposition[tier]}
                   </span>
                 ))}
+              </div>
+            )}
+
+            {/* Team stat breakdown */}
+            {filledCount > 0 && (
+              <div className="mt-4 pt-4 border-t border-slate-700/60">
+                <p className="text-xs uppercase tracking-widest text-slate-500 mb-3">Team Stats</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-0">
+                  {([
+                    { label: "DMG Factor", icon: "💥", value: teamStats.dmgFactor,   cls: "text-orange-400", pct: false },
+                    { label: "Skill DMG",  icon: "⚔️",  value: teamStats.skillDmg,   cls: "text-red-400",    pct: true  },
+                    { label: "Basic ATK",  icon: "👊",  value: teamStats.basicAtk,   cls: "text-emerald-400",pct: true  },
+                    { label: "Resistance", icon: "🛡️",  value: teamStats.resistance, cls: "text-cyan-400",   pct: true  },
+                    { label: "S.Resist",   icon: "✨",  value: teamStats.sResist,    cls: "text-teal-400",   pct: true  },
+                    { label: "Fan Cap",    icon: "🎵",  value: teamStats.fanCap,     cls: "text-yellow-400", pct: true  },
+                    { label: "Rally Cap",  icon: "🚀",  value: teamStats.rallyCap,   cls: "text-green-400",  pct: true  },
+                  ] as const).map(({ label, icon, value, cls, pct }) => (
+                    <div key={label} className="flex items-center justify-between border-b border-slate-800/60 py-2">
+                      <span className={`text-sm font-medium ${cls}`}>{icon} {label}</span>
+                      <span className="text-sm font-bold tabular-nums text-white">
+                        {value}{pct ? "%" : ""}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
           </div>
