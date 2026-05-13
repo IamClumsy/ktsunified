@@ -24,13 +24,24 @@ function calcPoints(artist: Artist): number {
 
 const GENRES = [...new Set(artistsData.map((a) => a.genre))].sort();
 
-const GENRE_STYLE: Record<string, { inactive: string; active: string }> = {
+const GENRE_STYLE_MAP: Record<string, { inactive: string; active: string }> = {
   "Pop":        { inactive: "text-pink-400 border-slate-700 hover:border-pink-500/50",     active: "bg-gradient-to-r from-pink-600 to-rose-600 text-white border-pink-500" },
   "Hip-Hop":    { inactive: "text-purple-400 border-slate-700 hover:border-purple-500/50", active: "bg-gradient-to-r from-purple-600 to-violet-600 text-white border-purple-500" },
   "R&B":        { inactive: "text-amber-400 border-slate-700 hover:border-amber-500/50",   active: "bg-gradient-to-r from-amber-500 to-orange-500 text-white border-amber-500" },
   "Electronic": { inactive: "text-sky-400 border-slate-700 hover:border-sky-500/50",       active: "bg-gradient-to-r from-sky-600 to-blue-600 text-white border-sky-500" },
   "Rock":       { inactive: "text-orange-400 border-slate-700 hover:border-orange-500/50", active: "bg-gradient-to-r from-orange-600 to-red-600 text-white border-orange-500" },
 };
+
+const GENRE_FALLBACKS = [
+  { inactive: "text-teal-400 border-slate-700 hover:border-teal-500/50",   active: "bg-gradient-to-r from-teal-600 to-cyan-600 text-white border-teal-500" },
+  { inactive: "text-lime-400 border-slate-700 hover:border-lime-500/50",   active: "bg-gradient-to-r from-lime-600 to-green-600 text-white border-lime-500" },
+  { inactive: "text-rose-400 border-slate-700 hover:border-rose-500/50",   active: "bg-gradient-to-r from-rose-600 to-pink-600 text-white border-rose-500" },
+  { inactive: "text-indigo-400 border-slate-700 hover:border-indigo-500/50", active: "bg-gradient-to-r from-indigo-600 to-violet-600 text-white border-indigo-500" },
+];
+
+function getGenreStyle(genre: string, genreIndex: number) {
+  return GENRE_STYLE_MAP[genre] ?? GENRE_FALLBACKS[genreIndex % GENRE_FALLBACKS.length];
+}
 
 const GRADE_BADGE: Record<string, string> = {
   S: "bg-yellow-400/20 text-yellow-300 border-yellow-400/50",
@@ -155,11 +166,8 @@ export function TeamBuilderTab() {
 
       {/* Genre selector */}
       <div className="flex flex-wrap gap-2 justify-center mb-10">
-        {GENRES.map((genre) => {
-          const style = GENRE_STYLE[genre] ?? {
-            inactive: "text-slate-400 border-slate-700 hover:border-slate-500",
-            active: "bg-slate-700 text-white border-slate-500",
-          };
+        {GENRES.map((genre, genreIndex) => {
+          const style = getGenreStyle(genre, genreIndex);
           const isActive = selectedGenre === genre;
           return (
             <button
