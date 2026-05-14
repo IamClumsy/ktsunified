@@ -81,6 +81,7 @@ export function NewArtistTab() {
   const [selectedSkill3, setSelectedSkill3] = useState("");
   const [selectedRanking, setSelectedRanking] = useState("");
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [showPics, setShowPics] = useState(true);
 
   useEffect(() => {
     const onScroll = () => setShowScrollTop(window.scrollY > 400);
@@ -264,6 +265,19 @@ export function NewArtistTab() {
               </button>
             ))}
           </div>
+          {/* Pics toggle — only relevant in card mode */}
+          {viewMode === "cards" && (
+            <button
+              onClick={() => setShowPics((v) => !v)}
+              className={`px-3 py-2.5 rounded-lg border text-sm transition-colors ${
+                showPics
+                  ? "bg-pink-600 text-white border-pink-500 font-semibold"
+                  : "bg-slate-900 text-slate-400 border-slate-700 hover:text-slate-200"
+              }`}
+            >
+              Pics
+            </button>
+          )}
         </div>
 
         {/* Active filter pills */}
@@ -374,7 +388,7 @@ export function NewArtistTab() {
                 key={artist.id}
                 className={`rounded-xl border bg-gradient-to-br from-violet-900/60 via-fuchsia-900/40 to-slate-900/80 p-3 flex flex-col gap-2 transition-all duration-150 hover:scale-[1.02] hover:brightness-110 ${GRADE_GLOW[grade] ?? GRADE_GLOW.F}`}
               >
-                {artist.pic && (
+                {showPics && artist.pic && (
                   <div className="relative w-full aspect-square overflow-hidden rounded-lg bg-slate-800/60">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
