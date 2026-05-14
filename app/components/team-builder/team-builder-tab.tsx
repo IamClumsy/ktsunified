@@ -267,12 +267,12 @@ export function TeamBuilderTab() {
                   return (
                     <div key={a.id} className="rounded-xl border border-slate-700/60 bg-slate-900/60 p-3 flex flex-col gap-1.5">
                       {a.pic ? (
-                        <div className="relative w-full overflow-hidden rounded-lg bg-slate-800/60">
+                        <div className="relative w-full aspect-[3/4] overflow-hidden rounded-lg bg-slate-800/60">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src={`/images/artists/${a.pic}.webp`}
                             alt={a.name}
-                            className="w-full object-cover object-top"
+                            className="w-full h-full object-cover object-top"
                           />
                           <div className="absolute top-1.5 left-1.5 right-1.5 flex items-center justify-between">
                             <span className="text-xs text-slate-300 bg-slate-900/70 px-1.5 py-0.5 rounded">#{i + 1}</span>
@@ -351,12 +351,12 @@ export function TeamBuilderTab() {
                   {artist ? (
                     <>
                       {artist.pic && (
-                        <div className="w-full overflow-hidden rounded-xl bg-slate-800/60">
+                        <div className="w-full aspect-[3/4] overflow-hidden rounded-xl bg-slate-800/60">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src={`/images/artists/${artist.pic}.webp`}
                             alt={artist.name}
-                            className="w-full object-cover object-top"
+                            className="w-full h-full object-cover object-top"
                           />
                         </div>
                       )}
