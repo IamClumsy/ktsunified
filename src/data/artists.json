@@ -12,7 +12,8 @@
       "50% Basic Attack Damage"
     ],
     "build": "",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Kokoro"
   },
   {
     "id": 2,
@@ -27,7 +28,8 @@
       "12% Skill Damage Reduction"
     ],
     "build": "Damage Reduction",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Everly"
   },
   {
     "id": 3,
@@ -42,7 +44,8 @@
       "50% Basic Attack Damage"
     ],
     "build": "",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Alice"
   },
   {
     "id": 4,
@@ -57,7 +60,8 @@
       "20% Skill Damage"
     ],
     "build": "",
-    "photos": "Own Photos"
+    "photos": "Own Photos",
+    "pic": "Cindy"
   },
   {
     "id": 5,
@@ -72,7 +76,8 @@
       "30% Damage to Player"
     ],
     "build": "",
-    "photos": "Own Photos"
+    "photos": "Own Photos",
+    "pic": "Longkui"
   },
   {
     "id": 6,
@@ -87,7 +92,8 @@
       "10% Fan Capacity"
     ],
     "build": "Single Car",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Anya"
   },
   {
     "id": 7,
@@ -102,7 +108,8 @@
       "20% Damage to Player"
     ],
     "build": "Rally",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Sari"
   },
   {
     "id": 8,
@@ -117,7 +124,8 @@
       "20% Damage to Player"
     ],
     "build": "Rally",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Nastassja"
   },
   {
     "id": 9,
@@ -132,7 +140,8 @@
       "10% Fan Capacity"
     ],
     "build": "Single Car",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Caroline"
   },
   {
     "id": 10,
@@ -147,7 +156,8 @@
       "12% Skill Damage Reduction"
     ],
     "build": "",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Audrey"
   },
   {
     "id": 11,
@@ -162,7 +172,8 @@
       "12% Reduction Basic Attack Damage"
     ],
     "build": "Damage Reduction",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Avery"
   },
   {
     "id": 12,
@@ -177,7 +188,8 @@
       "12% Skill Damage Reduction"
     ],
     "build": "Damage Reduction",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Ayaka"
   },
   {
     "id": 13,
@@ -192,7 +204,8 @@
       "10% Fan Capacity"
     ],
     "build": "Single Car",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Bella"
   },
   {
     "id": 14,
@@ -207,7 +220,8 @@
       "20% Damage to Player"
     ],
     "build": "Rally",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Chizuru"
   },
   {
     "id": 15,
@@ -222,7 +236,8 @@
       "20% Skill Damage"
     ],
     "build": "",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Aurora"
   },
   {
     "id": 16,
@@ -237,7 +252,8 @@
       "10% Fan Capacity"
     ],
     "build": "Single Car",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Savannah"
   },
   {
     "id": 17,
@@ -252,7 +268,8 @@
       "30% Damage World Building Guard"
     ],
     "build": "HQ Defense",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Brooklyn"
   },
   {
     "id": 18,
@@ -267,7 +284,8 @@
       "30% Damage to Player"
     ],
     "build": "",
-    "photos": "Own Photos"
+    "photos": "Own Photos",
+    "pic": "Monica"
   },
   {
     "id": 19,
@@ -282,7 +300,8 @@
       "12% Skill Damage Reduction"
     ],
     "build": "Damage Reduction",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Moana"
   },
   {
     "id": 20,
@@ -297,7 +316,8 @@
       "50% Basic Attack Damage"
     ],
     "build": "",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Zendaya"
   },
   {
     "id": 21,
@@ -312,7 +332,8 @@
       "50% Basic Attack Damage"
     ],
     "build": "HQ Defense",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Nova"
   },
   {
     "id": 22,
@@ -327,7 +348,8 @@
       "75% Drive Speed"
     ],
     "build": "",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Julia"
   },
   {
     "id": 23,
@@ -342,7 +364,8 @@
       "10% Fan Capacity"
     ],
     "build": "Single Car",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Sora"
   },
   {
     "id": 24,
@@ -357,7 +380,8 @@
       "40% Gold Brick Gathering Speed"
     ],
     "build": "Gold Gathering",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Kesnia"
   },
   {
     "id": 25,
@@ -372,7 +396,8 @@
       "50% Basic Attack Damage"
     ],
     "build": "",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Ratih"
   },
   {
     "id": 26,
@@ -387,7 +412,8 @@
       "50% Basic Attack Damage"
     ],
     "build": "",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Claire"
   },
   {
     "id": 27,
@@ -402,7 +428,8 @@
       "12% Skill Damage Reduction"
     ],
     "build": "Damage Reduction",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Paisley"
   },
   {
     "id": 28,
@@ -417,7 +444,8 @@
       "50% Basic Attack Damage"
     ],
     "build": "",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Yuuko"
   },
   {
     "id": 29,
@@ -432,7 +460,8 @@
       "20% Skill Damage"
     ],
     "build": "",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Skylar"
   },
   {
     "id": 30,
@@ -447,7 +476,8 @@
       "24% Damage to Player"
     ],
     "build": "",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Kasha"
   },
   {
     "id": 31,
@@ -462,7 +492,8 @@
       "10% Fan Capacity"
     ],
     "build": "Single Car",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Talia"
   },
   {
     "id": 32,
@@ -477,7 +508,8 @@
       "50% Basic Attack Damage"
     ],
     "build": "",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Leilani"
   },
   {
     "id": 33,
@@ -492,7 +524,8 @@
       "20% Damage to Player"
     ],
     "build": "Rally",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Xenia"
   },
   {
     "id": 34,
@@ -507,7 +540,8 @@
       "50% Basic Attack Damage"
     ],
     "build": "",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Daphne"
   },
   {
     "id": 35,
@@ -522,7 +556,8 @@
       "10% Fan Capacity"
     ],
     "build": "Single Car",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Calliope"
   },
   {
     "id": 36,
@@ -537,7 +572,8 @@
       "50% Basic Attack Damage"
     ],
     "build": "",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Ariadne"
   },
   {
     "id": 37,
@@ -552,7 +588,8 @@
       "50% Basic Attack Damage"
     ],
     "build": "",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Eirene"
   },
   {
     "id": 38,
@@ -567,7 +604,8 @@
       "20% Damage to Player"
     ],
     "build": "Gold Gathering",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Megan"
   },
   {
     "id": 39,
@@ -582,7 +620,8 @@
       "12% Fan Capacity"
     ],
     "build": "Single Car",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Haruki"
   },
   {
     "id": 40,
@@ -597,7 +636,8 @@
       "10% Fan Capacity"
     ],
     "build": "Single Car",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Mellissa"
   },
   {
     "id": 41,
@@ -612,7 +652,8 @@
       "25% Damage to Player"
     ],
     "build": "",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Riku"
   },
   {
     "id": 42,
@@ -627,7 +668,8 @@
       "60% Basic Attack Damage"
     ],
     "build": "",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Miyuki"
   },
   {
     "id": 43,
@@ -642,7 +684,8 @@
       "40% Gold Brick Gathering Speed"
     ],
     "build": "Gold Gathering",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Noora"
   },
   {
     "id": 44,
@@ -657,7 +700,8 @@
       "12% Fan Capacity"
     ],
     "build": "",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Ningsih"
   },
   {
     "id": 45,
@@ -672,7 +716,8 @@
       "24% Skill Damage"
     ],
     "build": "",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Dewi"
   },
   {
     "id": 46,
@@ -687,7 +732,8 @@
       "36% Damage World Building Guard"
     ],
     "build": "HQ Defense",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Lestari"
   },
   {
     "id": 47,
@@ -702,7 +748,8 @@
       "20% Damage to Player"
     ],
     "build": "Rally",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Hestia"
   },
   {
     "id": 48,
@@ -717,7 +764,8 @@
       "20% Damage to Player"
     ],
     "build": "",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Ruby"
   },
   {
     "id": 49,
@@ -732,7 +780,8 @@
       "50% Basic Attack Damage"
     ],
     "build": "Single Car",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Rosemary"
   },
   {
     "id": 50,
@@ -747,7 +796,8 @@
       "10% Rally Fan Capacity"
     ],
     "build": "Single Car, Rally",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Kelly"
   },
   {
     "id": 51,
@@ -762,7 +812,8 @@
       "14% Fan Capacity"
     ],
     "build": "Single Car",
-    "photos": "Tokyo4"
+    "photos": "Tokyo4",
+    "pic": "Aya"
   },
   {
     "id": 52,
@@ -777,7 +828,8 @@
       "12% Reduction Basic Attack Damage"
     ],
     "build": "Damage Reduction",
-    "photos": "Tokyo4 - Dice"
+    "photos": "Tokyo4 - Dice",
+    "pic": "Yumeno"
   },
   {
     "id": 53,
@@ -792,7 +844,8 @@
       "12% Reduction Basic Attack Damage"
     ],
     "build": "Damage Reduction",
-    "photos": "Tokyo4 - Shop"
+    "photos": "Tokyo4 - Shop",
+    "pic": "Mio"
   },
   {
     "id": 54,
@@ -807,7 +860,8 @@
       "12% Skill Damage Reduction"
     ],
     "build": "Damage Reduction",
-    "photos": "Bali4 - Warmup"
+    "photos": "Bali4 - Warmup",
+    "pic": "Sienna"
   },
   {
     "id": 55,
@@ -822,7 +876,8 @@
       "14% Fan Capacity"
     ],
     "build": "Single Car",
-    "photos": "Bali4 - Dice"
+    "photos": "Bali4 - Dice",
+    "pic": "Margot"
   },
   {
     "id": 56,
@@ -837,7 +892,8 @@
       "12% Reduction Basic Attack Damage"
     ],
     "build": "Single Car",
-    "photos": "Bali4 - Shop"
+    "photos": "Bali4 - Shop",
+    "pic": "Valentina"
   },
   {
     "id": 57,
@@ -852,7 +908,8 @@
       "12% Reduction Basic Attack Damage"
     ],
     "build": "Single Car",
-    "photos": "Rome3 - Shop"
+    "photos": "Rome3 - Shop",
+    "pic": "Flora"
   },
   {
     "id": 58,
@@ -867,7 +924,8 @@
       "12% Skill Damage Reduction"
     ],
     "build": "",
-    "photos": "Bali3 - Warmup"
+    "photos": "Bali3 - Warmup",
+    "pic": "Isla"
   },
   {
     "id": 59,
@@ -882,7 +940,8 @@
       "12% Fan Capacity"
     ],
     "build": "Single Car",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Octavia"
   },
   {
     "id": 60,
@@ -897,7 +956,8 @@
       "12% Skill Damage Reduction"
     ],
     "build": "Damage Reduction",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Hikari"
   },
   {
     "id": 61,
@@ -912,7 +972,8 @@
       "12% Fan Capacity"
     ],
     "build": "Single Car",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Aurelia"
   },
   {
     "id": 62,
@@ -927,7 +988,8 @@
       "12% Fan Capacity"
     ],
     "build": "Single Car",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Rin"
   },
   {
     "id": 63,
@@ -942,7 +1004,8 @@
       "12% Fan Capacity"
     ],
     "build": "Single Car",
-    "photos": "Bali3 - Dice"
+    "photos": "Bali3 - Dice",
+    "pic": "Marina"
   },
   {
     "id": 64,
@@ -957,7 +1020,8 @@
       "24% Damage to Player"
     ],
     "build": "",
-    "photos": "Rome3 - Warmup"
+    "photos": "Rome3 - Warmup",
+    "pic": "Claudius"
   },
   {
     "id": 65,
@@ -972,7 +1036,8 @@
       "12% Skill Damage Reduction"
     ],
     "build": "HQ Defense",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Cornelia"
   },
   {
     "id": 66,
@@ -987,7 +1052,8 @@
       "12% Reduction Basic Attack Damage"
     ],
     "build": "",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Eri"
   },
   {
     "id": 67,
@@ -1002,7 +1068,8 @@
       "12% Skill Damage Reduction"
     ],
     "build": "HQ Defense",
-    "photos": "Bali3 - Shop"
+    "photos": "Bali3 - Shop",
+    "pic": "Vivienne"
   },
   {
     "id": 68,
@@ -1017,7 +1084,8 @@
       "12% Fan Capacity"
     ],
     "build": "",
-    "photos": "Rome3 - Dice"
+    "photos": "Rome3 - Dice",
+    "pic": "Antonia"
   },
   {
     "id": 69,
@@ -1077,7 +1145,8 @@
       "14% Fan Capacity"
     ],
     "build": "Single Car",
-    "photos": "Rome4 - Dice"
+    "photos": "Rome4 - Dice",
+    "pic": "Kendell"
   },
   {
     "id": 73,
@@ -1092,7 +1161,8 @@
       "28% Skill Damage"
     ],
     "build": "",
-    "photos": "Rome4 - Warmup"
+    "photos": "Rome4 - Warmup",
+    "pic": "Sloane"
   },
   {
     "id": 74,
@@ -1107,7 +1177,8 @@
       "12% Reduction Basic Attack Damage"
     ],
     "build": "Damage Reduction",
-    "photos": "Rome4 - Shop"
+    "photos": "Rome4 - Shop",
+    "pic": "Valerie"
   },
   {
     "id": 75,
@@ -1137,7 +1208,8 @@
       "16% Fan Capacity"
     ],
     "build": "Single Car",
-    "photos": "Tokyo5"
+    "photos": "Tokyo5",
+    "pic": "Mio"
   },
   {
     "id": 77,
@@ -1154,7 +1226,7 @@
     "build": "",
     "photos": "Tokyo5"
   },
-    {
+  {
     "id": 78,
     "name": "Landy",
     "group": "Kalani",
@@ -1169,7 +1241,7 @@
     "build": "",
     "photos": "Bali 5 - Warmup"
   },
-    {
+  {
     "id": 79,
     "name": "Momosaki",
     "group": "Kalani",

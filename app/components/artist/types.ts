@@ -10,6 +10,7 @@ export interface Artist {
   thoughts?: string;
   build?: string;
   photos?: string;
+  pic?: string;
 }
 
 export enum LetterGrade {
