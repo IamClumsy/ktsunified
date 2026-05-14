@@ -1100,7 +1100,8 @@
       "10% Gain Fans Selling CDs"
     ],
     "build": "Gold Gathering",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Yoon"
   },
   {
     "id": 70,
@@ -1115,7 +1116,8 @@
       "20% Rally Fan Capacity"
     ],
     "build": "Rally",
-    "photos": "Own Photos"
+    "photos": "Own Photos",
+    "pic": "Rhea"
   },
   {
     "id": 71,
@@ -1130,7 +1132,8 @@
       "50% Basic Attack Damage"
     ],
     "build": "Rally",
-    "photos": "Universal"
+    "photos": "Universal",
+    "pic": "Belle"
   },
   {
     "id": 72,
