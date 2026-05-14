@@ -1242,7 +1242,8 @@
       "12% Skill Damage"
     ],
     "build": "",
-    "photos": "Bali 5 - Warmup"
+    "photos": "Bali 5 - Warmup",
+    "pic": "Landy"
   },
   {
     "id": 79,
@@ -1257,6 +1258,7 @@
       "36% Damage World Building Guard"
     ],
     "build": "",
-    "photos": "Bali 5"
+    "photos": "Bali 5",
+    "pic": "Momosaki"
   }
 ]
