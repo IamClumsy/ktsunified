@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useTransition } from "react";
 import artistsDataRaw from "@/src/data/artists.json";
 import { Artist } from "../artist/types";
 import { categorizeSkills } from "../artist/utils/skillCategorization";
@@ -93,6 +93,7 @@ export function TeamBuilderTab() {
   const [selectedGenre, setSelectedGenre] = useState("");
   const [team, setTeam] = useState<(Artist | null)[]>(Array(TEAM_SIZE).fill(null));
   const [lastDelta, setLastDelta] = useState<number | null>(null);
+  const [, startTransition] = useTransition();
 
   const genreArtists = useMemo(
     () => artistsData.filter((a) => a.genre === selectedGenre).sort((a, b) => calcPoints(b) - calcPoints(a)),
@@ -184,14 +185,18 @@ export function TeamBuilderTab() {
   }
 
   function changeGenre(genre: string) {
-    setSelectedGenre(genre);
-    setTeam(Array(TEAM_SIZE).fill(null));
-    setLastDelta(null);
+    startTransition(() => {
+      setSelectedGenre(genre);
+      setTeam(Array(TEAM_SIZE).fill(null));
+      setLastDelta(null);
+    });
   }
 
   function clearTeam() {
-    setTeam(Array(TEAM_SIZE).fill(null));
-    setLastDelta(null);
+    startTransition(() => {
+      setTeam(Array(TEAM_SIZE).fill(null));
+      setLastDelta(null);
+    });
   }
 
   return (
