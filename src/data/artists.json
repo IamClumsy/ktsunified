@@ -1196,7 +1196,8 @@
       "12% Reduction Basic Attack Damage"
     ],
     "build": "Damage Reduction",
-    "photos": "Tokyo5"
+    "photos": "Tokyo5",
+    "pic": "Hana"
   },
   {
     "id": 76,
@@ -1227,7 +1228,8 @@
       "32% Damage to Player"
     ],
     "build": "",
-    "photos": "Tokyo5"
+    "photos": "Tokyo5",
+    "pic": "Rena"
   },
   {
     "id": 78,
