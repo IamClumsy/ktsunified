@@ -946,7 +946,7 @@
   {
     "id": 60,
     "name": "Hikari",
-    "group": "None",
+    "group": "Sora",
     "rank": "SSR",
     "position": "Center",
     "genre": "Rock",
@@ -978,7 +978,7 @@
   {
     "id": 62,
     "name": "Rin",
-    "group": "None",
+    "group": "Sora",
     "rank": "SSR",
     "position": "Vocalist",
     "genre": "Electronic",
@@ -1042,7 +1042,7 @@
   {
     "id": 66,
     "name": "Eri",
-    "group": "None",
+    "group": "Sora",
     "rank": "SSR",
     "position": "Dancer",
     "genre": "R&B",
