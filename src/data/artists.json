@@ -914,7 +914,7 @@
   {
     "id": 58,
     "name": "Isla",
-    "group": "None",
+    "group": "Lemora",
     "rank": "SSR",
     "position": "Center",
     "genre": "Pop",
@@ -994,7 +994,7 @@
   {
     "id": 63,
     "name": "Marina",
-    "group": "None",
+    "group": "Lemora",
     "rank": "SSR",
     "position": "Vocalist",
     "genre": "Hip-Hop",
@@ -1058,7 +1058,7 @@
   {
     "id": 67,
     "name": "Vivienne",
-    "group": "None",
+    "group": "Lemora",
     "rank": "SSR",
     "position": "Dancer",
     "genre": "Rock",
