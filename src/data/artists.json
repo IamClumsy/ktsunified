@@ -25,7 +25,7 @@
     "skills": [
       "10 sec/1800 Damage",
       "12% Reduction Basic Attack Damage",
-      "12% Skill Damage Reduction"
+      "20% Skill Damage"
     ],
     "build": "Damage Reduction",
     "photos": "Universal",
@@ -56,7 +56,7 @@
     "genre": "Electronic",
     "skills": [
       "10 sec/1800 Damage",
-      "15% Reduction Basic Attack Damage",
+      "12% Reduction Basic Attack Damage",
       "20% Skill Damage"
     ],
     "build": "",
@@ -88,7 +88,7 @@
     "genre": "Electronic",
     "skills": [
       "10 sec/1800 Damage",
-      "180/DPS Attacking Group Center, Club, Landmark",
+      "200/DPS Attacking Group Center, Club, Landmark",
       "10% Fan Capacity"
     ],
     "build": "Single Car",
@@ -136,7 +136,7 @@
     "genre": "Electronic",
     "skills": [
       "10 sec/1800 Damage",
-      "20% Skill Damage",
+      "200 DPS Attacking Enemy Group Center, Club or Landmark",
       "10% Fan Capacity"
     ],
     "build": "Single Car",
@@ -648,8 +648,8 @@
     "genre": "Rock",
     "skills": [
       "10 sec/1800 Damage",
-      "15% Reduction Basic Attack Damage",
-      "25% Damage to Player"
+      "12% Reduction Basic Attack Damage",
+      "24% Damage to Player"
     ],
     "build": "",
     "photos": "Universal",
@@ -664,7 +664,7 @@
     "genre": "Electronic",
     "skills": [
       "10 sec/1800 Damage",
-      "15% Reduction Basic Attack Damage",
+      "12% Reduction Basic Attack Damage",
       "60% Basic Attack Damage"
     ],
     "build": "",
@@ -1064,7 +1064,7 @@
     "genre": "Rock",
     "skills": [
       "10 sec/1800 Damage",
-      "240/DPS Defending HQ, GH, Club, LM",
+      "200/DPS Defending HQ, GH, Club, LM",
       "12% Skill Damage Reduction"
     ],
     "build": "HQ Defense",
