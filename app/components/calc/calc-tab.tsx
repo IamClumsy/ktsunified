@@ -2,6 +2,7 @@
 
 import { ReactNode, useState } from "react";
 import { CalcTablesProvider, useCalcTables } from "./calc-context";
+import { CalcSectionSkeleton } from "@/app/components/ui/skeleton";
 import { Artists } from "./sections/artists";
 import { Assets } from "./sections/assets";
 import { HqGlass } from "./sections/hq-glass";
@@ -20,7 +21,7 @@ import { Blueprints } from "./sections/blueprints";
 function SectionGroup({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="space-y-4">
-      <div className="sticky top-16 z-20 -mx-4 px-4 py-1.5 bg-slate-950/95 backdrop-blur-sm flex items-center gap-3">
+      <div className="sticky top-12 md:top-16 z-20 -mx-4 px-4 py-1.5 bg-slate-950/95 backdrop-blur-sm flex items-center gap-3">
         <span className="text-xs uppercase tracking-[0.25em] text-slate-400 font-semibold">{label}</span>
         <div className="flex-1 h-px bg-slate-700/60" />
       </div>
@@ -34,7 +35,22 @@ function SectionGroup({ label, children }: { label: string; children: ReactNode 
 function CalcContent({ resetKey }: { resetKey: number }) {
   const { loading, error } = useCalcTables();
 
-  if (loading) return <div className="flex items-center justify-center py-24"><p className="text-slate-400">Loading calculator data…</p></div>;
+  if (loading) return (
+    <div className="space-y-10">
+      {["Artist", "HQ", "Collection", "Car"].map((label) => (
+        <div key={label} className="space-y-4">
+          <div className="sticky top-12 md:top-16 z-20 -mx-4 px-4 py-1.5 bg-slate-950/95 backdrop-blur-sm flex items-center gap-3">
+            <span className="text-xs uppercase tracking-[0.25em] text-slate-400 font-semibold">{label}</span>
+            <div className="flex-1 h-px bg-slate-700/60" />
+          </div>
+          <div className="grid gap-6 md:grid-cols-2">
+            <CalcSectionSkeleton />
+            <CalcSectionSkeleton />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
   if (error) return <div className="flex items-center justify-center py-24"><p className="text-red-400">Error: {error}</p></div>;
 
   return (

@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, useMemo, useTransition, useEffect } from "react";
+import Image from "next/image";
 import artistsDataRaw from "@/src/data/artists.json";
 import { Artist } from "./types";
 import { categorizeSkills } from "./utils/skillCategorization";
 import { getSkillClass, getRankingClass } from "./utils/skillStyling";
 import { getLetterGrade } from "./utils/artistCalculations";
 import { useArtistFilters } from "./hooks/useArtistFilters";
+import { BottomSheet } from "@/app/components/ui/bottom-sheet";
 
 const artistsData = artistsDataRaw as Artist[];
 
@@ -202,7 +204,7 @@ export function NewArtistTab() {
       </header>
 
       {/* Controls row — sticky under the page header */}
-      <div className="sticky top-24 z-40 -mx-4 px-4 pb-3 pt-2 bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/40 mb-4">
+      <div className="sticky top-12 md:top-[72px] z-40 -mx-4 px-4 pb-3 pt-2 bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/40 mb-4">
         <div className="flex items-center justify-center gap-2 flex-wrap">
           {/* Always-visible search */}
           <input
@@ -302,56 +304,62 @@ export function NewArtistTab() {
         )}
       </div>
 
-      {/* Filter panel — outside sticky so it doesn't consume viewport on mobile */}
-      {filtersOpen && (
-        <div className="-mx-4 px-4 pb-4 pt-3 border-b border-slate-700 bg-slate-900/80 mb-4">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            <div className="space-y-1">
-              <label htmlFor="ssr-filter-genre" className="text-xs uppercase tracking-widest text-slate-400">Genre</label>
-              <select id="ssr-filter-genre" value={selectedGenre} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedGenre(v)); }} className={selectClass}>
-                <option value="">All Genres</option>
-                {genres.map((g) => <option key={g} value={g}>{g}</option>)}
-              </select>
-            </div>
-            <div className="space-y-1">
-              <label htmlFor="ssr-filter-role" className="text-xs uppercase tracking-widest text-slate-400">Role</label>
-              <select id="ssr-filter-role" value={selectedRole} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedRole(v)); }} className={selectClass}>
-                <option value="">All Roles</option>
-                {roles.map((r) => <option key={r} value={r}>{r}</option>)}
-              </select>
-            </div>
-            <div className="space-y-1">
-              <label htmlFor="ssr-filter-skill2" className="text-xs uppercase tracking-widest text-slate-400">Skill 2</label>
-              <select id="ssr-filter-skill2" value={selectedSkill} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedSkill(v)); }} className={selectClass}>
-                <option value="">All Skills</option>
-                <optgroup label="Best">{skill2Categories.bestSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-                <optgroup label="Good">{skill2Categories.goodSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-                <optgroup label="Okay">{skill2Categories.okaySkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-                <optgroup label="Bad">{skill2Categories.badSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-                <optgroup label="Worst">{skill2Categories.worstSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-              </select>
-            </div>
-            <div className="space-y-1">
-              <label htmlFor="ssr-filter-skill3" className="text-xs uppercase tracking-widest text-slate-400">Skill 3</label>
-              <select id="ssr-filter-skill3" value={selectedSkill3} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedSkill3(v)); }} className={selectClass}>
-                <option value="">All Skills</option>
-                <optgroup label="Best">{skill3Categories.bestSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-                <optgroup label="Good">{skill3Categories.goodSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-                <optgroup label="Okay">{skill3Categories.okaySkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-                <optgroup label="Bad">{skill3Categories.badSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-                <optgroup label="Worst">{skill3Categories.worstSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-              </select>
-            </div>
-            <div className="space-y-1">
-              <label htmlFor="ssr-filter-ranking" className="text-xs uppercase tracking-widest text-slate-400">Ranking</label>
-              <select id="ssr-filter-ranking" value={selectedRanking} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedRanking(v)); }} className={selectClass}>
-                <option value="">All Rankings</option>
-                {["S", "A", "B", "C", "F"].map((r) => <option key={r} value={r}>{r}</option>)}
-              </select>
-            </div>
+      {/* Filter bottom sheet */}
+      <BottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="Filters">
+        <div className="grid grid-cols-2 gap-3">
+          <div className="space-y-1">
+            <label htmlFor="ssr-filter-genre" className="text-xs uppercase tracking-widest text-slate-400">Genre</label>
+            <select id="ssr-filter-genre" value={selectedGenre} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedGenre(v)); }} className={selectClass}>
+              <option value="">All Genres</option>
+              {genres.map((g) => <option key={g} value={g}>{g}</option>)}
+            </select>
+          </div>
+          <div className="space-y-1">
+            <label htmlFor="ssr-filter-role" className="text-xs uppercase tracking-widest text-slate-400">Role</label>
+            <select id="ssr-filter-role" value={selectedRole} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedRole(v)); }} className={selectClass}>
+              <option value="">All Roles</option>
+              {roles.map((r) => <option key={r} value={r}>{r}</option>)}
+            </select>
+          </div>
+          <div className="space-y-1">
+            <label htmlFor="ssr-filter-skill2" className="text-xs uppercase tracking-widest text-slate-400">Skill 2</label>
+            <select id="ssr-filter-skill2" value={selectedSkill} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedSkill(v)); }} className={selectClass}>
+              <option value="">All Skills</option>
+              <optgroup label="Best">{skill2Categories.bestSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+              <optgroup label="Good">{skill2Categories.goodSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+              <optgroup label="Okay">{skill2Categories.okaySkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+              <optgroup label="Bad">{skill2Categories.badSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+              <optgroup label="Worst">{skill2Categories.worstSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+            </select>
+          </div>
+          <div className="space-y-1">
+            <label htmlFor="ssr-filter-skill3" className="text-xs uppercase tracking-widest text-slate-400">Skill 3</label>
+            <select id="ssr-filter-skill3" value={selectedSkill3} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedSkill3(v)); }} className={selectClass}>
+              <option value="">All Skills</option>
+              <optgroup label="Best">{skill3Categories.bestSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+              <optgroup label="Good">{skill3Categories.goodSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+              <optgroup label="Okay">{skill3Categories.okaySkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+              <optgroup label="Bad">{skill3Categories.badSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+              <optgroup label="Worst">{skill3Categories.worstSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+            </select>
+          </div>
+          <div className="space-y-1 col-span-2">
+            <label htmlFor="ssr-filter-ranking" className="text-xs uppercase tracking-widest text-slate-400">Ranking</label>
+            <select id="ssr-filter-ranking" value={selectedRanking} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedRanking(v)); }} className={selectClass}>
+              <option value="">All Rankings</option>
+              {["S", "A", "B", "C", "F"].map((r) => <option key={r} value={r}>{r}</option>)}
+            </select>
           </div>
         </div>
-      )}
+        {activeFilterCount > 0 && (
+          <button
+            onClick={() => { clearFilters(); setFiltersOpen(false); }}
+            className="mt-4 w-full py-3 rounded-xl border border-red-500/40 text-red-400 text-sm font-medium hover:bg-red-500/10 transition-colors"
+          >
+            Clear all filters
+          </button>
+        )}
+      </BottomSheet>
 
       {/* Grade tally — click to quick-filter by grade */}
       <div className="flex items-center justify-center gap-3 text-xs mb-4 mt-1">
@@ -362,7 +370,7 @@ export function NewArtistTab() {
             <button
               key={g}
               onClick={() => startTransition(() => setSelectedRanking(isActive ? "" : g))}
-              className={`font-bold px-2 py-0.5 rounded-full transition-colors ${colorClass} ${
+              className={`font-bold px-3 py-1.5 min-h-[36px] rounded-full transition-colors ${colorClass} ${
                 isActive ? "bg-slate-700 ring-1 ring-current" : "hover:bg-slate-800"
               }`}
             >
@@ -386,15 +394,16 @@ export function NewArtistTab() {
             return (
               <div
                 key={artist.id}
-                className={`rounded-xl border bg-gradient-to-br from-violet-900/60 via-fuchsia-900/40 to-slate-900/80 p-3 flex flex-col gap-2 transition-all duration-150 hover:scale-[1.02] hover:brightness-110 ${GRADE_GLOW[grade] ?? GRADE_GLOW.F}`}
+                className={`rounded-xl border bg-gradient-to-br from-violet-900/60 via-fuchsia-900/40 to-slate-900/80 p-3 flex flex-col gap-2 transition-all duration-150 hover:scale-[1.02] hover:brightness-110 active:scale-95 active:brightness-90 cursor-pointer ${GRADE_GLOW[grade] ?? GRADE_GLOW.F}`}
               >
                 {showPics && artist.pic && (
                   <div className="relative w-full aspect-square overflow-hidden rounded-lg bg-slate-800/60">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={`/images/artists/${artist.pic}.webp`}
                       alt={artist.name}
-                      className="w-full h-full object-cover object-top"
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      className="object-cover object-top"
                     />
                   </div>
                 )}
@@ -513,7 +522,7 @@ export function NewArtistTab() {
       {showScrollTop && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-6 right-6 z-50 w-10 h-10 rounded-full bg-slate-800 border border-slate-600 text-white text-lg flex items-center justify-center shadow-xl hover:bg-slate-700 transition-colors"
+          className="fixed bottom-20 right-4 z-50 w-11 h-11 rounded-full bg-slate-800 border border-slate-600 text-white text-lg flex items-center justify-center shadow-xl hover:bg-slate-700 active:scale-95 transition-all md:bottom-6 md:right-6"
           aria-label="Scroll to top"
         >
           ↑
