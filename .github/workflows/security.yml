@@ -5,6 +5,8 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  schedule:
+    - cron: "0 0 * * 1" # Weekly Monday scan
 
 jobs:
   # ── TruffleHog — secrets detection ──────────────────────────────────────────
@@ -15,14 +17,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0          # full history so TruffleHog can diff commits
+          fetch-depth: 0
 
       - name: Run TruffleHog
         uses: trufflesecurity/trufflehog@main
         with:
-          path: ./
-          base: ${{ github.event.repository.default_branch }}
-          head: HEAD
           extra_args: --only-verified
 
   # ── Bandit — Python static analysis ─────────────────────────────────────────
@@ -47,25 +46,18 @@ jobs:
             --exclude ./.git,./node_modules,./.next \
             --severity-level medium \
             --confidence-level medium \
-            -f json -o bandit-report.json || true
-          bandit -r . \
-            --exclude ./.git,./node_modules,./.next \
-            --severity-level medium \
-            --confidence-level medium \
             -f txt
 
   # ── OSV Scanner — dependency vulnerabilities ─────────────────────────────────
   osv-scanner:
     name: OSV Scanner (dependencies)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Run OSV Scanner
-        uses: google/osv-scanner-action@v2.3.8
-        with:
-          scan-args: |-
-            --lockfile=package-lock.json
-            --format=table
-            ./
+    permissions:
+      security-events: write
+      contents: read
+      actions: read
+    uses: google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@3adb4b14a2b0623876d18d863a498b785fb3752d # v2.3.8
+    with:
+      scan-args: |-
+        --lockfile=package-lock.json
+        -r
+        ./

@@ -17,4 +17,6 @@ jobs:
       - name: Socket Security
         uses: SocketDev/action@v1.3.2
         with:
-          api-key: ${{ secrets.SOCKET_SECURITY_API_KEY }}
+          mode: monitor
+          github-token: ${{ github.token }}
+          socket-token: ${{ secrets.SOCKET_SECURITY_API_KEY }}
