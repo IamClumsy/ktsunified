@@ -9,6 +9,7 @@ import { getSkillClass, getRankingClass } from "./utils/skillStyling";
 import { getLetterGrade } from "./utils/artistCalculations";
 import { useArtistFilters } from "./hooks/useArtistFilters";
 import { BottomSheet } from "@/app/components/ui/bottom-sheet";
+import { useUrlFilterValues, useSetUrlFilter, useClearUrlFilters } from "./hooks/useUrlFilters";
 
 const artistsData = artistsDataRaw as Artist[];
 
@@ -74,14 +75,29 @@ export function NewArtistTab() {
 
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [, startTransition] = useTransition();
-  const [sortBy, setSortBy] = useState<SortOption>("ranking");
-  const [viewMode, setViewMode] = useState<ViewMode>("cards");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedRole, setSelectedRole] = useState("");
-  const [selectedGenre, setSelectedGenre] = useState("");
-  const [selectedSkill, setSelectedSkill] = useState("");
-  const [selectedSkill3, setSelectedSkill3] = useState("");
-  const [selectedRanking, setSelectedRanking] = useState("");
+
+  // URL-backed filter state — survives refresh and is shareable
+  const urlFilters = useUrlFilterValues();
+  const setUrlFilter = useSetUrlFilter();
+  const clearUrlFilters = useClearUrlFilters();
+
+  const searchTerm     = urlFilters.search;
+  const selectedRole   = urlFilters.role;
+  const selectedGenre  = urlFilters.genre;
+  const selectedSkill  = urlFilters.skill2;
+  const selectedSkill3 = urlFilters.skill3;
+  const selectedRanking = urlFilters.grade;
+  const sortBy = (urlFilters.sort || "ranking") as SortOption;
+  const viewMode = (urlFilters.view || "cards") as ViewMode;
+
+  const setSearchTerm      = (v: string) => setUrlFilter({ search: v });
+  const setSelectedRole    = (v: string) => startTransition(() => setUrlFilter({ role: v }));
+  const setSelectedGenre   = (v: string) => startTransition(() => setUrlFilter({ genre: v }));
+  const setSelectedSkill   = (v: string) => startTransition(() => setUrlFilter({ skill2: v }));
+  const setSelectedSkill3  = (v: string) => startTransition(() => setUrlFilter({ skill3: v }));
+  const setSelectedRanking = (v: string) => startTransition(() => setUrlFilter({ grade: v }));
+  const setSortBy          = (v: SortOption) => startTransition(() => setUrlFilter({ sort: v }));
+  const setViewMode        = (v: ViewMode) => startTransition(() => setUrlFilter({ view: v }));
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [showPics, setShowPics] = useState(true);
 
@@ -182,11 +198,7 @@ export function NewArtistTab() {
   ].filter(Boolean) as { label: string; value: string; clear: () => void }[];
 
   function clearFilters() {
-    setSearchTerm("");
-    startTransition(() => {
-      setSelectedRole(""); setSelectedGenre("");
-      setSelectedSkill(""); setSelectedSkill3(""); setSelectedRanking("");
-    });
+    startTransition(() => clearUrlFilters());
   }
 
   return (
@@ -353,7 +365,7 @@ export function NewArtistTab() {
         </div>
         {activeFilterCount > 0 && (
           <button
-            onClick={() => { clearFilters(); setFiltersOpen(false); }}
+            onClick={() => { clearUrlFilters(); setFiltersOpen(false); }}
             className="mt-4 w-full py-3 rounded-xl border border-red-500/40 text-red-400 text-sm font-medium hover:bg-red-500/10 transition-colors"
           >
             Clear all filters

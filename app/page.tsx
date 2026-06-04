@@ -1,7 +1,8 @@
 "use client";
 
-import { Suspense, useState, useTransition, lazy, memo } from "react";
+import { Suspense, useState, useTransition, lazy, memo, useCallback } from "react";
 import { ArtistCardSkeleton, CalcSectionSkeleton } from "@/app/components/ui/skeleton";
+import { useSwipeNav } from "@/app/hooks/useSwipeNav";
 
 // Code-split each tab — chunks are cached at Vercel's CDN edge
 const NewSrArtistTab  = lazy(() => import("@/app/components/artist/new-sr-artist-tab").then((m) => ({ default: m.NewSrArtistTab })));
@@ -130,7 +131,22 @@ export default function Home() {
     });
   }
 
-  const activeTabLabel = TABS.find((t) => t.id === activeTab)?.label ?? "";
+  const activeIndex = TABS.findIndex((t) => t.id === activeTab);
+  const activeTabLabel = TABS[activeIndex]?.label ?? "";
+
+  const swipeLeft  = useCallback(() => {
+    const next = TABS[activeIndex + 1];
+    if (next) switchTab(next.id);
+   
+  }, [activeIndex]);
+
+  const swipeRight = useCallback(() => {
+    const prev = TABS[activeIndex - 1];
+    if (prev) switchTab(prev.id);
+   
+  }, [activeIndex]);
+
+  useSwipeNav({ onSwipeLeft: swipeLeft, onSwipeRight: swipeRight });
 
   return (
     <div className="min-h-screen text-white">
@@ -174,7 +190,7 @@ export default function Home() {
       </header>
 
       {/* ── Tab content ────────────────────────────────────────────────── */}
-      <main className="pb-20 md:pb-0">
+      <main id="main-content" className="pb-20 md:pb-0">
         {TABS.map((tab) => (
           <div key={tab.id} hidden={activeTab !== tab.id} inert={activeTab !== tab.id || undefined}>
             {mounted.has(tab.id) && <TabContent id={tab.id} />}
