@@ -12,7 +12,9 @@ export function DropdownInput({ label, value, options, optionLabels, onChange }:
   const id = label.toLowerCase().replace(/\s+/g, "-");
   return (
     <div className="space-y-1">
-      <label htmlFor={id} className="text-xs uppercase tracking-widest text-slate-400">{label}</label>
+      <label htmlFor={id} className="text-xs uppercase tracking-widest text-slate-400">
+        {label}
+      </label>
       <select
         id={id}
         value={value}

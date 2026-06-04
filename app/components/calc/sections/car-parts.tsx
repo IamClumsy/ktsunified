@@ -27,7 +27,6 @@ export function CarParts() {
     return vlookupDiff(from, to, tables.carParts.data, 5);
   }, [tables, from, to]);
 
-
   return (
     <CalculatorSection title="Car Parts" note="*Available until SSS1" color="amber">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

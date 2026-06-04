@@ -51,11 +51,16 @@ export function Artists() {
     return base == null ? null : Math.ceil(base * modifier);
   }, [tables, from, to, modifier]);
 
-
   return (
     <CalculatorSection title="Artists" color="pink">
       <LevelRangeInput from={from} to={to} onFromChange={setFrom} onToChange={setTo} max={160} />
-      <DropdownInput label="Artist" value={artist} options={artistOptions} optionLabels={artistOptionLabels} onChange={setArtist} />
+      <DropdownInput
+        label="Artist"
+        value={artist}
+        options={artistOptions}
+        optionLabels={artistOptionLabels}
+        onChange={setArtist}
+      />
       <ResultDisplay
         accentClass="text-pink-300"
         results={[

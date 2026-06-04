@@ -37,7 +37,9 @@ function NumericInput({
 
   return (
     <div className="space-y-1">
-      <label htmlFor={id} className="text-xs uppercase tracking-widest text-slate-400">{label}</label>
+      <label htmlFor={id} className="text-xs uppercase tracking-widest text-slate-400">
+        {label}
+      </label>
       <input
         id={id}
         type="text"
@@ -68,9 +70,7 @@ function NumericInput({
           isOverMax ? "border-amber-500/70" : "border-slate-700"
         }`}
       />
-      {isOverMax && (
-        <p className="text-xs text-amber-400">Max is {max.toLocaleString()}</p>
-      )}
+      {isOverMax && <p className="text-xs text-amber-400">Max is {max.toLocaleString()}</p>}
     </div>
   );
 }

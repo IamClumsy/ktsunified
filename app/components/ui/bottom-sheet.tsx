@@ -59,9 +59,7 @@ export function BottomSheet({ open, onClose, title, children }: Props) {
         </div>
 
         {/* Content */}
-        <div className="px-5 pb-6">
-          {children}
-        </div>
+        <div className="px-5 pb-6">{children}</div>
 
         {/* Safe area spacer */}
         <div style={{ height: "env(safe-area-inset-bottom)" }} />

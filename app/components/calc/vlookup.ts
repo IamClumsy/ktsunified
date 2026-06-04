@@ -1,8 +1,4 @@
-export function vlookup(
-  key: number | string,
-  table: unknown[][],
-  col: number
-): number | null {
+export function vlookup(key: number | string, table: unknown[][], col: number): number | null {
   for (const row of table) {
     const cell = row[0];
     if (cell == null) continue;

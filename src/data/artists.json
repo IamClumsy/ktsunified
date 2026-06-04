@@ -6,11 +6,7 @@
     "rank": "SSR",
     "position": "Center",
     "genre": "Electronic",
-    "skills": [
-      "10 sec/1800 Damage",
-      "20% Skill Damage",
-      "50% Basic Attack Damage"
-    ],
+    "skills": ["10 sec/1800 Damage", "20% Skill Damage", "50% Basic Attack Damage"],
     "build": "",
     "photos": "Universal",
     "pic": "Kokoro"
@@ -22,11 +18,7 @@
     "rank": "SSR",
     "position": "Center",
     "genre": "Electronic",
-    "skills": [
-      "10 sec/1800 Damage",
-      "12% Reduction Basic Attack Damage",
-      "20% Skill Damage"
-    ],
+    "skills": ["10 sec/1800 Damage", "12% Reduction Basic Attack Damage", "20% Skill Damage"],
     "build": "Damage Reduction",
     "photos": "Universal",
     "pic": "Everly"
@@ -38,11 +30,7 @@
     "rank": "SSR",
     "position": "Vocalist",
     "genre": "Electronic",
-    "skills": [
-      "10 sec/1800 Damage",
-      "20% Skill Damage",
-      "50% Basic Attack Damage"
-    ],
+    "skills": ["10 sec/1800 Damage", "20% Skill Damage", "50% Basic Attack Damage"],
     "build": "",
     "photos": "Universal",
     "pic": "Alice"
@@ -54,11 +42,7 @@
     "rank": "SSR",
     "position": "Center",
     "genre": "Electronic",
-    "skills": [
-      "10 sec/1800 Damage",
-      "12% Reduction Basic Attack Damage",
-      "20% Skill Damage"
-    ],
+    "skills": ["10 sec/1800 Damage", "12% Reduction Basic Attack Damage", "20% Skill Damage"],
     "build": "",
     "photos": "Own Photos",
     "pic": "Cindy"
@@ -70,11 +54,7 @@
     "rank": "SSR AH",
     "position": "Center",
     "genre": "Electronic",
-    "skills": [
-      "10 sec/1800 Damage",
-      "30% Skill Damage",
-      "30% Damage to Player"
-    ],
+    "skills": ["10 sec/1800 Damage", "30% Skill Damage", "30% Damage to Player"],
     "build": "",
     "photos": "Own Photos",
     "pic": "Longkui"
@@ -102,11 +82,7 @@
     "rank": "SSR",
     "position": "Vocalist",
     "genre": "Electronic",
-    "skills": [
-      "10 sec/1800 Damage",
-      "10% Rally Fan Capacity",
-      "20% Damage to Player"
-    ],
+    "skills": ["10 sec/1800 Damage", "10% Rally Fan Capacity", "20% Damage to Player"],
     "build": "Rally",
     "photos": "Universal",
     "pic": "Sari"
@@ -118,11 +94,7 @@
     "rank": "SSR",
     "position": "Vocalist",
     "genre": "Electronic",
-    "skills": [
-      "10 sec/1800 Damage",
-      "10% Rally Fan Capacity",
-      "20% Damage to Player"
-    ],
+    "skills": ["10 sec/1800 Damage", "10% Rally Fan Capacity", "20% Damage to Player"],
     "build": "Rally",
     "photos": "Universal",
     "pic": "Nastassja"
@@ -198,11 +170,7 @@
     "rank": "SSR VIP",
     "position": "Vocalist",
     "genre": "Hip-Hop",
-    "skills": [
-      "10 sec/1800 Damage",
-      "20% Skill Damage",
-      "10% Fan Capacity"
-    ],
+    "skills": ["10 sec/1800 Damage", "20% Skill Damage", "10% Fan Capacity"],
     "build": "Single Car",
     "photos": "Universal",
     "pic": "Bella"
@@ -214,11 +182,7 @@
     "rank": "SSR",
     "position": "Center",
     "genre": "Pop",
-    "skills": [
-      "10 sec/1800 Damage",
-      "10% Rally Fan Capacity",
-      "20% Damage to Player"
-    ],
+    "skills": ["10 sec/1800 Damage", "10% Rally Fan Capacity", "20% Damage to Player"],
     "build": "Rally",
     "photos": "Universal",
     "pic": "Chizuru"
@@ -230,11 +194,7 @@
     "rank": "SSR",
     "position": "Center",
     "genre": "Pop",
-    "skills": [
-      "10 sec/1800 Damage",
-      "50% Basic Attack Damage",
-      "20% Skill Damage"
-    ],
+    "skills": ["10 sec/1800 Damage", "50% Basic Attack Damage", "20% Skill Damage"],
     "build": "",
     "photos": "Universal",
     "pic": "Aurora"
@@ -246,11 +206,7 @@
     "rank": "SSR",
     "position": "Dancer",
     "genre": "Pop",
-    "skills": [
-      "10 sec/1800 Damage",
-      "180/DPS Attacking Enemy Company",
-      "10% Fan Capacity"
-    ],
+    "skills": ["10 sec/1800 Damage", "180/DPS Attacking Enemy Company", "10% Fan Capacity"],
     "build": "Single Car",
     "photos": "Universal",
     "pic": "Savannah"
@@ -278,11 +234,7 @@
     "rank": "SSR AH",
     "position": "Center",
     "genre": "Pop",
-    "skills": [
-      "10 sec/1800 Damage",
-      "30% Damage to Player",
-      "30% Damage to Player"
-    ],
+    "skills": ["10 sec/1800 Damage", "30% Damage to Player", "30% Damage to Player"],
     "build": "",
     "photos": "Own Photos",
     "pic": "Monica"
@@ -310,11 +262,7 @@
     "rank": "SSR",
     "position": "Center",
     "genre": "R&B",
-    "skills": [
-      "10 sec/1800 Damage",
-      "20% Damage WG / 50% Drive Speed",
-      "50% Basic Attack Damage"
-    ],
+    "skills": ["10 sec/1800 Damage", "20% Damage WG / 50% Drive Speed", "50% Basic Attack Damage"],
     "build": "",
     "photos": "Universal",
     "pic": "Zendaya"
@@ -342,11 +290,7 @@
     "rank": "SSR",
     "position": "Vocalist",
     "genre": "R&B",
-    "skills": [
-      "10 sec/1800 Damage",
-      "20% Skill Damage",
-      "75% Drive Speed"
-    ],
+    "skills": ["10 sec/1800 Damage", "20% Skill Damage", "75% Drive Speed"],
     "build": "",
     "photos": "Universal",
     "pic": "Julia"
@@ -358,11 +302,7 @@
     "rank": "SSR",
     "position": "Vocalist",
     "genre": "R&B",
-    "skills": [
-      "10 sec/1800 Damage",
-      "50% Basic Attack Damage",
-      "10% Fan Capacity"
-    ],
+    "skills": ["10 sec/1800 Damage", "50% Basic Attack Damage", "10% Fan Capacity"],
     "build": "Single Car",
     "photos": "Universal",
     "pic": "Sora"
@@ -406,11 +346,7 @@
     "rank": "SSR",
     "position": "Center",
     "genre": "Rock",
-    "skills": [
-      "10 sec/1800 Damage",
-      "20% Skill Damage",
-      "50% Basic Attack Damage"
-    ],
+    "skills": ["10 sec/1800 Damage", "20% Skill Damage", "50% Basic Attack Damage"],
     "build": "",
     "photos": "Universal",
     "pic": "Claire"
@@ -454,11 +390,7 @@
     "rank": "SSR",
     "position": "Vocalist",
     "genre": "Rock",
-    "skills": [
-      "10 sec/1800 Damage",
-      "30% Damage World Building Guard",
-      "20% Skill Damage"
-    ],
+    "skills": ["10 sec/1800 Damage", "30% Damage World Building Guard", "20% Skill Damage"],
     "build": "",
     "photos": "Universal",
     "pic": "Skylar"
@@ -470,11 +402,7 @@
     "rank": "SSR",
     "position": "Dancer",
     "genre": "Rock",
-    "skills": [
-      "10 sec/1800 Damage",
-      "60% Basic Attack Damage",
-      "24% Damage to Player"
-    ],
+    "skills": ["10 sec/1800 Damage", "60% Basic Attack Damage", "24% Damage to Player"],
     "build": "",
     "photos": "Universal",
     "pic": "Kasha"
@@ -486,11 +414,7 @@
     "rank": "SSR",
     "position": "Center",
     "genre": "Rock",
-    "skills": [
-      "10 sec/1800 Damage",
-      "50% Basic Attack Damage",
-      "10% Fan Capacity"
-    ],
+    "skills": ["10 sec/1800 Damage", "50% Basic Attack Damage", "10% Fan Capacity"],
     "build": "Single Car",
     "photos": "Universal",
     "pic": "Talia"
@@ -502,11 +426,7 @@
     "rank": "SSR",
     "position": "Dancer",
     "genre": "Hip-Hop",
-    "skills": [
-      "10 sec/1800 Damage",
-      "20% Skill Damage",
-      "50% Basic Attack Damage"
-    ],
+    "skills": ["10 sec/1800 Damage", "20% Skill Damage", "50% Basic Attack Damage"],
     "build": "",
     "photos": "Universal",
     "pic": "Leilani"
@@ -518,11 +438,7 @@
     "rank": "SSR",
     "position": "Center",
     "genre": "Electronic",
-    "skills": [
-      "10 sec/1800 Damage",
-      "10% Rally Fan Capacity",
-      "20% Damage to Player"
-    ],
+    "skills": ["10 sec/1800 Damage", "10% Rally Fan Capacity", "20% Damage to Player"],
     "build": "Rally",
     "photos": "Universal",
     "pic": "Xenia"
@@ -534,11 +450,7 @@
     "rank": "SSR",
     "position": "Vocalist",
     "genre": "Hip-Hop",
-    "skills": [
-      "10 sec/1800 Damage",
-      "20% Skill Damage",
-      "50% Basic Attack Damage"
-    ],
+    "skills": ["10 sec/1800 Damage", "20% Skill Damage", "50% Basic Attack Damage"],
     "build": "",
     "photos": "Universal",
     "pic": "Daphne"
@@ -550,11 +462,7 @@
     "rank": "SSR",
     "position": "Dancer",
     "genre": "Rock",
-    "skills": [
-      "10 sec/1800 Damage",
-      "50% Basic Attack Damage",
-      "10% Fan Capacity"
-    ],
+    "skills": ["10 sec/1800 Damage", "50% Basic Attack Damage", "10% Fan Capacity"],
     "build": "Single Car",
     "photos": "Universal",
     "pic": "Calliope"
@@ -598,11 +506,7 @@
     "rank": "SSR",
     "position": "Dancer",
     "genre": "Hip-Hop",
-    "skills": [
-      "10 sec/1800 Damage",
-      "40% Gold Brick Gathering Speed",
-      "20% Damage to Player"
-    ],
+    "skills": ["10 sec/1800 Damage", "40% Gold Brick Gathering Speed", "20% Damage to Player"],
     "build": "Gold Gathering",
     "photos": "Universal",
     "pic": "Megan"
@@ -614,11 +518,7 @@
     "rank": "SSR",
     "position": "Center",
     "genre": "Hip-Hop",
-    "skills": [
-      "10 sec/1800 Damage",
-      "60% Basic Attack Damage",
-      "12% Fan Capacity"
-    ],
+    "skills": ["10 sec/1800 Damage", "60% Basic Attack Damage", "12% Fan Capacity"],
     "build": "Single Car",
     "photos": "Universal",
     "pic": "Haruki"
@@ -630,11 +530,7 @@
     "rank": "SSR",
     "position": "Center",
     "genre": "Rock",
-    "skills": [
-      "10 sec/1800 Damage",
-      "50% Basic Attack Damage",
-      "10% Fan Capacity"
-    ],
+    "skills": ["10 sec/1800 Damage", "50% Basic Attack Damage", "10% Fan Capacity"],
     "build": "Single Car",
     "photos": "Universal",
     "pic": "Mellissa"
@@ -646,11 +542,7 @@
     "rank": "SSR",
     "position": "Vocalist",
     "genre": "Rock",
-    "skills": [
-      "10 sec/1800 Damage",
-      "12% Reduction Basic Attack Damage",
-      "24% Damage to Player"
-    ],
+    "skills": ["10 sec/1800 Damage", "12% Reduction Basic Attack Damage", "24% Damage to Player"],
     "build": "",
     "photos": "Universal",
     "pic": "Riku"
@@ -678,11 +570,7 @@
     "rank": "SSR",
     "position": "Center",
     "genre": "R&B",
-    "skills": [
-      "10 sec/1800 Damage",
-      "50% Basic Attack Damage",
-      "40% Gold Brick Gathering Speed"
-    ],
+    "skills": ["10 sec/1800 Damage", "50% Basic Attack Damage", "40% Gold Brick Gathering Speed"],
     "build": "Gold Gathering",
     "photos": "Universal",
     "pic": "Noora"
@@ -694,11 +582,7 @@
     "rank": "SSR",
     "position": "Dancer",
     "genre": "Hip-Hop",
-    "skills": [
-      "10 sec/1800 Damage",
-      "240/DPS Attacking Enemy Company",
-      "12% Fan Capacity"
-    ],
+    "skills": ["10 sec/1800 Damage", "240/DPS Attacking Enemy Company", "12% Fan Capacity"],
     "build": "",
     "photos": "Universal",
     "pic": "Ningsih"
@@ -710,11 +594,7 @@
     "rank": "SSR",
     "position": "Center",
     "genre": "R&B",
-    "skills": [
-      "10 sec/1800 Damage",
-      "60% Basic Attack Damage",
-      "24% Skill Damage"
-    ],
+    "skills": ["10 sec/1800 Damage", "60% Basic Attack Damage", "24% Skill Damage"],
     "build": "",
     "photos": "Universal",
     "pic": "Dewi"
@@ -742,11 +622,7 @@
     "rank": "SSR",
     "position": "Center",
     "genre": "Hip-Hop",
-    "skills": [
-      "10 sec/1800 Damage",
-      "10% Rally Fan Capacity",
-      "20% Damage to Player"
-    ],
+    "skills": ["10 sec/1800 Damage", "10% Rally Fan Capacity", "20% Damage to Player"],
     "build": "Rally",
     "photos": "Universal",
     "pic": "Hestia"
@@ -758,11 +634,7 @@
     "rank": "SSR",
     "position": "Dancer",
     "genre": "Pop",
-    "skills": [
-      "10 sec/1800 Damage",
-      "50% Basic Attack Damage",
-      "20% Damage to Player"
-    ],
+    "skills": ["10 sec/1800 Damage", "50% Basic Attack Damage", "20% Damage to Player"],
     "build": "",
     "photos": "Universal",
     "pic": "Ruby"
@@ -774,11 +646,7 @@
     "rank": "SSR",
     "position": "Vocalist",
     "genre": "Pop",
-    "skills": [
-      "10 sec/1800 Damage",
-      "10% Fan Capacity",
-      "50% Basic Attack Damage"
-    ],
+    "skills": ["10 sec/1800 Damage", "10% Fan Capacity", "50% Basic Attack Damage"],
     "build": "Single Car",
     "photos": "Universal",
     "pic": "Rosemary"
@@ -790,11 +658,7 @@
     "rank": "SSR",
     "position": "Vocalist",
     "genre": "Rock",
-    "skills": [
-      "10 sec/1800 Damage",
-      "10% Fan Capacity",
-      "10% Rally Fan Capacity"
-    ],
+    "skills": ["10 sec/1800 Damage", "10% Fan Capacity", "10% Rally Fan Capacity"],
     "build": "Single Car, Rally",
     "photos": "Universal",
     "pic": "Kelly"
@@ -806,11 +670,7 @@
     "rank": "SSR",
     "position": "Center",
     "genre": "R&B",
-    "skills": [
-      "10 sec/1800 Damage",
-      "70% Basic Attack Damage",
-      "14% Fan Capacity"
-    ],
+    "skills": ["10 sec/1800 Damage", "70% Basic Attack Damage", "14% Fan Capacity"],
     "build": "Single Car",
     "photos": "Tokyo4",
     "pic": "Aya"
@@ -822,11 +682,7 @@
     "rank": "SSR",
     "position": "Vocalist",
     "genre": "Pop",
-    "skills": [
-      "10 sec/1800 Damage",
-      "28% Damage to Player",
-      "12% Reduction Basic Attack Damage"
-    ],
+    "skills": ["10 sec/1800 Damage", "28% Damage to Player", "12% Reduction Basic Attack Damage"],
     "build": "Damage Reduction",
     "photos": "Tokyo4 - Dice",
     "pic": "Yumeno"
@@ -854,11 +710,7 @@
     "rank": "SSR",
     "position": "Dancer",
     "genre": "Rock",
-    "skills": [
-      "10 sec/1800 Damage",
-      "28% Damage to Player",
-      "12% Skill Damage Reduction"
-    ],
+    "skills": ["10 sec/1800 Damage", "28% Damage to Player", "12% Skill Damage Reduction"],
     "build": "Damage Reduction",
     "photos": "Bali4 - Warmup",
     "pic": "Sienna"
@@ -870,11 +722,7 @@
     "rank": "SSR",
     "position": "Vocalist",
     "genre": "Electronic",
-    "skills": [
-      "10 sec/1800 Damage",
-      "28% Skill Damage",
-      "14% Fan Capacity"
-    ],
+    "skills": ["10 sec/1800 Damage", "28% Skill Damage", "14% Fan Capacity"],
     "build": "Single Car",
     "photos": "Bali4 - Dice",
     "pic": "Margot"
@@ -886,11 +734,7 @@
     "rank": "SSR",
     "position": "Dancer",
     "genre": "Pop",
-    "skills": [
-      "10 sec/1800 Damage",
-      "14% Fan Capacity",
-      "12% Reduction Basic Attack Damage"
-    ],
+    "skills": ["10 sec/1800 Damage", "14% Fan Capacity", "12% Reduction Basic Attack Damage"],
     "build": "Single Car",
     "photos": "Bali4 - Shop",
     "pic": "Valentina"
@@ -902,11 +746,7 @@
     "rank": "SSR",
     "position": "Center",
     "genre": "Electronic",
-    "skills": [
-      "10 sec/1800 Damage",
-      "12% Fan Capacity",
-      "12% Reduction Basic Attack Damage"
-    ],
+    "skills": ["10 sec/1800 Damage", "12% Fan Capacity", "12% Reduction Basic Attack Damage"],
     "build": "Single Car",
     "photos": "Rome3 - Shop",
     "pic": "Flora"
@@ -918,11 +758,7 @@
     "rank": "SSR",
     "position": "Center",
     "genre": "Pop",
-    "skills": [
-      "10 sec/1800 Damage",
-      "24% Damage to Player",
-      "12% Skill Damage Reduction"
-    ],
+    "skills": ["10 sec/1800 Damage", "24% Damage to Player", "12% Skill Damage Reduction"],
     "build": "",
     "photos": "Bali3 - Warmup",
     "pic": "Isla"
@@ -934,11 +770,7 @@
     "rank": "SSR",
     "position": "Center",
     "genre": "Pop",
-    "skills": [
-      "10 sec/1800 Damage",
-      "240/DPS Attacking Enemy Company",
-      "12% Fan Capacity"
-    ],
+    "skills": ["10 sec/1800 Damage", "240/DPS Attacking Enemy Company", "12% Fan Capacity"],
     "build": "Single Car",
     "photos": "Universal",
     "pic": "Octavia"
@@ -950,11 +782,7 @@
     "rank": "SSR",
     "position": "Center",
     "genre": "Rock",
-    "skills": [
-      "10 sec/1800 Damage",
-      "24% Damage to Player",
-      "12% Skill Damage Reduction"
-    ],
+    "skills": ["10 sec/1800 Damage", "24% Damage to Player", "12% Skill Damage Reduction"],
     "build": "Damage Reduction",
     "photos": "Universal",
     "pic": "Hikari"
@@ -966,11 +794,7 @@
     "rank": "SSR",
     "position": "Vocalist",
     "genre": "Electronic",
-    "skills": [
-      "10 sec/1800 Damage",
-      "24% Damage to Player",
-      "12% Fan Capacity"
-    ],
+    "skills": ["10 sec/1800 Damage", "24% Damage to Player", "12% Fan Capacity"],
     "build": "Single Car",
     "photos": "Universal",
     "pic": "Aurelia"
@@ -982,11 +806,7 @@
     "rank": "SSR",
     "position": "Vocalist",
     "genre": "Electronic",
-    "skills": [
-      "10 sec/1800 Damage",
-      "24% Skill Damage",
-      "12% Fan Capacity"
-    ],
+    "skills": ["10 sec/1800 Damage", "24% Skill Damage", "12% Fan Capacity"],
     "build": "Single Car",
     "photos": "Universal",
     "pic": "Rin"
@@ -1014,11 +834,7 @@
     "rank": "SSR",
     "position": "Vocalist",
     "genre": "Hip-Hop",
-    "skills": [
-      "10 sec/1800 Damage",
-      "24% Damage to Player",
-      "24% Damage to Player"
-    ],
+    "skills": ["10 sec/1800 Damage", "24% Damage to Player", "24% Damage to Player"],
     "build": "",
     "photos": "Rome3 - Warmup",
     "pic": "Claudius"
@@ -1046,11 +862,7 @@
     "rank": "SSR",
     "position": "Dancer",
     "genre": "R&B",
-    "skills": [
-      "10 sec/1800 Damage",
-      "12% Fan Capacity",
-      "12% Reduction Basic Attack Damage"
-    ],
+    "skills": ["10 sec/1800 Damage", "12% Fan Capacity", "12% Reduction Basic Attack Damage"],
     "build": "",
     "photos": "Universal",
     "pic": "Eri"
@@ -1078,11 +890,7 @@
     "rank": "SSR",
     "position": "Dancer",
     "genre": "Rock",
-    "skills": [
-      "10 sec/1800 Damage",
-      "24% Skill Damage",
-      "12% Fan Capacity"
-    ],
+    "skills": ["10 sec/1800 Damage", "24% Skill Damage", "12% Fan Capacity"],
     "build": "",
     "photos": "Rome3 - Dice",
     "pic": "Antonia"
@@ -1094,11 +902,7 @@
     "rank": "SSR",
     "position": "Dancer",
     "genre": "Electronic",
-    "skills": [
-      "10 sec/1800 Damage",
-      "40% Gold Brick Gathering Speed",
-      "10% Gain Fans Selling CDs"
-    ],
+    "skills": ["10 sec/1800 Damage", "40% Gold Brick Gathering Speed", "10% Gain Fans Selling CDs"],
     "build": "Gold Gathering",
     "photos": "Universal",
     "pic": "Yoon"
@@ -1110,11 +914,7 @@
     "rank": "SSR",
     "position": "Vocalist",
     "genre": "Hip-Hop",
-    "skills": [
-      "10 sec/1800 Damage",
-      "40% Damage to Player",
-      "20% Rally Fan Capacity"
-    ],
+    "skills": ["10 sec/1800 Damage", "40% Damage to Player", "20% Rally Fan Capacity"],
     "build": "Rally",
     "photos": "Own Photos",
     "pic": "Rhea"
@@ -1126,11 +926,7 @@
     "rank": "SSR",
     "position": "Center",
     "genre": "Pop",
-    "skills": [
-      "10 sec/1800 Damage",
-      "10% Rally Fan Capacity",
-      "50% Basic Attack Damage"
-    ],
+    "skills": ["10 sec/1800 Damage", "10% Rally Fan Capacity", "50% Basic Attack Damage"],
     "build": "Rally",
     "photos": "Universal",
     "pic": "Belle"
@@ -1142,11 +938,7 @@
     "rank": "SSR",
     "position": "Vocalist",
     "genre": "Hip-Hop",
-    "skills": [
-      "10 sec/1800 Damage",
-      "28% Damage to Player",
-      "14% Fan Capacity"
-    ],
+    "skills": ["10 sec/1800 Damage", "28% Damage to Player", "14% Fan Capacity"],
     "build": "Single Car",
     "photos": "Rome4 - Dice",
     "pic": "Kendell"
@@ -1158,11 +950,7 @@
     "rank": "SSR",
     "position": "Center",
     "genre": "Pop",
-    "skills": [
-      "10 sec/1800 Damage",
-      "28% Damage to Player",
-      "28% Skill Damage"
-    ],
+    "skills": ["10 sec/1800 Damage", "28% Damage to Player", "28% Skill Damage"],
     "build": "",
     "photos": "Rome4 - Warmup",
     "pic": "Sloane"
@@ -1174,11 +962,7 @@
     "rank": "SSR",
     "position": "Dancer",
     "genre": "Rock",
-    "skills": [
-      "10 sec/1800 Damage",
-      "28% Skill Damage",
-      "12% Reduction Basic Attack Damage"
-    ],
+    "skills": ["10 sec/1800 Damage", "28% Skill Damage", "12% Reduction Basic Attack Damage"],
     "build": "Damage Reduction",
     "photos": "Rome4 - Shop",
     "pic": "Valerie"
@@ -1206,11 +990,7 @@
     "rank": "SSR",
     "position": "Center",
     "genre": "Electronic",
-    "skills": [
-      "10 sec/1800 Damage",
-      "80% Basic Attack Damage",
-      "16% Fan Capacity"
-    ],
+    "skills": ["10 sec/1800 Damage", "80% Basic Attack Damage", "16% Fan Capacity"],
     "build": "Single Car",
     "photos": "Tokyo5",
     "pic": "Mio"
@@ -1222,11 +1002,7 @@
     "rank": "SSR",
     "position": "Vocalist",
     "genre": "R&B",
-    "skills": [
-      "10 sec/1800 Damage",
-      "12% Reduction Basic Attack Damage",
-      "32% Damage to Player"
-    ],
+    "skills": ["10 sec/1800 Damage", "12% Reduction Basic Attack Damage", "32% Damage to Player"],
     "build": "",
     "photos": "Tokyo5",
     "pic": "Rena"
@@ -1238,11 +1014,7 @@
     "rank": "SSR",
     "position": "Center",
     "genre": "Hip-Hop",
-    "skills": [
-      "10 sec/1800 Damage",
-      "80% Basic Attack Damage",
-      "12% Skill Damage"
-    ],
+    "skills": ["10 sec/1800 Damage", "80% Basic Attack Damage", "12% Skill Damage"],
     "build": "",
     "photos": "Bali 5 - Warmup",
     "pic": "Landy"

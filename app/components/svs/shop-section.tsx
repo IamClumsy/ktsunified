@@ -37,20 +37,22 @@ type Props = {
 
 export function ShopSection({ shop, color, onTotalChange, remaining }: Props) {
   const scheme = schemes[color];
-  const [items, setItems] = useState<ItemState[]>(() =>
-    shop.items.map(() => ({ quantity: 0 }))
-  );
+  const [items, setItems] = useState<ItemState[]>(() => shop.items.map(() => ({ quantity: 0 })));
 
   const total = useMemo(
     () => items.reduce((sum, state, i) => sum + state.quantity * shop.items[i].price, 0),
     [items, shop.items]
   );
 
-  useEffect(() => { onTotalChange?.(total); }, [total, onTotalChange]);
+  useEffect(() => {
+    onTotalChange?.(total);
+  }, [total, onTotalChange]);
 
   function setQty(idx: number, qty: number) {
     const max = shop.items[idx].quantity;
-    setItems((prev) => prev.map((s, i) => (i === idx ? { quantity: Math.min(max, Math.max(0, qty)) } : s)));
+    setItems((prev) =>
+      prev.map((s, i) => (i === idx ? { quantity: Math.min(max, Math.max(0, qty)) } : s))
+    );
   }
 
   function reset() {
@@ -104,10 +106,14 @@ export function ShopSection({ shop, color, onTotalChange, remaining }: Props) {
                           atMax ? "border-green-500/60" : "border-slate-700"
                         }`}
                       />
-                      <span className="text-slate-500 text-xs tabular-nums">/ {fmt(item.quantity)}</span>
+                      <span className="text-slate-500 text-xs tabular-nums">
+                        / {fmt(item.quantity)}
+                      </span>
                     </div>
                   </td>
-                  <td className="py-2 text-right text-slate-400 tabular-nums pr-1">{fmt(item.price)}</td>
+                  <td className="py-2 text-right text-slate-400 tabular-nums pr-1">
+                    {fmt(item.price)}
+                  </td>
                   <td className={`py-2 text-right font-medium tabular-nums ${scheme.total}`}>
                     {fmt(subtotal)}
                   </td>

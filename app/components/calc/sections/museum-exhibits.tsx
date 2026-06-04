@@ -30,7 +30,6 @@ export function MuseumExhibits() {
     return vlookupDiff(from - 1, to - 1, tables.exhibits.data, tierNum * 2 + 1);
   }, [tables, from, to, tierNum]);
 
-
   return (
     <CalculatorSection title="Museum Exhibits" color="sky">
       <DropdownInput label="Exhibit Room" value={tier} options={ROOM_OPTIONS} onChange={setTier} />
@@ -41,12 +40,16 @@ export function MuseumExhibits() {
           {
             label: isHQ ? "HQ Sandstone" : "Sandstone",
             value: sandstone,
-            equivalent: isHQ && sandstone != null ? { label: "Sandstone", value: sandstone * HQ_MULTIPLIER } : null,
+            equivalent:
+              isHQ && sandstone != null
+                ? { label: "Sandstone", value: sandstone * HQ_MULTIPLIER }
+                : null,
           },
           {
             label: isHQ ? "HQ Tiles" : "Tiles",
             value: tile,
-            equivalent: isHQ && tile != null ? { label: "Tiles", value: tile * HQ_MULTIPLIER } : null,
+            equivalent:
+              isHQ && tile != null ? { label: "Tiles", value: tile * HQ_MULTIPLIER } : null,
           },
         ]}
       />

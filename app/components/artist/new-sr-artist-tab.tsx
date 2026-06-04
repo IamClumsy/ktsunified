@@ -39,14 +39,21 @@ function parseCSV(csvText: string): CsvRow[] {
     let current = "";
     let inQuotes = false;
     for (const char of lines[i]) {
-      if (char === '"') { inQuotes = !inQuotes; }
-      else if (char === "," && !inQuotes) { values.push(current.trim()); current = ""; }
-      else { current += char; }
+      if (char === '"') {
+        inQuotes = !inQuotes;
+      } else if (char === "," && !inQuotes) {
+        values.push(current.trim());
+        current = "";
+      } else {
+        current += char;
+      }
     }
     values.push(current.trim());
     if (values.length === headers.length) {
       const row: Record<string, string> = {};
-      headers.forEach((h, i) => { row[h] = values[i] || ""; });
+      headers.forEach((h, i) => {
+        row[h] = values[i] || "";
+      });
       rows.push(row as unknown as CsvRow);
     }
   }
@@ -92,21 +99,29 @@ const GRADE_BORDER: Record<string, string> = {
 const GRADE_ORDER: Record<string, number> = { S: 0, A: 1, B: 2, C: 3, F: 4 };
 
 const PHOTO_CLASS: Record<string, string> = {
-  Universal:      "bg-teal-900/60 text-teal-300 border border-teal-500/40",
-  "Own Photos":   "bg-pink-900/60 text-pink-300 border border-pink-500/40",
-  Tokyo4:         "bg-violet-900/60 text-violet-300 border border-violet-500/40",
-  Rome3:          "bg-amber-900/60 text-amber-300 border border-amber-500/40",
-  Bali3:          "bg-emerald-900/60 text-emerald-300 border border-emerald-500/40",
-  Bali4:          "bg-emerald-900/60 text-emerald-200 border border-emerald-400/40",
+  Universal: "bg-teal-900/60 text-teal-300 border border-teal-500/40",
+  "Own Photos": "bg-pink-900/60 text-pink-300 border border-pink-500/40",
+  Tokyo4: "bg-violet-900/60 text-violet-300 border border-violet-500/40",
+  Rome3: "bg-amber-900/60 text-amber-300 border border-amber-500/40",
+  Bali3: "bg-emerald-900/60 text-emerald-300 border border-emerald-500/40",
+  Bali4: "bg-emerald-900/60 text-emerald-200 border border-emerald-400/40",
   "Not Released": "bg-red-900/60 text-red-400 border border-red-500/40",
 };
 
 const LEGEND = [
-  { cls: "damage-to-player", color: "Gold", desc: "Best Skills (Damage to Player, 60%+ Attack Damage)" },
+  {
+    cls: "damage-to-player",
+    color: "Gold",
+    desc: "Best Skills (Damage to Player, 60%+ Attack Damage)",
+  },
   { cls: "skill-good", color: "Green", desc: "Good Skills (50% BA Damage, Skill Damage variants)" },
   { cls: "blue-text", color: "Blue", desc: "Damage Reduction Skills" },
   { cls: "violet-text", color: "Violet", desc: "Okay Skills (DPS Defending, Fan Gain)" },
-  { cls: "skill-specific-worst", color: "Red", desc: "Worst Skills (Drive Speed, World Building Guard)" },
+  {
+    cls: "skill-specific-worst",
+    color: "Red",
+    desc: "Worst Skills (Drive Speed, World Building Guard)",
+  },
   { cls: "gold-text", color: "Orange", desc: "Gold Gathering" },
   { cls: "skill-white", color: "White", desc: "Capacity Increase Skills" },
 ];
@@ -124,7 +139,9 @@ function HighlightedName({ name, term }: { name: string; term: string }) {
   return (
     <>
       {name.slice(0, idx)}
-      <mark className="bg-purple-500/30 text-purple-200 rounded-sm not-italic">{name.slice(idx, idx + term.length)}</mark>
+      <mark className="bg-purple-500/30 text-purple-200 rounded-sm not-italic">
+        {name.slice(idx, idx + term.length)}
+      </mark>
       {name.slice(idx + term.length)}
     </>
   );
@@ -174,26 +191,38 @@ export function NewSrArtistTab() {
 
   const roles = useMemo(() => [...new Set(artists.map((a) => a.position))].sort(), [artists]);
   const genres = useMemo(() => [...new Set(artists.map((a) => a.genre))].sort(), [artists]);
-  const groups = useMemo(() => [...new Set(artists.map((a) => a.group))].filter((g) => g !== "None").sort(), [artists]);
+  const groups = useMemo(
+    () => [...new Set(artists.map((a) => a.group))].filter((g) => g !== "None").sort(),
+    [artists]
+  );
   const ranks = useMemo(() => [...new Set(artists.map((a) => a.rank))], [artists]);
 
-  const allSkills2 = useMemo(() => [...new Set(artists.map((a) => a.skills[1]).filter(Boolean))], [artists]);
-  const allSkills3 = useMemo(() => [...new Set(artists.map((a) => a.skills[2]).filter(Boolean))], [artists]);
+  const allSkills2 = useMemo(
+    () => [...new Set(artists.map((a) => a.skills[1]).filter(Boolean))],
+    [artists]
+  );
+  const allSkills3 = useMemo(
+    () => [...new Set(artists.map((a) => a.skills[2]).filter(Boolean))],
+    [artists]
+  );
   const skill2Categories = useMemo(() => categorizeSkills(allSkills2), [allSkills2]);
   const skill3Categories = useMemo(() => categorizeSkills(allSkills3), [allSkills3]);
 
-  const calculatePoints = useMemo(() => (artist: Artist) => {
-    let points = 0;
-    artist.skills.forEach((skill, index) => {
-      if (!skill || index === 0) return;
-      const cats = index === 1 ? skill2Categories : skill3Categories;
-      if (cats.bestSkills.includes(skill)) points += 10;
-      else if (cats.goodSkills.includes(skill)) points += 6;
-      else if (cats.okaySkills.includes(skill)) points += 3;
-      else if (cats.worstSkills.includes(skill)) points -= 1;
-    });
-    return points;
-  }, [skill2Categories, skill3Categories]);
+  const calculatePoints = useMemo(
+    () => (artist: Artist) => {
+      let points = 0;
+      artist.skills.forEach((skill, index) => {
+        if (!skill || index === 0) return;
+        const cats = index === 1 ? skill2Categories : skill3Categories;
+        if (cats.bestSkills.includes(skill)) points += 10;
+        else if (cats.goodSkills.includes(skill)) points += 6;
+        else if (cats.okaySkills.includes(skill)) points += 3;
+        else if (cats.worstSkills.includes(skill)) points -= 1;
+      });
+      return points;
+    },
+    [skill2Categories, skill3Categories]
+  );
 
   const filteredArtists = useMemo(() => {
     return artists.filter((a) => {
@@ -209,7 +238,18 @@ export function NewSrArtistTab() {
         (selectedRanking === "" || grade === selectedRanking)
       );
     });
-  }, [artists, searchTerm, selectedRank, selectedRole, selectedGenre, selectedGroup, selectedSkill, selectedSkill3, selectedRanking, calculatePoints]);
+  }, [
+    artists,
+    searchTerm,
+    selectedRank,
+    selectedRole,
+    selectedGenre,
+    selectedGroup,
+    selectedSkill,
+    selectedSkill3,
+    selectedRanking,
+    calculatePoints,
+  ]);
 
   const sortedArtists = useMemo(() => {
     const rankOrder = (r: string) => (r === "SR" ? 0 : 1);
@@ -233,8 +273,7 @@ export function NewSrArtistTab() {
         const pa = calculatePoints(a);
         const pb = calculatePoints(b);
         const gradeDiff =
-          (GRADE_ORDER[getSrLetterGrade(pa)] ?? 5) -
-          (GRADE_ORDER[getSrLetterGrade(pb)] ?? 5);
+          (GRADE_ORDER[getSrLetterGrade(pa)] ?? 5) - (GRADE_ORDER[getSrLetterGrade(pb)] ?? 5);
         if (gradeDiff !== 0) return gradeDiff;
         if (pb !== pa) return pb - pa;
         return a.name.localeCompare(b.name);
@@ -252,29 +291,75 @@ export function NewSrArtistTab() {
     return counts;
   }, [sortedArtists, calculatePoints]);
 
-  const activeFilterCount = [searchTerm, selectedRank, selectedRole, selectedGenre, selectedGroup, selectedSkill, selectedSkill3, selectedRanking].filter(Boolean).length;
+  const activeFilterCount = [
+    searchTerm,
+    selectedRank,
+    selectedRole,
+    selectedGenre,
+    selectedGroup,
+    selectedSkill,
+    selectedSkill3,
+    selectedRanking,
+  ].filter(Boolean).length;
 
   const activeFilters = [
-    searchTerm      && { label: "Name",    value: searchTerm,      clear: () => setSearchTerm("") },
-    selectedGenre   && { label: "Genre",   value: selectedGenre,   clear: () => startTransition(() => setSelectedGenre("")) },
-    selectedRole    && { label: "Role",    value: selectedRole,    clear: () => startTransition(() => setSelectedRole("")) },
-    selectedGroup   && { label: "Group",   value: selectedGroup,   clear: () => startTransition(() => setSelectedGroup("")) },
-    selectedRank    && { label: "Rank",    value: selectedRank,    clear: () => startTransition(() => setSelectedRank("")) },
-    selectedSkill   && { label: "Skill 2", value: selectedSkill,   clear: () => startTransition(() => setSelectedSkill("")) },
-    selectedSkill3  && { label: "Skill 3", value: selectedSkill3,  clear: () => startTransition(() => setSelectedSkill3("")) },
-    selectedRanking && { label: "Grade",   value: selectedRanking, clear: () => startTransition(() => setSelectedRanking("")) },
+    searchTerm && { label: "Name", value: searchTerm, clear: () => setSearchTerm("") },
+    selectedGenre && {
+      label: "Genre",
+      value: selectedGenre,
+      clear: () => startTransition(() => setSelectedGenre("")),
+    },
+    selectedRole && {
+      label: "Role",
+      value: selectedRole,
+      clear: () => startTransition(() => setSelectedRole("")),
+    },
+    selectedGroup && {
+      label: "Group",
+      value: selectedGroup,
+      clear: () => startTransition(() => setSelectedGroup("")),
+    },
+    selectedRank && {
+      label: "Rank",
+      value: selectedRank,
+      clear: () => startTransition(() => setSelectedRank("")),
+    },
+    selectedSkill && {
+      label: "Skill 2",
+      value: selectedSkill,
+      clear: () => startTransition(() => setSelectedSkill("")),
+    },
+    selectedSkill3 && {
+      label: "Skill 3",
+      value: selectedSkill3,
+      clear: () => startTransition(() => setSelectedSkill3("")),
+    },
+    selectedRanking && {
+      label: "Grade",
+      value: selectedRanking,
+      clear: () => startTransition(() => setSelectedRanking("")),
+    },
   ].filter(Boolean) as { label: string; value: string; clear: () => void }[];
 
   function clearFilters() {
     setSearchTerm("");
     startTransition(() => {
-      setSelectedRank(""); setSelectedRole(""); setSelectedGenre("");
-      setSelectedGroup(""); setSelectedSkill(""); setSelectedSkill3(""); setSelectedRanking("");
+      setSelectedRank("");
+      setSelectedRole("");
+      setSelectedGenre("");
+      setSelectedGroup("");
+      setSelectedSkill("");
+      setSelectedSkill3("");
+      setSelectedRanking("");
     });
   }
 
   if (loading) {
-    return <div className="flex items-center justify-center py-32"><p className="text-slate-400">Loading SR/R artists…</p></div>;
+    return (
+      <div className="flex items-center justify-center py-32">
+        <p className="text-slate-400">Loading SR/R artists…</p>
+      </div>
+    );
   }
 
   return (
@@ -384,60 +469,231 @@ export function NewSrArtistTab() {
         <div className="-mx-4 px-4 pb-4 pt-3 border-b border-slate-700 bg-slate-900/80 mb-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <div className="space-y-1">
-              <label htmlFor="sr-filter-genre" className="text-xs uppercase tracking-widest text-slate-400">Genre</label>
-              <select id="sr-filter-genre" value={selectedGenre} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedGenre(v)); }} className={selectClass}>
+              <label
+                htmlFor="sr-filter-genre"
+                className="text-xs uppercase tracking-widest text-slate-400"
+              >
+                Genre
+              </label>
+              <select
+                id="sr-filter-genre"
+                value={selectedGenre}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  startTransition(() => setSelectedGenre(v));
+                }}
+                className={selectClass}
+              >
                 <option value="">All Genres</option>
-                {genres.map((g) => <option key={g} value={g}>{g}</option>)}
+                {genres.map((g) => (
+                  <option key={g} value={g}>
+                    {g}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="space-y-1">
-              <label htmlFor="sr-filter-role" className="text-xs uppercase tracking-widest text-slate-400">Role</label>
-              <select id="sr-filter-role" value={selectedRole} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedRole(v)); }} className={selectClass}>
+              <label
+                htmlFor="sr-filter-role"
+                className="text-xs uppercase tracking-widest text-slate-400"
+              >
+                Role
+              </label>
+              <select
+                id="sr-filter-role"
+                value={selectedRole}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  startTransition(() => setSelectedRole(v));
+                }}
+                className={selectClass}
+              >
                 <option value="">All Roles</option>
-                {roles.map((r) => <option key={r} value={r}>{r}</option>)}
+                {roles.map((r) => (
+                  <option key={r} value={r}>
+                    {r}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="space-y-1">
-              <label htmlFor="sr-filter-group" className="text-xs uppercase tracking-widest text-slate-400">Group</label>
-              <select id="sr-filter-group" value={selectedGroup} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedGroup(v)); }} className={selectClass}>
+              <label
+                htmlFor="sr-filter-group"
+                className="text-xs uppercase tracking-widest text-slate-400"
+              >
+                Group
+              </label>
+              <select
+                id="sr-filter-group"
+                value={selectedGroup}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  startTransition(() => setSelectedGroup(v));
+                }}
+                className={selectClass}
+              >
                 <option value="">All Groups</option>
-                {groups.map((g) => <option key={g} value={g}>{g}</option>)}
+                {groups.map((g) => (
+                  <option key={g} value={g}>
+                    {g}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="space-y-1">
-              <label htmlFor="sr-filter-rank" className="text-xs uppercase tracking-widest text-slate-400">Rank</label>
-              <select id="sr-filter-rank" value={selectedRank} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedRank(v)); }} className={selectClass}>
+              <label
+                htmlFor="sr-filter-rank"
+                className="text-xs uppercase tracking-widest text-slate-400"
+              >
+                Rank
+              </label>
+              <select
+                id="sr-filter-rank"
+                value={selectedRank}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  startTransition(() => setSelectedRank(v));
+                }}
+                className={selectClass}
+              >
                 <option value="">SR &amp; R</option>
-                {ranks.map((r) => <option key={r} value={r}>{r}</option>)}
+                {ranks.map((r) => (
+                  <option key={r} value={r}>
+                    {r}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="space-y-1">
-              <label htmlFor="sr-filter-skill2" className="text-xs uppercase tracking-widest text-slate-400">Skill 2</label>
-              <select id="sr-filter-skill2" value={selectedSkill} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedSkill(v)); }} className={selectClass}>
+              <label
+                htmlFor="sr-filter-skill2"
+                className="text-xs uppercase tracking-widest text-slate-400"
+              >
+                Skill 2
+              </label>
+              <select
+                id="sr-filter-skill2"
+                value={selectedSkill}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  startTransition(() => setSelectedSkill(v));
+                }}
+                className={selectClass}
+              >
                 <option value="">All Skills</option>
-                <optgroup label="Best">{skill2Categories.bestSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-                <optgroup label="Good">{skill2Categories.goodSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-                <optgroup label="Okay">{skill2Categories.okaySkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-                <optgroup label="Bad">{skill2Categories.badSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-                <optgroup label="Worst">{skill2Categories.worstSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+                <optgroup label="Best">
+                  {skill2Categories.bestSkills.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
+                </optgroup>
+                <optgroup label="Good">
+                  {skill2Categories.goodSkills.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
+                </optgroup>
+                <optgroup label="Okay">
+                  {skill2Categories.okaySkills.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
+                </optgroup>
+                <optgroup label="Bad">
+                  {skill2Categories.badSkills.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
+                </optgroup>
+                <optgroup label="Worst">
+                  {skill2Categories.worstSkills.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
+                </optgroup>
               </select>
             </div>
             <div className="space-y-1">
-              <label htmlFor="sr-filter-skill3" className="text-xs uppercase tracking-widest text-slate-400">Skill 3</label>
-              <select id="sr-filter-skill3" value={selectedSkill3} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedSkill3(v)); }} className={selectClass}>
+              <label
+                htmlFor="sr-filter-skill3"
+                className="text-xs uppercase tracking-widest text-slate-400"
+              >
+                Skill 3
+              </label>
+              <select
+                id="sr-filter-skill3"
+                value={selectedSkill3}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  startTransition(() => setSelectedSkill3(v));
+                }}
+                className={selectClass}
+              >
                 <option value="">All Skills</option>
-                <optgroup label="Best">{skill3Categories.bestSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-                <optgroup label="Good">{skill3Categories.goodSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-                <optgroup label="Okay">{skill3Categories.okaySkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-                <optgroup label="Bad">{skill3Categories.badSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-                <optgroup label="Worst">{skill3Categories.worstSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+                <optgroup label="Best">
+                  {skill3Categories.bestSkills.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
+                </optgroup>
+                <optgroup label="Good">
+                  {skill3Categories.goodSkills.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
+                </optgroup>
+                <optgroup label="Okay">
+                  {skill3Categories.okaySkills.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
+                </optgroup>
+                <optgroup label="Bad">
+                  {skill3Categories.badSkills.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
+                </optgroup>
+                <optgroup label="Worst">
+                  {skill3Categories.worstSkills.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
+                </optgroup>
               </select>
             </div>
             <div className="space-y-1">
-              <label htmlFor="sr-filter-ranking" className="text-xs uppercase tracking-widest text-slate-400">Ranking</label>
-              <select id="sr-filter-ranking" value={selectedRanking} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedRanking(v)); }} className={selectClass}>
+              <label
+                htmlFor="sr-filter-ranking"
+                className="text-xs uppercase tracking-widest text-slate-400"
+              >
+                Ranking
+              </label>
+              <select
+                id="sr-filter-ranking"
+                value={selectedRanking}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  startTransition(() => setSelectedRanking(v));
+                }}
+                className={selectClass}
+              >
                 <option value="">All Rankings</option>
-                {["S", "A", "B", "C", "F"].map((r) => <option key={r} value={r}>{r}</option>)}
+                {["S", "A", "B", "C", "F"].map((r) => (
+                  <option key={r} value={r}>
+                    {r}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -447,7 +703,16 @@ export function NewSrArtistTab() {
       {/* Grade tally */}
       <div className="flex items-center justify-center gap-3 text-xs mb-4 mt-1">
         {(["S", "A", "B", "C", "F"] as const).map((g) => {
-          const colorClass = g === "S" ? "ranking-a" : g === "A" ? "ranking-b" : g === "B" ? "ranking-c" : g === "C" ? "ranking-d" : "ranking-f";
+          const colorClass =
+            g === "S"
+              ? "ranking-a"
+              : g === "A"
+                ? "ranking-b"
+                : g === "B"
+                  ? "ranking-c"
+                  : g === "C"
+                    ? "ranking-d"
+                    : "ranking-f";
           const isActive = selectedRanking === g;
           return (
             <button
@@ -467,7 +732,12 @@ export function NewSrArtistTab() {
       {sortedArtists.length === 0 ? (
         <div className="text-center py-16 text-slate-400">
           <p>No artists match the current filters.</p>
-          <button onClick={clearFilters} className="mt-3 text-sm text-purple-400 hover:text-purple-300 underline">Clear all filters</button>
+          <button
+            onClick={clearFilters}
+            className="mt-3 text-sm text-purple-400 hover:text-purple-300 underline"
+          >
+            Clear all filters
+          </button>
         </div>
       ) : viewMode === "cards" ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -480,35 +750,49 @@ export function NewSrArtistTab() {
                 className={`rounded-xl border bg-gradient-to-br from-teal-900/60 via-cyan-900/40 to-slate-900/80 p-3 flex flex-col gap-2 transition-all duration-150 hover:scale-[1.02] hover:brightness-110 ${GRADE_GLOW[grade] ?? GRADE_GLOW.F}`}
               >
                 <div className="flex items-center justify-between gap-2">
-                  <span className="font-semibold text-white text-sm truncate"><HighlightedName name={artist.name} term={searchTerm} /></span>
+                  <span className="font-semibold text-white text-sm truncate">
+                    <HighlightedName name={artist.name} term={searchTerm} />
+                  </span>
                   <div className="flex items-center gap-1 shrink-0">
-                    <span className={`inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-bold ${artist.rank === "SR" ? "bg-purple-700/60 text-purple-200" : "bg-slate-700/60 text-slate-300"}`}>
+                    <span
+                      className={`inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-bold ${artist.rank === "SR" ? "bg-purple-700/60 text-purple-200" : "bg-slate-700/60 text-slate-300"}`}
+                    >
                       {artist.rank}
                     </span>
-                    <span className={`inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-bold bg-gradient-to-r from-slate-600 to-slate-700 ${getRankingClass(grade)}`}>
+                    <span
+                      className={`inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-bold bg-gradient-to-r from-slate-600 to-slate-700 ${getRankingClass(grade)}`}
+                    >
                       {grade}
                     </span>
                   </div>
                 </div>
                 <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-xs">
                   <span className="text-pink-300">{artist.genre}</span>
-                  <span className="text-slate-400" aria-hidden="true">·</span>
+                  <span className="text-slate-400" aria-hidden="true">
+                    ·
+                  </span>
                   <span className="text-purple-300">{artist.position}</span>
                   {artist.group && artist.group !== "None" && (
                     <>
-                      <span className="text-slate-400" aria-hidden="true">·</span>
+                      <span className="text-slate-400" aria-hidden="true">
+                        ·
+                      </span>
                       <span className="text-fuchsia-300 truncate">{artist.group}</span>
                     </>
                   )}
                 </div>
                 <div className="flex flex-col gap-1">
                   {artist.skills[1] && artist.skills[1] !== "None" && (
-                    <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs ${getSkillClass(artist.skills[1])}`}>
+                    <span
+                      className={`inline-flex items-center px-2 py-1 rounded-full text-xs ${getSkillClass(artist.skills[1])}`}
+                    >
                       {artist.skills[1]}
                     </span>
                   )}
                   {artist.skills[2] && artist.skills[2] !== "None" && (
-                    <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs ${getSkillClass(artist.skills[2])}`}>
+                    <span
+                      className={`inline-flex items-center px-2 py-1 rounded-full text-xs ${getSkillClass(artist.skills[2])}`}
+                    >
                       {artist.skills[2]}
                     </span>
                   )}
@@ -523,7 +807,9 @@ export function NewSrArtistTab() {
                   </div>
                   <div className="flex justify-end">
                     {artist.photos && (
-                      <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${PHOTO_CLASS[artist.photos] ?? "bg-slate-700 text-slate-300"}`}>
+                      <span
+                        className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${PHOTO_CLASS[artist.photos] ?? "bg-slate-700 text-slate-300"}`}
+                      >
                         {artist.photos}
                       </span>
                     )}
@@ -543,20 +829,32 @@ export function NewSrArtistTab() {
                 key={artist.id}
                 className={`flex items-center gap-3 py-2 px-3 bg-slate-900/60 hover:bg-slate-800/40 transition-colors border-l-4 ${GRADE_BORDER[grade] ?? "border-slate-700"}`}
               >
-                <span className="w-28 font-semibold text-white text-sm truncate shrink-0"><HighlightedName name={artist.name} term={searchTerm} /></span>
-                <span className={`inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-bold ${artist.rank === "SR" ? "bg-purple-700/60 text-purple-200" : "bg-slate-700/60 text-slate-300"} shrink-0`}>
+                <span className="w-28 font-semibold text-white text-sm truncate shrink-0">
+                  <HighlightedName name={artist.name} term={searchTerm} />
+                </span>
+                <span
+                  className={`inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-bold ${artist.rank === "SR" ? "bg-purple-700/60 text-purple-200" : "bg-slate-700/60 text-slate-300"} shrink-0`}
+                >
                   {artist.rank}
                 </span>
-                <span className={`inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-bold bg-gradient-to-r from-slate-600 to-slate-700 shrink-0 ${getRankingClass(grade)}`}>
+                <span
+                  className={`inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-bold bg-gradient-to-r from-slate-600 to-slate-700 shrink-0 ${getRankingClass(grade)}`}
+                >
                   {grade}
                 </span>
-                <span className="hidden sm:block text-xs text-slate-400 shrink-0 w-28 truncate">{artist.genre} · {artist.position}</span>
+                <span className="hidden sm:block text-xs text-slate-400 shrink-0 w-28 truncate">
+                  {artist.genre} · {artist.position}
+                </span>
                 <div className="flex flex-1 flex-wrap gap-x-3 gap-y-0.5 min-w-0">
                   {artist.skills[1] && artist.skills[1] !== "None" && (
-                    <span className={`text-xs ${getSkillClass(artist.skills[1])}`}>{artist.skills[1]}</span>
+                    <span className={`text-xs ${getSkillClass(artist.skills[1])}`}>
+                      {artist.skills[1]}
+                    </span>
                   )}
                   {artist.skills[2] && artist.skills[2] !== "None" && (
-                    <span className={`text-xs ${getSkillClass(artist.skills[2])}`}>{artist.skills[2]}</span>
+                    <span className={`text-xs ${getSkillClass(artist.skills[2])}`}>
+                      {artist.skills[2]}
+                    </span>
                   )}
                 </div>
               </div>
@@ -567,11 +865,15 @@ export function NewSrArtistTab() {
 
       {/* Legend */}
       <div className="mt-10 px-6 py-4 rounded-2xl border border-purple-400/30 bg-slate-900/60 shadow-[0_0_20px_rgba(147,51,234,0.2)]">
-        <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-3 text-center">Skill Colour Legend</h2>
+        <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-3 text-center">
+          Skill Colour Legend
+        </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           {LEGEND.map(({ cls, color, desc }) => (
             <div key={color} className="flex items-center gap-3">
-              <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-slate-600 to-slate-700 shrink-0 ${cls}`}>
+              <span
+                className={`inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-slate-600 to-slate-700 shrink-0 ${cls}`}
+              >
                 {color}
               </span>
               <span className="text-slate-300 text-xs">{desc}</span>
@@ -579,21 +881,48 @@ export function NewSrArtistTab() {
           ))}
         </div>
         <div className="mt-5 pt-4 border-t border-slate-700/60">
-          <h3 className="text-xs font-semibold text-white uppercase tracking-widest mb-2 text-center">How Rankings Work</h3>
-          <p className="text-slate-400 text-xs text-center mb-3">Skill 2 and Skill 3 are each scored, then added together.</p>
+          <h3 className="text-xs font-semibold text-white uppercase tracking-widest mb-2 text-center">
+            How Rankings Work
+          </h3>
+          <p className="text-slate-400 text-xs text-center mb-3">
+            Skill 2 and Skill 3 are each scored, then added together.
+          </p>
           <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs mb-3">
-            <span className="damage-to-player bg-gradient-to-r from-slate-600 to-slate-700 px-2 py-0.5 rounded-full">Best: 10 pts</span>
-            <span className="basic-attack-50 bg-gradient-to-r from-slate-700 to-slate-800 px-2 py-0.5 rounded-full">Good: 6 pts</span>
-            <span className="text-slate-300 bg-slate-700 px-2 py-0.5 rounded-full">Okay: 3 pts</span>
+            <span className="damage-to-player bg-gradient-to-r from-slate-600 to-slate-700 px-2 py-0.5 rounded-full">
+              Best: 10 pts
+            </span>
+            <span className="basic-attack-50 bg-gradient-to-r from-slate-700 to-slate-800 px-2 py-0.5 rounded-full">
+              Good: 6 pts
+            </span>
+            <span className="text-slate-300 bg-slate-700 px-2 py-0.5 rounded-full">
+              Okay: 3 pts
+            </span>
             <span className="text-slate-300 bg-slate-700 px-2 py-0.5 rounded-full">Bad: 0 pts</span>
-            <span className="skill-specific-worst bg-gradient-to-r from-slate-600 to-slate-700 px-2 py-0.5 rounded-full">Worst: −1 pt</span>
+            <span className="skill-specific-worst bg-gradient-to-r from-slate-600 to-slate-700 px-2 py-0.5 rounded-full">
+              Worst: −1 pt
+            </span>
           </div>
           <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs">
-            <span><span className="ranking-a font-bold">S</span> <span className="text-slate-400">≥ 14 pts</span></span>
-            <span><span className="ranking-b font-bold">A</span> <span className="text-slate-400">≥ 10 pts</span></span>
-            <span><span className="ranking-c font-bold">B</span> <span className="text-slate-400">≥ 5 pts</span></span>
-            <span><span className="ranking-d font-bold">C</span> <span className="text-slate-400">≥ 0 pts</span></span>
-            <span><span className="ranking-f font-bold">F</span> <span className="text-slate-400">&lt; 0 pts</span></span>
+            <span>
+              <span className="ranking-a font-bold">S</span>{" "}
+              <span className="text-slate-400">≥ 14 pts</span>
+            </span>
+            <span>
+              <span className="ranking-b font-bold">A</span>{" "}
+              <span className="text-slate-400">≥ 10 pts</span>
+            </span>
+            <span>
+              <span className="ranking-c font-bold">B</span>{" "}
+              <span className="text-slate-400">≥ 5 pts</span>
+            </span>
+            <span>
+              <span className="ranking-d font-bold">C</span>{" "}
+              <span className="text-slate-400">≥ 0 pts</span>
+            </span>
+            <span>
+              <span className="ranking-f font-bold">F</span>{" "}
+              <span className="text-slate-400">&lt; 0 pts</span>
+            </span>
           </div>
         </div>
       </div>

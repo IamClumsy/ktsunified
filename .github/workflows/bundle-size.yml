@@ -1,0 +1,82 @@
+name: Bundle Size
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  bundle:
+    name: Check bundle size
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build & analyze
+        run: npm run build
+
+      - name: Check bundle size
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+
+            // Read Next.js build manifest to get chunk sizes
+            const buildDir = '.next';
+            let totalSize = 0;
+            let files = [];
+
+            function walk(dir) {
+              if (!fs.existsSync(dir)) return;
+              for (const f of fs.readdirSync(dir)) {
+                const full = path.join(dir, f);
+                const stat = fs.statSync(full);
+                if (stat.isDirectory()) walk(full);
+                else if (f.endsWith('.js') && !f.endsWith('.map')) {
+                  totalSize += stat.size;
+                  files.push({ name: full.replace(buildDir + '/', ''), size: stat.size });
+                }
+              }
+            }
+
+            walk(path.join(buildDir, 'static', 'chunks'));
+
+            const totalKB = (totalSize / 1024).toFixed(1);
+            const LIMIT_KB = 1500;
+
+            files.sort((a, b) => b.size - a.size);
+            const top = files.slice(0, 8)
+              .map(f => `| \`${f.name}\` | ${(f.size/1024).toFixed(1)} KB |`)
+              .join('\n');
+
+            const status = totalSize / 1024 > LIMIT_KB ? '🔴 Over limit' : '✅ Within limit';
+
+            const body = [
+              `## Bundle Size Report`,
+              `**Total JS chunks:** ${totalKB} KB / ${LIMIT_KB} KB limit — ${status}`,
+              ``,
+              `| File | Size |`,
+              `|------|------|`,
+              top,
+            ].join('\n');
+
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body,
+            });
+
+            if (totalSize / 1024 > LIMIT_KB) {
+              core.setFailed(`Bundle size ${totalKB} KB exceeds limit of ${LIMIT_KB} KB`);
+            }

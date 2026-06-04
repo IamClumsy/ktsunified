@@ -32,21 +32,29 @@ const GRADE_BORDER: Record<string, string> = {
 const GRADE_ORDER: Record<string, number> = { S: 0, A: 1, B: 2, C: 3, F: 4 };
 
 const PHOTO_CLASS: Record<string, string> = {
-  Universal:      "bg-teal-900/60 text-teal-300 border border-teal-500/40",
-  "Own Photos":   "bg-pink-900/60 text-pink-300 border border-pink-500/40",
-  Tokyo4:         "bg-violet-900/60 text-violet-300 border border-violet-500/40",
-  Rome3:          "bg-amber-900/60 text-amber-300 border border-amber-500/40",
-  Bali3:          "bg-emerald-900/60 text-emerald-300 border border-emerald-500/40",
-  Bali4:          "bg-emerald-900/60 text-emerald-200 border border-emerald-400/40",
+  Universal: "bg-teal-900/60 text-teal-300 border border-teal-500/40",
+  "Own Photos": "bg-pink-900/60 text-pink-300 border border-pink-500/40",
+  Tokyo4: "bg-violet-900/60 text-violet-300 border border-violet-500/40",
+  Rome3: "bg-amber-900/60 text-amber-300 border border-amber-500/40",
+  Bali3: "bg-emerald-900/60 text-emerald-300 border border-emerald-500/40",
+  Bali4: "bg-emerald-900/60 text-emerald-200 border border-emerald-400/40",
   "Not Released": "bg-red-900/60 text-red-400 border border-red-500/40",
 };
 
 const LEGEND = [
-  { cls: "damage-to-player", color: "Gold", desc: "Best Skills (Damage to Player, 60%+ Attack Damage)" },
+  {
+    cls: "damage-to-player",
+    color: "Gold",
+    desc: "Best Skills (Damage to Player, 60%+ Attack Damage)",
+  },
   { cls: "skill-good", color: "Green", desc: "Good Skills (50% BA Damage, Skill Damage variants)" },
   { cls: "blue-text", color: "Blue", desc: "Damage Reduction Skills" },
   { cls: "violet-text", color: "Violet", desc: "Okay Skills (DPS Defending, Fan Gain)" },
-  { cls: "skill-specific-worst", color: "Red", desc: "Worst Skills (Drive Speed, World Building Guard)" },
+  {
+    cls: "skill-specific-worst",
+    color: "Red",
+    desc: "Worst Skills (Drive Speed, World Building Guard)",
+  },
   { cls: "gold-text", color: "Orange", desc: "Gold Gathering" },
   { cls: "skill-white", color: "White", desc: "Capacity Increase Skills" },
 ];
@@ -64,7 +72,9 @@ function HighlightedName({ name, term }: { name: string; term: string }) {
   return (
     <>
       {name.slice(0, idx)}
-      <mark className="bg-pink-500/30 text-pink-200 rounded-sm not-italic">{name.slice(idx, idx + term.length)}</mark>
+      <mark className="bg-pink-500/30 text-pink-200 rounded-sm not-italic">
+        {name.slice(idx, idx + term.length)}
+      </mark>
       {name.slice(idx + term.length)}
     </>
   );
@@ -81,23 +91,23 @@ export function NewArtistTab() {
   const setUrlFilter = useSetUrlFilter();
   const clearUrlFilters = useClearUrlFilters();
 
-  const searchTerm     = urlFilters.search;
-  const selectedRole   = urlFilters.role;
-  const selectedGenre  = urlFilters.genre;
-  const selectedSkill  = urlFilters.skill2;
+  const searchTerm = urlFilters.search;
+  const selectedRole = urlFilters.role;
+  const selectedGenre = urlFilters.genre;
+  const selectedSkill = urlFilters.skill2;
   const selectedSkill3 = urlFilters.skill3;
   const selectedRanking = urlFilters.grade;
   const sortBy = (urlFilters.sort || "ranking") as SortOption;
   const viewMode = (urlFilters.view || "cards") as ViewMode;
 
-  const setSearchTerm      = (v: string) => setUrlFilter({ search: v });
-  const setSelectedRole    = (v: string) => startTransition(() => setUrlFilter({ role: v }));
-  const setSelectedGenre   = (v: string) => startTransition(() => setUrlFilter({ genre: v }));
-  const setSelectedSkill   = (v: string) => startTransition(() => setUrlFilter({ skill2: v }));
-  const setSelectedSkill3  = (v: string) => startTransition(() => setUrlFilter({ skill3: v }));
+  const setSearchTerm = (v: string) => setUrlFilter({ search: v });
+  const setSelectedRole = (v: string) => startTransition(() => setUrlFilter({ role: v }));
+  const setSelectedGenre = (v: string) => startTransition(() => setUrlFilter({ genre: v }));
+  const setSelectedSkill = (v: string) => startTransition(() => setUrlFilter({ skill2: v }));
+  const setSelectedSkill3 = (v: string) => startTransition(() => setUrlFilter({ skill3: v }));
   const setSelectedRanking = (v: string) => startTransition(() => setUrlFilter({ grade: v }));
-  const setSortBy          = (v: SortOption) => startTransition(() => setUrlFilter({ sort: v }));
-  const setViewMode        = (v: ViewMode) => startTransition(() => setUrlFilter({ view: v }));
+  const setSortBy = (v: SortOption) => startTransition(() => setUrlFilter({ sort: v }));
+  const setViewMode = (v: ViewMode) => startTransition(() => setUrlFilter({ view: v }));
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [showPics, setShowPics] = useState(true);
 
@@ -167,8 +177,7 @@ export function NewArtistTab() {
         const pa = calculatePoints(a);
         const pb = calculatePoints(b);
         const gradeDiff =
-          (GRADE_ORDER[getLetterGrade(pa)] ?? 5) -
-          (GRADE_ORDER[getLetterGrade(pb)] ?? 5);
+          (GRADE_ORDER[getLetterGrade(pa)] ?? 5) - (GRADE_ORDER[getLetterGrade(pb)] ?? 5);
         if (gradeDiff !== 0) return gradeDiff;
         if (pb !== pa) return pb - pa;
         return a.name.localeCompare(b.name);
@@ -186,15 +195,42 @@ export function NewArtistTab() {
     return counts;
   }, [sortedArtists, calculatePoints]);
 
-  const activeFilterCount = [searchTerm, selectedRole, selectedGenre, selectedSkill, selectedSkill3, selectedRanking].filter(Boolean).length;
+  const activeFilterCount = [
+    searchTerm,
+    selectedRole,
+    selectedGenre,
+    selectedSkill,
+    selectedSkill3,
+    selectedRanking,
+  ].filter(Boolean).length;
 
   const activeFilters = [
-    searchTerm    && { label: "Name",    value: searchTerm,    clear: () => setSearchTerm("") },
-    selectedGenre && { label: "Genre",   value: selectedGenre, clear: () => startTransition(() => setSelectedGenre("")) },
-    selectedRole  && { label: "Role",    value: selectedRole,  clear: () => startTransition(() => setSelectedRole("")) },
-    selectedSkill && { label: "Skill 2", value: selectedSkill, clear: () => startTransition(() => setSelectedSkill("")) },
-    selectedSkill3 && { label: "Skill 3", value: selectedSkill3, clear: () => startTransition(() => setSelectedSkill3("")) },
-    selectedRanking && { label: "Grade", value: selectedRanking, clear: () => startTransition(() => setSelectedRanking("")) },
+    searchTerm && { label: "Name", value: searchTerm, clear: () => setSearchTerm("") },
+    selectedGenre && {
+      label: "Genre",
+      value: selectedGenre,
+      clear: () => startTransition(() => setSelectedGenre("")),
+    },
+    selectedRole && {
+      label: "Role",
+      value: selectedRole,
+      clear: () => startTransition(() => setSelectedRole("")),
+    },
+    selectedSkill && {
+      label: "Skill 2",
+      value: selectedSkill,
+      clear: () => startTransition(() => setSelectedSkill("")),
+    },
+    selectedSkill3 && {
+      label: "Skill 3",
+      value: selectedSkill3,
+      clear: () => startTransition(() => setSelectedSkill3("")),
+    },
+    selectedRanking && {
+      label: "Grade",
+      value: selectedRanking,
+      clear: () => startTransition(() => setSelectedRanking("")),
+    },
   ].filter(Boolean) as { label: string; value: string; clear: () => void }[];
 
   function clearFilters() {
@@ -320,52 +356,192 @@ export function NewArtistTab() {
       <BottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="Filters">
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1">
-            <label htmlFor="ssr-filter-genre" className="text-xs uppercase tracking-widest text-slate-400">Genre</label>
-            <select id="ssr-filter-genre" value={selectedGenre} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedGenre(v)); }} className={selectClass}>
+            <label
+              htmlFor="ssr-filter-genre"
+              className="text-xs uppercase tracking-widest text-slate-400"
+            >
+              Genre
+            </label>
+            <select
+              id="ssr-filter-genre"
+              value={selectedGenre}
+              onChange={(e) => {
+                const v = e.target.value;
+                startTransition(() => setSelectedGenre(v));
+              }}
+              className={selectClass}
+            >
               <option value="">All Genres</option>
-              {genres.map((g) => <option key={g} value={g}>{g}</option>)}
+              {genres.map((g) => (
+                <option key={g} value={g}>
+                  {g}
+                </option>
+              ))}
             </select>
           </div>
           <div className="space-y-1">
-            <label htmlFor="ssr-filter-role" className="text-xs uppercase tracking-widest text-slate-400">Role</label>
-            <select id="ssr-filter-role" value={selectedRole} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedRole(v)); }} className={selectClass}>
+            <label
+              htmlFor="ssr-filter-role"
+              className="text-xs uppercase tracking-widest text-slate-400"
+            >
+              Role
+            </label>
+            <select
+              id="ssr-filter-role"
+              value={selectedRole}
+              onChange={(e) => {
+                const v = e.target.value;
+                startTransition(() => setSelectedRole(v));
+              }}
+              className={selectClass}
+            >
               <option value="">All Roles</option>
-              {roles.map((r) => <option key={r} value={r}>{r}</option>)}
+              {roles.map((r) => (
+                <option key={r} value={r}>
+                  {r}
+                </option>
+              ))}
             </select>
           </div>
           <div className="space-y-1">
-            <label htmlFor="ssr-filter-skill2" className="text-xs uppercase tracking-widest text-slate-400">Skill 2</label>
-            <select id="ssr-filter-skill2" value={selectedSkill} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedSkill(v)); }} className={selectClass}>
+            <label
+              htmlFor="ssr-filter-skill2"
+              className="text-xs uppercase tracking-widest text-slate-400"
+            >
+              Skill 2
+            </label>
+            <select
+              id="ssr-filter-skill2"
+              value={selectedSkill}
+              onChange={(e) => {
+                const v = e.target.value;
+                startTransition(() => setSelectedSkill(v));
+              }}
+              className={selectClass}
+            >
               <option value="">All Skills</option>
-              <optgroup label="Best">{skill2Categories.bestSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-              <optgroup label="Good">{skill2Categories.goodSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-              <optgroup label="Okay">{skill2Categories.okaySkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-              <optgroup label="Bad">{skill2Categories.badSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-              <optgroup label="Worst">{skill2Categories.worstSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+              <optgroup label="Best">
+                {skill2Categories.bestSkills.map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label="Good">
+                {skill2Categories.goodSkills.map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label="Okay">
+                {skill2Categories.okaySkills.map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label="Bad">
+                {skill2Categories.badSkills.map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label="Worst">
+                {skill2Categories.worstSkills.map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
+              </optgroup>
             </select>
           </div>
           <div className="space-y-1">
-            <label htmlFor="ssr-filter-skill3" className="text-xs uppercase tracking-widest text-slate-400">Skill 3</label>
-            <select id="ssr-filter-skill3" value={selectedSkill3} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedSkill3(v)); }} className={selectClass}>
+            <label
+              htmlFor="ssr-filter-skill3"
+              className="text-xs uppercase tracking-widest text-slate-400"
+            >
+              Skill 3
+            </label>
+            <select
+              id="ssr-filter-skill3"
+              value={selectedSkill3}
+              onChange={(e) => {
+                const v = e.target.value;
+                startTransition(() => setSelectedSkill3(v));
+              }}
+              className={selectClass}
+            >
               <option value="">All Skills</option>
-              <optgroup label="Best">{skill3Categories.bestSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-              <optgroup label="Good">{skill3Categories.goodSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-              <optgroup label="Okay">{skill3Categories.okaySkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-              <optgroup label="Bad">{skill3Categories.badSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
-              <optgroup label="Worst">{skill3Categories.worstSkills.map((s) => <option key={s} value={s}>{s}</option>)}</optgroup>
+              <optgroup label="Best">
+                {skill3Categories.bestSkills.map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label="Good">
+                {skill3Categories.goodSkills.map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label="Okay">
+                {skill3Categories.okaySkills.map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label="Bad">
+                {skill3Categories.badSkills.map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label="Worst">
+                {skill3Categories.worstSkills.map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
+              </optgroup>
             </select>
           </div>
           <div className="space-y-1 col-span-2">
-            <label htmlFor="ssr-filter-ranking" className="text-xs uppercase tracking-widest text-slate-400">Ranking</label>
-            <select id="ssr-filter-ranking" value={selectedRanking} onChange={(e) => { const v = e.target.value; startTransition(() => setSelectedRanking(v)); }} className={selectClass}>
+            <label
+              htmlFor="ssr-filter-ranking"
+              className="text-xs uppercase tracking-widest text-slate-400"
+            >
+              Ranking
+            </label>
+            <select
+              id="ssr-filter-ranking"
+              value={selectedRanking}
+              onChange={(e) => {
+                const v = e.target.value;
+                startTransition(() => setSelectedRanking(v));
+              }}
+              className={selectClass}
+            >
               <option value="">All Rankings</option>
-              {["S", "A", "B", "C", "F"].map((r) => <option key={r} value={r}>{r}</option>)}
+              {["S", "A", "B", "C", "F"].map((r) => (
+                <option key={r} value={r}>
+                  {r}
+                </option>
+              ))}
             </select>
           </div>
         </div>
         {activeFilterCount > 0 && (
           <button
-            onClick={() => { clearUrlFilters(); setFiltersOpen(false); }}
+            onClick={() => {
+              clearUrlFilters();
+              setFiltersOpen(false);
+            }}
             className="mt-4 w-full py-3 rounded-xl border border-red-500/40 text-red-400 text-sm font-medium hover:bg-red-500/10 transition-colors"
           >
             Clear all filters
@@ -376,7 +552,16 @@ export function NewArtistTab() {
       {/* Grade tally — click to quick-filter by grade */}
       <div className="flex items-center justify-center gap-3 text-xs mb-4 mt-1">
         {(["S", "A", "B", "C", "F"] as const).map((g) => {
-          const colorClass = g === "S" ? "ranking-a" : g === "A" ? "ranking-b" : g === "B" ? "ranking-c" : g === "C" ? "ranking-d" : "ranking-f";
+          const colorClass =
+            g === "S"
+              ? "ranking-a"
+              : g === "A"
+                ? "ranking-b"
+                : g === "B"
+                  ? "ranking-c"
+                  : g === "C"
+                    ? "ranking-d"
+                    : "ranking-f";
           const isActive = selectedRanking === g;
           return (
             <button
@@ -396,7 +581,12 @@ export function NewArtistTab() {
       {sortedArtists.length === 0 ? (
         <div className="text-center py-16 text-slate-400">
           <p>No artists match the current filters.</p>
-          <button onClick={clearFilters} className="mt-3 text-sm text-pink-400 hover:text-pink-300 underline">Clear all filters</button>
+          <button
+            onClick={clearFilters}
+            className="mt-3 text-sm text-pink-400 hover:text-pink-300 underline"
+          >
+            Clear all filters
+          </button>
         </div>
       ) : viewMode === "cards" ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -420,30 +610,42 @@ export function NewArtistTab() {
                   </div>
                 )}
                 <div className="flex items-center justify-between gap-2">
-                  <span className="font-semibold text-white text-sm truncate"><HighlightedName name={artist.name} term={searchTerm} /></span>
-                  <span className={`inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-bold bg-gradient-to-r from-slate-600 to-slate-700 shrink-0 ${getRankingClass(grade)}`}>
+                  <span className="font-semibold text-white text-sm truncate">
+                    <HighlightedName name={artist.name} term={searchTerm} />
+                  </span>
+                  <span
+                    className={`inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-bold bg-gradient-to-r from-slate-600 to-slate-700 shrink-0 ${getRankingClass(grade)}`}
+                  >
                     {grade}
                   </span>
                 </div>
                 <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-xs">
                   <span className="text-pink-300">{artist.genre}</span>
-                  <span className="text-slate-400" aria-hidden="true">·</span>
+                  <span className="text-slate-400" aria-hidden="true">
+                    ·
+                  </span>
                   <span className="text-purple-300">{artist.position}</span>
                   {artist.group && artist.group !== "None" && (
                     <>
-                      <span className="text-slate-400" aria-hidden="true">·</span>
+                      <span className="text-slate-400" aria-hidden="true">
+                        ·
+                      </span>
                       <span className="text-fuchsia-300 truncate">{artist.group}</span>
                     </>
                   )}
                 </div>
                 <div className="flex flex-col gap-1">
                   {artist.skills[1] && (
-                    <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs ${getSkillClass(artist.skills[1])}`}>
+                    <span
+                      className={`inline-flex items-center px-2 py-1 rounded-full text-xs ${getSkillClass(artist.skills[1])}`}
+                    >
                       {artist.skills[1]}
                     </span>
                   )}
                   {artist.skills[2] && (
-                    <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs ${getSkillClass(artist.skills[2])}`}>
+                    <span
+                      className={`inline-flex items-center px-2 py-1 rounded-full text-xs ${getSkillClass(artist.skills[2])}`}
+                    >
                       {artist.skills[2]}
                     </span>
                   )}
@@ -458,7 +660,9 @@ export function NewArtistTab() {
                   </div>
                   <div className="flex justify-end">
                     {artist.photos && (
-                      <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${PHOTO_CLASS[artist.photos] ?? "bg-slate-700 text-slate-300"}`}>
+                      <span
+                        className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${PHOTO_CLASS[artist.photos] ?? "bg-slate-700 text-slate-300"}`}
+                      >
                         {artist.photos}
                       </span>
                     )}
@@ -478,17 +682,27 @@ export function NewArtistTab() {
                 key={artist.id}
                 className={`flex items-center gap-3 py-2 px-3 bg-slate-900/60 hover:bg-slate-800/40 transition-colors border-l-4 ${GRADE_BORDER[grade] ?? "border-slate-700"}`}
               >
-                <span className="w-28 font-semibold text-white text-sm truncate shrink-0"><HighlightedName name={artist.name} term={searchTerm} /></span>
-                <span className={`inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-bold bg-gradient-to-r from-slate-600 to-slate-700 shrink-0 ${getRankingClass(grade)}`}>
+                <span className="w-28 font-semibold text-white text-sm truncate shrink-0">
+                  <HighlightedName name={artist.name} term={searchTerm} />
+                </span>
+                <span
+                  className={`inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-bold bg-gradient-to-r from-slate-600 to-slate-700 shrink-0 ${getRankingClass(grade)}`}
+                >
                   {grade}
                 </span>
-                <span className="hidden sm:block text-xs text-slate-400 shrink-0 w-32 truncate">{artist.genre} · {artist.position}</span>
+                <span className="hidden sm:block text-xs text-slate-400 shrink-0 w-32 truncate">
+                  {artist.genre} · {artist.position}
+                </span>
                 <div className="flex flex-1 flex-wrap gap-x-3 gap-y-0.5 min-w-0">
                   {artist.skills[1] && (
-                    <span className={`text-xs ${getSkillClass(artist.skills[1])}`}>{artist.skills[1]}</span>
+                    <span className={`text-xs ${getSkillClass(artist.skills[1])}`}>
+                      {artist.skills[1]}
+                    </span>
                   )}
                   {artist.skills[2] && (
-                    <span className={`text-xs ${getSkillClass(artist.skills[2])}`}>{artist.skills[2]}</span>
+                    <span className={`text-xs ${getSkillClass(artist.skills[2])}`}>
+                      {artist.skills[2]}
+                    </span>
                   )}
                 </div>
               </div>
@@ -499,11 +713,15 @@ export function NewArtistTab() {
 
       {/* Skill colour legend */}
       <div className="mt-10 px-6 py-4 rounded-2xl border border-fuchsia-400/30 bg-slate-900/60 shadow-[0_0_20px_rgba(192,38,211,0.2)]">
-        <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-3 text-center">Skill Colour Legend</h2>
+        <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-3 text-center">
+          Skill Colour Legend
+        </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           {LEGEND.map(({ cls, color, desc }) => (
             <div key={color} className="flex items-center gap-3">
-              <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-slate-600 to-slate-700 shrink-0 ${cls}`}>
+              <span
+                className={`inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-slate-600 to-slate-700 shrink-0 ${cls}`}
+              >
                 {color}
               </span>
               <span className="text-slate-300 text-xs">{desc}</span>
@@ -511,21 +729,48 @@ export function NewArtistTab() {
           ))}
         </div>
         <div className="mt-5 pt-4 border-t border-slate-700/60">
-          <h3 className="text-xs font-semibold text-white uppercase tracking-widest mb-2 text-center">How Rankings Work</h3>
-          <p className="text-slate-400 text-xs text-center mb-3">Skill 2 and Skill 3 are each scored, then added together.</p>
+          <h3 className="text-xs font-semibold text-white uppercase tracking-widest mb-2 text-center">
+            How Rankings Work
+          </h3>
+          <p className="text-slate-400 text-xs text-center mb-3">
+            Skill 2 and Skill 3 are each scored, then added together.
+          </p>
           <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs mb-3">
-            <span className="damage-to-player bg-gradient-to-r from-slate-600 to-slate-700 px-2 py-0.5 rounded-full">Best: 10 pts</span>
-            <span className="basic-attack-50 bg-gradient-to-r from-slate-700 to-slate-800 px-2 py-0.5 rounded-full">Good: 6 pts</span>
-            <span className="text-slate-300 bg-slate-700 px-2 py-0.5 rounded-full">Okay: 3 pts</span>
+            <span className="damage-to-player bg-gradient-to-r from-slate-600 to-slate-700 px-2 py-0.5 rounded-full">
+              Best: 10 pts
+            </span>
+            <span className="basic-attack-50 bg-gradient-to-r from-slate-700 to-slate-800 px-2 py-0.5 rounded-full">
+              Good: 6 pts
+            </span>
+            <span className="text-slate-300 bg-slate-700 px-2 py-0.5 rounded-full">
+              Okay: 3 pts
+            </span>
             <span className="text-slate-300 bg-slate-700 px-2 py-0.5 rounded-full">Bad: 0 pts</span>
-            <span className="skill-specific-worst bg-gradient-to-r from-slate-600 to-slate-700 px-2 py-0.5 rounded-full">Worst: −1 pt</span>
+            <span className="skill-specific-worst bg-gradient-to-r from-slate-600 to-slate-700 px-2 py-0.5 rounded-full">
+              Worst: −1 pt
+            </span>
           </div>
           <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs">
-            <span><span className="ranking-a font-bold">S</span> <span className="text-slate-400">≥ 16 pts</span></span>
-            <span><span className="ranking-b font-bold">A</span> <span className="text-slate-400">≥ 11 pts</span></span>
-            <span><span className="ranking-c font-bold">B</span> <span className="text-slate-400">≥ 6 pts</span></span>
-            <span><span className="ranking-d font-bold">C</span> <span className="text-slate-400">≥ 2 pts</span></span>
-            <span><span className="ranking-f font-bold">F</span> <span className="text-slate-400">&lt; 2 pts</span></span>
+            <span>
+              <span className="ranking-a font-bold">S</span>{" "}
+              <span className="text-slate-400">≥ 16 pts</span>
+            </span>
+            <span>
+              <span className="ranking-b font-bold">A</span>{" "}
+              <span className="text-slate-400">≥ 11 pts</span>
+            </span>
+            <span>
+              <span className="ranking-c font-bold">B</span>{" "}
+              <span className="text-slate-400">≥ 6 pts</span>
+            </span>
+            <span>
+              <span className="ranking-d font-bold">C</span>{" "}
+              <span className="text-slate-400">≥ 2 pts</span>
+            </span>
+            <span>
+              <span className="ranking-f font-bold">F</span>{" "}
+              <span className="text-slate-400">&lt; 2 pts</span>
+            </span>
           </div>
         </div>
       </div>

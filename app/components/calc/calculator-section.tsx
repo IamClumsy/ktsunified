@@ -61,12 +61,11 @@ export function CalculatorSection({ title, note, color, children }: Props) {
           : "rounded-2xl border border-slate-800 bg-slate-900/60 p-5 shadow-xl"
       }
     >
-      <button
-        onClick={toggle}
-        className="w-full flex items-center justify-between gap-2 text-left"
-      >
+      <button onClick={toggle} className="w-full flex items-center justify-between gap-2 text-left">
         <div>
-          <h2 className={`text-lg font-semibold ${scheme ? scheme.title : "text-white"}`}>{title}</h2>
+          <h2 className={`text-lg font-semibold ${scheme ? scheme.title : "text-white"}`}>
+            {title}
+          </h2>
           {note && <p className="mt-0.5 text-xs text-slate-400">{note}</p>}
         </div>
         <svg

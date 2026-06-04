@@ -30,7 +30,6 @@ export function VillaHomemaking() {
     return vlookupDiff(from - 1, to - 1, tables.homemaking.data, tierNum * 2 + 1);
   }, [tables, from, to, tierNum]);
 
-
   return (
     <CalculatorSection title="Villa Homemaking" color="emerald">
       <DropdownInput label="Tier" value={tier} options={TIER_OPTIONS} onChange={setTier} />
@@ -41,12 +40,14 @@ export function VillaHomemaking() {
           {
             label: isHQ ? "HQ Coins" : "Coins",
             value: coins,
-            equivalent: isHQ && coins != null ? { label: "Coins", value: coins * HQ_MULTIPLIER } : null,
+            equivalent:
+              isHQ && coins != null ? { label: "Coins", value: coins * HQ_MULTIPLIER } : null,
           },
           {
             label: isHQ ? "HQ Keys" : "Keys",
             value: keys,
-            equivalent: isHQ && keys != null ? { label: "Keys", value: keys * HQ_MULTIPLIER } : null,
+            equivalent:
+              isHQ && keys != null ? { label: "Keys", value: keys * HQ_MULTIPLIER } : null,
           },
         ]}
       />

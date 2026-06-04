@@ -28,7 +28,9 @@ export function CeoOutfit() {
     const fromIdx = steps.indexOf(from);
     const toIdx = steps.indexOf(to);
     if (fromIdx < 0 || toIdx < 0 || fromIdx > toIdx) return null;
-    let bankCards = 0, droids = 0, crownCards = 0;
+    let bankCards = 0,
+      droids = 0,
+      crownCards = 0;
     for (let i = fromIdx; i <= toIdx; i++) {
       const row = tables.ceoOutfit.data[i];
       bankCards += typeof row[1] === "number" ? row[1] : 0;
@@ -38,9 +40,12 @@ export function CeoOutfit() {
     return { bankCards, droids, crownCards };
   }, [tables, steps, from, to]);
 
-
   return (
-    <CalculatorSection title="CEO Outfit" note="*Bank Cards per Item (per outfit piece). Refined and above: costs not yet added to spreadsheet." color="pink">
+    <CalculatorSection
+      title="CEO Outfit"
+      note="*Bank Cards per Item (per outfit piece). Refined and above: costs not yet added to spreadsheet."
+      color="pink"
+    >
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <DropdownInput label="From Step" value={from} options={steps} onChange={setFrom} />
         <DropdownInput label="To Step" value={to} options={steps} onChange={setTo} />

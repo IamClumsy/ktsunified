@@ -29,22 +29,25 @@ function write(name, data) {
 function generateCalcTables() {
   const filePath = path.join(SRC, "apex girl calculator.xlsx");
   const artistXpModsPath = path.join(SRC, "artistxpmods.xlsx");
-  if (!fs.existsSync(filePath)) { console.warn(`  ⚠ skip calc-tables: file not found`); return; }
+  if (!fs.existsSync(filePath)) {
+    console.warn(`  ⚠ skip calc-tables: file not found`);
+    return;
+  }
 
   const RANGES = {
-    glass:      { colStart: 0,   colEnd: 3,   maxRows: 603 },
-    gems:       { colStart: 3,   colEnd: 6,   maxRows: 53  },
-    carParts:   { colStart: 6,   colEnd: 11,  maxRows: 36  },
-    villa:      { colStart: 11,  colEnd: 16,  maxRows: 41  },
-    carRanks:   { colStart: 16,  colEnd: 18,  maxRows: 7   },
-    floors:     { colStart: 59,  colEnd: 70,  maxRows: 63  },
-    exhibits:   { colStart: 70,  colEnd: 81,  maxRows: 63  },
-    carCore:    { colStart: 81,  colEnd: 92,  maxRows: 63  },
-    homemaking: { colStart: 92,  colEnd: 103, maxRows: 63  },
-    artists:    { colStart: 103, colEnd: 108, maxRows: 143 },
-    assets:     { colStart: 122, colEnd: 132, maxRows: 62  },
-    assetTypes: { colStart: 108, colEnd: 111, maxRows: 5   },
-    sacrifices: { colStart: 132, colEnd: 135, maxRows: 63  },
+    glass: { colStart: 0, colEnd: 3, maxRows: 603 },
+    gems: { colStart: 3, colEnd: 6, maxRows: 53 },
+    carParts: { colStart: 6, colEnd: 11, maxRows: 36 },
+    villa: { colStart: 11, colEnd: 16, maxRows: 41 },
+    carRanks: { colStart: 16, colEnd: 18, maxRows: 7 },
+    floors: { colStart: 59, colEnd: 70, maxRows: 63 },
+    exhibits: { colStart: 70, colEnd: 81, maxRows: 63 },
+    carCore: { colStart: 81, colEnd: 92, maxRows: 63 },
+    homemaking: { colStart: 92, colEnd: 103, maxRows: 63 },
+    artists: { colStart: 103, colEnd: 108, maxRows: 143 },
+    assets: { colStart: 122, colEnd: 132, maxRows: 62 },
+    assetTypes: { colStart: 108, colEnd: 111, maxRows: 5 },
+    sacrifices: { colStart: 132, colEnd: 135, maxRows: 63 },
   };
 
   function extractRange(data, { colStart, colEnd, maxRows }) {
@@ -70,7 +73,10 @@ function generateCalcTables() {
   const fileBuffer = fs.readFileSync(filePath);
   const wb = XLSX.read(fileBuffer, { type: "buffer", cellDates: true });
   const ws = wb.Sheets["Tables"];
-  if (!ws) { console.warn(`  ⚠ skip calc-tables: "Tables" sheet not found`); return; }
+  if (!ws) {
+    console.warn(`  ⚠ skip calc-tables: "Tables" sheet not found`);
+    return;
+  }
   const raw = XLSX.utils.sheet_to_json(ws, { header: 1 });
 
   const result = {};
@@ -93,7 +99,8 @@ function generateCalcTables() {
       accumulated += cost;
       glassData.push([level - 1, cost || null, accumulated]);
     }
-    if (glassData.length > 0) result.glass = { headers: result.glass?.headers ?? [], data: glassData };
+    if (glassData.length > 0)
+      result.glass = { headers: result.glass?.headers ?? [], data: glassData };
   }
 
   // Extend artist data from Artist sheet
@@ -153,7 +160,17 @@ function generateCalcTables() {
     const assetsByLevel = new Map();
     for (const row of assetRaw) {
       if (!Array.isArray(row) || typeof row[0] !== "number" || typeof row[1] !== "number") continue;
-      assetsByLevel.set(row[0], [row[1], row[2], row[3], row[6], row[7], row[8], 0, row[11], row[12]]);
+      assetsByLevel.set(row[0], [
+        row[1],
+        row[2],
+        row[3],
+        row[6],
+        row[7],
+        row[8],
+        0,
+        row[11],
+        row[12],
+      ]);
     }
     result.assets.data = result.assets.data.filter(
       (row) => typeof row[0] === "number" && typeof row[1] === "number"
@@ -207,11 +224,15 @@ function generateCalcTables() {
     for (let r = 2; r < othersRaw.length; r++) {
       const row = othersRaw[r];
       if (!Array.isArray(row)) continue;
-      if (typeof row[0] === "number" && typeof row[2] === "number") cardsData.push([row[0] - 1, row[1] ?? null, row[2]]);
-      if (typeof row[4] === "number" && typeof row[6] === "number") goldData.push([row[4] - 1, row[5] ?? null, row[6]]);
+      if (typeof row[0] === "number" && typeof row[2] === "number")
+        cardsData.push([row[0] - 1, row[1] ?? null, row[2]]);
+      if (typeof row[4] === "number" && typeof row[6] === "number")
+        goldData.push([row[4] - 1, row[5] ?? null, row[6]]);
     }
-    if (cardsData.length > 0) result.buildingCards = { headers: ["Level", "Cards", "Accum"], data: cardsData };
-    if (goldData.length > 0) result.buildingGold = { headers: ["Level", "Gold", "Accum"], data: goldData };
+    if (cardsData.length > 0)
+      result.buildingCards = { headers: ["Level", "Cards", "Accum"], data: cardsData };
+    if (goldData.length > 0)
+      result.buildingGold = { headers: ["Level", "Gold", "Accum"], data: goldData };
   }
 
   // Parse Blueprints sheet
@@ -228,7 +249,10 @@ function generateCalcTables() {
         if (typeof row[t + 1] === "number") tierAccum[t] += row[t + 1];
       }
     }
-    result.blueprintsMain = { headers: ["Tier", "Total Cost"], data: tierHeaders.map((h, i) => [h, tierAccum[i]]) };
+    result.blueprintsMain = {
+      headers: ["Tier", "Total Cost"],
+      data: tierHeaders.map((h, i) => [h, tierAccum[i]]),
+    };
 
     let battleDataStart = -1;
     let expansionDataStart = -1;
@@ -273,7 +297,17 @@ function generateCalcTables() {
     }
     if (sportsData.length > 0) {
       result.ceoSports = {
-        headers: ["Level", "T1 Drink", "T1 Bar", "T2 Drink", "T2 Bar", "T3 Drink", "T3 Bar", "T4 HQ Drink", "T4 HQ Bar"],
+        headers: [
+          "Level",
+          "T1 Drink",
+          "T1 Bar",
+          "T2 Drink",
+          "T2 Bar",
+          "T3 Drink",
+          "T3 Bar",
+          "T4 HQ Drink",
+          "T4 HQ Bar",
+        ],
         data: sportsData,
       };
     }
@@ -292,16 +326,24 @@ function generateCalcTables() {
       lastAppearance = appearance;
       const goldCrowns = typeof row[2] === "number" ? row[2] : 0;
       const label = appearance === "Essential" ? "Essential" : `${appearance} GC${goldCrowns}`;
-      outfitData.push([label, typeof row[5] === "number" ? row[5] : 0, typeof row[6] === "number" ? row[6] : 0, typeof row[11] === "number" ? row[11] : 0]);
+      outfitData.push([
+        label,
+        typeof row[5] === "number" ? row[5] : 0,
+        typeof row[6] === "number" ? row[6] : 0,
+        typeof row[11] === "number" ? row[11] : 0,
+      ]);
     }
-    result.ceoOutfit = { headers: ["Step", "Bank Cards per Item", "Droids", "Crown Cards"], data: outfitData };
+    result.ceoOutfit = {
+      headers: ["Step", "Bank Cards per Item", "Droids", "Crown Cards"],
+      data: outfitData,
+    };
   }
 
   // Override SSS2-SSS5 car parts from dedicated Car Parts sheet
   const carPartsSheetWs = wb.Sheets["Car Parts"];
   if (carPartsSheetWs && result.carParts) {
     const cpRaw = XLSX.utils.sheet_to_json(carPartsSheetWs, { header: 1 });
-    const toStars = (v) => typeof v === "string" ? v.length : 0;
+    const toStars = (v) => (typeof v === "string" ? v.length : 0);
     let partsAccum = 0;
     let drawingsAccum = 0;
     for (const row of result.carParts.data) {
@@ -342,7 +384,8 @@ function generateCalcTables() {
         if (!Array.isArray(row)) continue;
         const name = row[0];
         const mod = row[1];
-        if (typeof name === "string" && name !== "" && typeof mod === "number") modsData.push([name, mod]);
+        if (typeof name === "string" && name !== "" && typeof mod === "number")
+          modsData.push([name, mod]);
       }
       modsData.sort((a, b) => a[0].localeCompare(b[0]));
       result.artistMods = { headers: ["Artist", "Modifier"], data: modsData };
@@ -356,7 +399,10 @@ function generateCalcTables() {
 
 function generateSvsTables() {
   const filePath = path.join(SRC, "SVS Store Calculator.xlsx");
-  if (!fs.existsSync(filePath)) { console.warn(`  ⚠ skip svs-tables: file not found`); return; }
+  if (!fs.existsSync(filePath)) {
+    console.warn(`  ⚠ skip svs-tables: file not found`);
+    return;
+  }
 
   function parseShop(ws) {
     const raw = XLSX.utils.sheet_to_json(ws, { header: 1 });
@@ -393,11 +439,14 @@ function generateSvsTables() {
 
 function generateCeoTables() {
   const filePath = path.join(SRC, "EventScoring.xlsx");
-  if (!fs.existsSync(filePath)) { console.warn(`  ⚠ skip ceo-tables: file not found`); return; }
+  if (!fs.existsSync(filePath)) {
+    console.warn(`  ⚠ skip ceo-tables: file not found`);
+    return;
+  }
 
-  const LEFT     = { category: 0,  task: 1,  points: 2,  used: 3  };
-  const RIGHT    = { category: 6,  task: 7,  points: 8,  used: 9  };
-  const WARM_UP  = { category: 12, task: 13, points: 14, used: 15 };
+  const LEFT = { category: 0, task: 1, points: 2, used: 3 };
+  const RIGHT = { category: 6, task: 7, points: 8, used: 9 };
+  const WARM_UP = { category: 12, task: 13, points: 14, used: 15 };
   const TRAVELER = { category: 18, task: 19, points: 20, used: 21 };
 
   const TOTAL_LABELS = new Set(["total", "approximate total for all days"]);
@@ -414,30 +463,41 @@ function generateCeoTables() {
       if (!taskCell) continue;
       const catCell = String(row[cols.category] ?? "").trim();
       if (catCell && catCell !== currentCategory) {
-        if (currentCategory && currentTasks.length > 0) categories.push({ name: currentCategory, tasks: currentTasks });
+        if (currentCategory && currentTasks.length > 0)
+          categories.push({ name: currentCategory, tasks: currentTasks });
         currentCategory = catCell;
         currentTasks = [];
       }
-      const points = typeof row[cols.points] === "number" ? row[cols.points] : Number(row[cols.points]) || 0;
+      const points =
+        typeof row[cols.points] === "number" ? row[cols.points] : Number(row[cols.points]) || 0;
       const usedRaw = row[cols.used];
-      const used = typeof usedRaw === "number" ? usedRaw : (usedRaw != null && usedRaw !== "" ? Number(usedRaw) || 0 : 0);
+      const used =
+        typeof usedRaw === "number"
+          ? usedRaw
+          : usedRaw != null && usedRaw !== ""
+            ? Number(usedRaw) || 0
+            : 0;
       currentTasks.push({ task: taskCell, points, used });
     }
-    if (currentCategory && currentTasks.length > 0) categories.push({ name: currentCategory, tasks: currentTasks });
+    if (currentCategory && currentTasks.length > 0)
+      categories.push({ name: currentCategory, tasks: currentTasks });
     return { name: eventName, categories };
   }
 
   const fileBuffer = fs.readFileSync(filePath);
   const wb = XLSX.read(fileBuffer, { type: "buffer", cellDates: true });
   const ws = wb.Sheets["Sheet1"];
-  if (!ws) { console.warn(`  ⚠ skip ceo-tables: "Sheet1" not found`); return; }
+  if (!ws) {
+    console.warn(`  ⚠ skip ceo-tables: "Sheet1" not found`);
+    return;
+  }
   const raw = XLSX.utils.sheet_to_json(ws, { header: 1 });
 
   const result = {
     events: [
-      parseEvent(raw, LEFT,     "Top CEO Event"),
-      parseEvent(raw, RIGHT,    "Ultimate CEO Event"),
-      parseEvent(raw, WARM_UP,  "Warm Up Event"),
+      parseEvent(raw, LEFT, "Top CEO Event"),
+      parseEvent(raw, RIGHT, "Ultimate CEO Event"),
+      parseEvent(raw, WARM_UP, "Warm Up Event"),
       parseEvent(raw, TRAVELER, "Ultimate Traveler"),
     ],
   };
@@ -450,10 +510,16 @@ function generateShopTables() {
   const result = {};
 
   function parseSimpleShop(filePath, sheetName, title, currency) {
-    if (!fs.existsSync(filePath)) { console.warn(`  ⚠ skip ${title}: file not found`); return null; }
+    if (!fs.existsSync(filePath)) {
+      console.warn(`  ⚠ skip ${title}: file not found`);
+      return null;
+    }
     const wb = XLSX.read(fs.readFileSync(filePath), { type: "buffer" });
     const ws = wb.Sheets[sheetName];
-    if (!ws) { console.warn(`  ⚠ skip ${title}: sheet not found`); return null; }
+    if (!ws) {
+      console.warn(`  ⚠ skip ${title}: sheet not found`);
+      return null;
+    }
     const raw = XLSX.utils.sheet_to_json(ws, { header: 1 });
     const items = [];
     // Header at row 5, data from row 6: [Yes/No, item, qty, maxQty, price, subtotal]
@@ -471,10 +537,16 @@ function generateShopTables() {
 
   function parseVipShop() {
     const filePath = path.join(SRC, "VIP Shop Calculator.xlsx");
-    if (!fs.existsSync(filePath)) { console.warn(`  ⚠ skip VIP shop: file not found`); return null; }
+    if (!fs.existsSync(filePath)) {
+      console.warn(`  ⚠ skip VIP shop: file not found`);
+      return null;
+    }
     const wb = XLSX.read(fs.readFileSync(filePath), { type: "buffer" });
     const ws = wb.Sheets["VIP"];
-    if (!ws) { console.warn(`  ⚠ skip VIP shop: sheet not found`); return null; }
+    if (!ws) {
+      console.warn(`  ⚠ skip VIP shop: sheet not found`);
+      return null;
+    }
     const raw = XLSX.utils.sheet_to_json(ws, { header: 1 });
     const items = [];
     // Header at row 6, data from row 7: [Yes/No, vipLevel, item, qty, maxQty, price, subtotal]
@@ -494,10 +566,20 @@ function generateShopTables() {
   const vip = parseVipShop();
   if (vip) result.VIP = vip;
 
-  const abroad = parseSimpleShop(path.join(SRC, "Abroad Shop Calculator.xlsx"), "ABROAD", "Abroad Shop", "Abroad Coins");
+  const abroad = parseSimpleShop(
+    path.join(SRC, "Abroad Shop Calculator.xlsx"),
+    "ABROAD",
+    "Abroad Shop",
+    "Abroad Coins"
+  );
   if (abroad) result.ABROAD = abroad;
 
-  const parking = parseSimpleShop(path.join(SRC, "Parking Shop Calculator.xlsx"), "PARKING", "Parking Shop", "Parking Coins");
+  const parking = parseSimpleShop(
+    path.join(SRC, "Parking Shop Calculator.xlsx"),
+    "PARKING",
+    "Parking Shop",
+    "Parking Coins"
+  );
   if (parking) result.PARKING = parking;
 
   write("shops-tables", result);

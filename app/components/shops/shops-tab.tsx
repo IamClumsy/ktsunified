@@ -46,9 +46,17 @@ function fmt(v: number) {
 function ShopsContent() {
   const { tables, loading, error } = useShopsTables();
   const [selectedShop, setSelectedShop] = useState<ShopKey>("VIP");
-  const [budgets, setBudgets] = useState<Record<ShopKey, number | "">>({ VIP: "", ABROAD: "", PARKING: "" });
+  const [budgets, setBudgets] = useState<Record<ShopKey, number | "">>({
+    VIP: "",
+    ABROAD: "",
+    PARKING: "",
+  });
   const [totals, setTotals] = useState<Record<ShopKey, number>>({ VIP: 0, ABROAD: 0, PARKING: 0 });
-  const [resetKeys, setResetKeys] = useState<Record<ShopKey, number>>({ VIP: 0, ABROAD: 0, PARKING: 0 });
+  const [resetKeys, setResetKeys] = useState<Record<ShopKey, number>>({
+    VIP: 0,
+    ABROAD: 0,
+    PARKING: 0,
+  });
 
   const budget = budgets[selectedShop];
   const shopTotal = totals[selectedShop];
@@ -58,8 +66,18 @@ function ShopsContent() {
   const setAbroad = useCallback((t: number) => setTotals((p) => ({ ...p, ABROAD: t })), []);
   const setParking = useCallback((t: number) => setTotals((p) => ({ ...p, PARKING: t })), []);
 
-  if (loading) return <div className="flex items-center justify-center py-24"><p className="text-slate-400">Loading shop data…</p></div>;
-  if (error) return <div className="flex items-center justify-center py-24"><p className="text-red-400">Error: {error}</p></div>;
+  if (loading)
+    return (
+      <div className="flex items-center justify-center py-24">
+        <p className="text-slate-400">Loading shop data…</p>
+      </div>
+    );
+  if (error)
+    return (
+      <div className="flex items-center justify-center py-24">
+        <p className="text-red-400">Error: {error}</p>
+      </div>
+    );
   if (!tables) return null;
 
   function resetCurrentShop() {
@@ -91,7 +109,10 @@ function ShopsContent() {
 
       {/* Budget input */}
       <div className="rounded-2xl border border-slate-700 bg-slate-900/80 px-5 py-4 flex flex-wrap items-center gap-4">
-        <label htmlFor={BUDGET_INPUT_ID[selectedShop]} className="text-sm uppercase tracking-widest text-slate-400 shrink-0">
+        <label
+          htmlFor={BUDGET_INPUT_ID[selectedShop]}
+          className="text-sm uppercase tracking-widest text-slate-400 shrink-0"
+        >
           Budget
         </label>
         <input
@@ -100,13 +121,18 @@ function ShopsContent() {
           min={0}
           value={budget}
           onChange={(e) =>
-            setBudgets((p) => ({ ...p, [selectedShop]: e.target.value === "" ? "" : Number(e.target.value) }))
+            setBudgets((p) => ({
+              ...p,
+              [selectedShop]: e.target.value === "" ? "" : Number(e.target.value),
+            }))
           }
           placeholder={`Enter ${tables[selectedShop]?.currency ?? "coins"} budget…`}
           className="flex-1 min-w-[160px] rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-violet-400/60"
         />
         {remaining !== null && (
-          <span className={`text-sm font-semibold tabular-nums ${remaining >= 0 ? "text-green-400" : "text-red-400"}`}>
+          <span
+            className={`text-sm font-semibold tabular-nums ${remaining >= 0 ? "text-green-400" : "text-red-400"}`}
+          >
             {remaining >= 0 ? `${fmt(remaining)} remaining` : `${fmt(-remaining)} over budget`}
           </span>
         )}
@@ -173,7 +199,9 @@ function ShopsContent() {
           <span className="text-sm uppercase tracking-widest text-slate-400">
             Total {tables[selectedShop]?.currency ?? "coins"}
           </span>
-          <span className={`text-2xl font-bold tabular-nums ${remaining !== null && remaining < 0 ? "text-red-400" : "text-white"}`}>
+          <span
+            className={`text-2xl font-bold tabular-nums ${remaining !== null && remaining < 0 ? "text-red-400" : "text-white"}`}
+          >
             {fmt(shopTotal)}
           </span>
         </div>
@@ -189,7 +217,9 @@ export function ShopsTab() {
         <header className="mb-10 text-center">
           <p className="text-sm uppercase tracking-[0.4em] text-slate-400">Shop Calculators</p>
           <h1 className="mt-4 text-2xl md:text-4xl font-bold text-white">Shop Calculators</h1>
-          <p className="mt-2 text-slate-300">Plan your spending across VIP, Abroad, and Parking shops</p>
+          <p className="mt-2 text-slate-300">
+            Plan your spending across VIP, Abroad, and Parking shops
+          </p>
         </header>
         <ShopsContent />
       </div>

@@ -51,8 +51,18 @@ function SvsContent() {
   const setSilver = useCallback((t: number) => setTotals((p) => ({ ...p, SILVER: t })), []);
   const setBronze = useCallback((t: number) => setTotals((p) => ({ ...p, BRONZE: t })), []);
 
-  if (loading) return <div className="flex items-center justify-center py-24"><p className="text-slate-400">Loading calculator data…</p></div>;
-  if (error) return <div className="flex items-center justify-center py-24"><p className="text-red-400">Error: {error}</p></div>;
+  if (loading)
+    return (
+      <div className="flex items-center justify-center py-24">
+        <p className="text-slate-400">Loading calculator data…</p>
+      </div>
+    );
+  if (error)
+    return (
+      <div className="flex items-center justify-center py-24">
+        <p className="text-red-400">Error: {error}</p>
+      </div>
+    );
   if (!tables) return null;
 
   return (
@@ -80,7 +90,12 @@ function SvsContent() {
 
       {/* Budget input */}
       <div className="rounded-2xl border border-slate-700 bg-slate-900/80 px-5 py-4 flex flex-wrap items-center gap-4">
-        <label htmlFor="svs-budget" className="text-sm uppercase tracking-widest text-slate-400 shrink-0">Budget</label>
+        <label
+          htmlFor="svs-budget"
+          className="text-sm uppercase tracking-widest text-slate-400 shrink-0"
+        >
+          Budget
+        </label>
         <input
           id="svs-budget"
           type="number"
@@ -91,7 +106,9 @@ function SvsContent() {
           className="flex-1 min-w-[160px] rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-amber-400/60"
         />
         {remaining !== null && (
-          <span className={`text-sm font-semibold tabular-nums ${remaining >= 0 ? "text-green-400" : "text-red-400"}`}>
+          <span
+            className={`text-sm font-semibold tabular-nums ${remaining >= 0 ? "text-green-400" : "text-red-400"}`}
+          >
             {remaining >= 0 ? `${fmt(remaining)} remaining` : `${fmt(-remaining)} over budget`}
           </span>
         )}
@@ -113,13 +130,37 @@ function SvsContent() {
 
       {/* Active shop — keep all mounted so totals stay accurate */}
       <div hidden={selectedShop !== "GOLD"}>
-        {tables.GOLD && <ShopSection key={`GOLD-${resetKey}`} shop={tables.GOLD} color="amber" onTotalChange={setGold} remaining={remaining} />}
+        {tables.GOLD && (
+          <ShopSection
+            key={`GOLD-${resetKey}`}
+            shop={tables.GOLD}
+            color="amber"
+            onTotalChange={setGold}
+            remaining={remaining}
+          />
+        )}
       </div>
       <div hidden={selectedShop !== "SILVER"}>
-        {tables.SILVER && <ShopSection key={`SILVER-${resetKey}`} shop={tables.SILVER} color="slate" onTotalChange={setSilver} remaining={remaining} />}
+        {tables.SILVER && (
+          <ShopSection
+            key={`SILVER-${resetKey}`}
+            shop={tables.SILVER}
+            color="slate"
+            onTotalChange={setSilver}
+            remaining={remaining}
+          />
+        )}
       </div>
       <div hidden={selectedShop !== "BRONZE"}>
-        {tables.BRONZE && <ShopSection key={`BRONZE-${resetKey}`} shop={tables.BRONZE} color="orange" onTotalChange={setBronze} remaining={remaining} />}
+        {tables.BRONZE && (
+          <ShopSection
+            key={`BRONZE-${resetKey}`}
+            shop={tables.BRONZE}
+            color="orange"
+            onTotalChange={setBronze}
+            remaining={remaining}
+          />
+        )}
       </div>
 
       {/* Grand total footer */}
@@ -132,7 +173,9 @@ function SvsContent() {
         </button>
         <div className="flex items-center gap-3">
           <span className="text-sm uppercase tracking-widest text-slate-400">Grand Total</span>
-          <span className={`text-2xl font-bold tabular-nums ${remaining !== null && remaining < 0 ? "text-red-400" : "text-white"}`}>
+          <span
+            className={`text-2xl font-bold tabular-nums ${remaining !== null && remaining < 0 ? "text-red-400" : "text-white"}`}
+          >
             {fmt(grandTotal)}
           </span>
         </div>

@@ -21,13 +21,13 @@ export function useUrlFilterValues(): Record<UrlFilterKey, string> {
   const params = useSearchParams();
   return {
     search: params.get("search") ?? "",
-    genre:  params.get("genre")  ?? "",
-    role:   params.get("role")   ?? "",
+    genre: params.get("genre") ?? "",
+    role: params.get("role") ?? "",
     skill2: params.get("skill2") ?? "",
     skill3: params.get("skill3") ?? "",
-    grade:  params.get("grade")  ?? "",
-    sort:   params.get("sort")   ?? "",
-    view:   params.get("view")   ?? "",
+    grade: params.get("grade") ?? "",
+    sort: params.get("sort") ?? "",
+    view: params.get("view") ?? "",
   };
 }
 
@@ -41,7 +41,9 @@ export function useSetUrlFilter() {
 
   // Use a ref so the callback is stable across renders
   const paramsRef = useRef(params);
-  useEffect(() => { paramsRef.current = params; }, [params]);
+  useEffect(() => {
+    paramsRef.current = params;
+  }, [params]);
 
   return useCallback(
     (updates: Partial<Record<UrlFilterKey, string>>) => {

@@ -30,7 +30,6 @@ export function HqFloors() {
     return vlookupDiff(from - 1, to - 1, tables.floors.data, tierNum * 2 + 1);
   }, [tables, from, to, tierNum]);
 
-
   return (
     <CalculatorSection
       title="HQ Floors"
@@ -45,12 +44,14 @@ export function HqFloors() {
           {
             label: isHQ ? "HQ Wood" : "Wood",
             value: wood,
-            equivalent: isHQ && wood != null ? { label: "Wood", value: wood * HQ_MULTIPLIER } : null,
+            equivalent:
+              isHQ && wood != null ? { label: "Wood", value: wood * HQ_MULTIPLIER } : null,
           },
           {
             label: isHQ ? "HQ Steel" : "Steel",
             value: steel,
-            equivalent: isHQ && steel != null ? { label: "Steel", value: steel * HQ_MULTIPLIER } : null,
+            equivalent:
+              isHQ && steel != null ? { label: "Steel", value: steel * HQ_MULTIPLIER } : null,
           },
         ]}
       />

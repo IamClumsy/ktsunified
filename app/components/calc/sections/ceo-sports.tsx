@@ -30,7 +30,6 @@ export function CeoSports() {
     return vlookupDiff(from - 1, to - 1, tables.ceoSports.data, tierNum * 2 + 1);
   }, [tables, from, to, tierNum]);
 
-
   return (
     <CalculatorSection title="CEO Sports" color="pink">
       <DropdownInput label="Tier" value={tier} options={TIER_OPTIONS} onChange={setTier} />
@@ -41,12 +40,16 @@ export function CeoSports() {
           {
             label: isHQ ? "HQ Energy Drink" : "Energy Drink",
             value: drinks,
-            equivalent: isHQ && drinks != null ? { label: "Energy Drink", value: drinks * HQ_MULTIPLIER } : null,
+            equivalent:
+              isHQ && drinks != null
+                ? { label: "Energy Drink", value: drinks * HQ_MULTIPLIER }
+                : null,
           },
           {
             label: isHQ ? "HQ Protein Bar" : "Protein Bar",
             value: bars,
-            equivalent: isHQ && bars != null ? { label: "Protein Bar", value: bars * HQ_MULTIPLIER } : null,
+            equivalent:
+              isHQ && bars != null ? { label: "Protein Bar", value: bars * HQ_MULTIPLIER } : null,
           },
         ]}
       />

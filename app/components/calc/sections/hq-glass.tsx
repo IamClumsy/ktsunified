@@ -17,7 +17,6 @@ export function HqGlass() {
     return vlookupDiff(from - 1, to - 1, tables.glass.data, 3);
   }, [tables, from, to]);
 
-
   return (
     <CalculatorSection title="HQ Glass" note="*Available up to level 600" color="violet">
       <LevelRangeInput from={from} to={to} onFromChange={setFrom} onToChange={setTo} max={600} />

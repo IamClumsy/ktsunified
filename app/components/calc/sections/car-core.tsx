@@ -34,7 +34,6 @@ export function CarCore() {
     return vlookupDiff(from - 1, to - 1, tables.carCore.data, tierNum * 2 + 1);
   }, [tables, from, to, tierNum]);
 
-
   return (
     <CalculatorSection title="Car Core" color="amber">
       <DropdownInput label="Rank" value={rank} options={RANK_OPTIONS} onChange={setRank} />
@@ -45,12 +44,14 @@ export function CarCore() {
           {
             label: isEnhanced ? "Enhanced Plugs" : "Plugs",
             value: plugs,
-            equivalent: isEnhanced && plugs != null ? { label: "Plugs", value: plugs * HQ_MULTIPLIER } : null,
+            equivalent:
+              isEnhanced && plugs != null ? { label: "Plugs", value: plugs * HQ_MULTIPLIER } : null,
           },
           {
             label: isEnhanced ? "Enhanced Coils" : "Coils",
             value: coils,
-            equivalent: isEnhanced && coils != null ? { label: "Coils", value: coils * HQ_MULTIPLIER } : null,
+            equivalent:
+              isEnhanced && coils != null ? { label: "Coils", value: coils * HQ_MULTIPLIER } : null,
           },
         ]}
       />

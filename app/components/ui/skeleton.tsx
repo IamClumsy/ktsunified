@@ -1,7 +1,5 @@
 export function Skeleton({ className }: { className?: string }) {
-  return (
-    <div className={`animate-pulse rounded bg-slate-800 ${className ?? ""}`} />
-  );
+  return <div className={`animate-pulse rounded bg-slate-800 ${className ?? ""}`} />;
 }
 
 export function ArtistCardSkeleton() {

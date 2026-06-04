@@ -49,9 +49,7 @@ export function SvsTablesProvider({ children }: { children: ReactNode }) {
     })();
   }, []);
 
-  return (
-    <TablesContext.Provider value={state}>{children}</TablesContext.Provider>
-  );
+  return <TablesContext.Provider value={state}>{children}</TablesContext.Provider>;
 }
 
 export function useSvsTables() {

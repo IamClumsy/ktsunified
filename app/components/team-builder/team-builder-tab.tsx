@@ -17,26 +17,61 @@ const sk3 = categorizeSkills(allSkills3);
 function calcPoints(artist: Artist): number {
   return calculateArtistPoints(
     artist,
-    sk2.bestSkills, sk2.goodSkills, sk2.okaySkills, sk2.badSkills, sk2.worstSkills,
-    sk3.bestSkills, sk3.goodSkills, sk3.okaySkills, sk3.badSkills, sk3.worstSkills,
+    sk2.bestSkills,
+    sk2.goodSkills,
+    sk2.okaySkills,
+    sk2.badSkills,
+    sk2.worstSkills,
+    sk3.bestSkills,
+    sk3.goodSkills,
+    sk3.okaySkills,
+    sk3.badSkills,
+    sk3.worstSkills
   );
 }
 
 const GENRES = [...new Set(artistsData.map((a) => a.genre))].sort();
 
 const GENRE_STYLE_MAP: Record<string, { inactive: string; active: string }> = {
-  "Pop":        { inactive: "text-pink-400 border-slate-700 hover:border-pink-500/50",     active: "bg-gradient-to-r from-pink-600 to-rose-600 text-white border-pink-500" },
-  "Hip-Hop":    { inactive: "text-purple-400 border-slate-700 hover:border-purple-500/50", active: "bg-gradient-to-r from-purple-600 to-violet-600 text-white border-purple-500" },
-  "R&B":        { inactive: "text-amber-400 border-slate-700 hover:border-amber-500/50",   active: "bg-gradient-to-r from-amber-500 to-orange-500 text-white border-amber-500" },
-  "Electronic": { inactive: "text-sky-400 border-slate-700 hover:border-sky-500/50",       active: "bg-gradient-to-r from-sky-600 to-blue-600 text-white border-sky-500" },
-  "Rock":       { inactive: "text-orange-400 border-slate-700 hover:border-orange-500/50", active: "bg-gradient-to-r from-orange-600 to-red-600 text-white border-orange-500" },
+  Pop: {
+    inactive: "text-pink-400 border-slate-700 hover:border-pink-500/50",
+    active: "bg-gradient-to-r from-pink-600 to-rose-600 text-white border-pink-500",
+  },
+  "Hip-Hop": {
+    inactive: "text-purple-400 border-slate-700 hover:border-purple-500/50",
+    active: "bg-gradient-to-r from-purple-600 to-violet-600 text-white border-purple-500",
+  },
+  "R&B": {
+    inactive: "text-amber-400 border-slate-700 hover:border-amber-500/50",
+    active: "bg-gradient-to-r from-amber-500 to-orange-500 text-white border-amber-500",
+  },
+  Electronic: {
+    inactive: "text-sky-400 border-slate-700 hover:border-sky-500/50",
+    active: "bg-gradient-to-r from-sky-600 to-blue-600 text-white border-sky-500",
+  },
+  Rock: {
+    inactive: "text-orange-400 border-slate-700 hover:border-orange-500/50",
+    active: "bg-gradient-to-r from-orange-600 to-red-600 text-white border-orange-500",
+  },
 };
 
 const GENRE_FALLBACKS = [
-  { inactive: "text-teal-400 border-slate-700 hover:border-teal-500/50",   active: "bg-gradient-to-r from-teal-600 to-cyan-600 text-white border-teal-500" },
-  { inactive: "text-lime-400 border-slate-700 hover:border-lime-500/50",   active: "bg-gradient-to-r from-lime-600 to-green-600 text-white border-lime-500" },
-  { inactive: "text-rose-400 border-slate-700 hover:border-rose-500/50",   active: "bg-gradient-to-r from-rose-600 to-pink-600 text-white border-rose-500" },
-  { inactive: "text-indigo-400 border-slate-700 hover:border-indigo-500/50", active: "bg-gradient-to-r from-indigo-600 to-violet-600 text-white border-indigo-500" },
+  {
+    inactive: "text-teal-400 border-slate-700 hover:border-teal-500/50",
+    active: "bg-gradient-to-r from-teal-600 to-cyan-600 text-white border-teal-500",
+  },
+  {
+    inactive: "text-lime-400 border-slate-700 hover:border-lime-500/50",
+    active: "bg-gradient-to-r from-lime-600 to-green-600 text-white border-lime-500",
+  },
+  {
+    inactive: "text-rose-400 border-slate-700 hover:border-rose-500/50",
+    active: "bg-gradient-to-r from-rose-600 to-pink-600 text-white border-rose-500",
+  },
+  {
+    inactive: "text-indigo-400 border-slate-700 hover:border-indigo-500/50",
+    active: "bg-gradient-to-r from-indigo-600 to-violet-600 text-white border-indigo-500",
+  },
 ];
 
 function getGenreStyle(genre: string, genreIndex: number) {
@@ -52,10 +87,10 @@ const GRADE_BADGE: Record<string, string> = {
 };
 
 const TIER_BADGE: Record<string, string> = {
-  Best:  "bg-yellow-400/20 text-yellow-300 border-yellow-400/40",
-  Good:  "bg-emerald-400/20 text-emerald-300 border-emerald-400/40",
-  Okay:  "bg-sky-400/20 text-sky-300 border-sky-400/40",
-  Bad:   "bg-slate-500/20 text-slate-400 border-slate-500/40",
+  Best: "bg-yellow-400/20 text-yellow-300 border-yellow-400/40",
+  Good: "bg-emerald-400/20 text-emerald-300 border-emerald-400/40",
+  Okay: "bg-sky-400/20 text-sky-300 border-sky-400/40",
+  Bad: "bg-slate-500/20 text-slate-400 border-slate-500/40",
   Worst: "bg-red-400/20 text-red-400 border-red-400/40",
 };
 
@@ -96,22 +131,24 @@ export function TeamBuilderTab() {
   const [, startTransition] = useTransition();
 
   const genreArtists = useMemo(
-    () => artistsData.filter((a) => a.genre === selectedGenre).sort((a, b) => calcPoints(b) - calcPoints(a)),
-    [selectedGenre],
+    () =>
+      artistsData
+        .filter((a) => a.genre === selectedGenre)
+        .sort((a, b) => calcPoints(b) - calcPoints(a)),
+    [selectedGenre]
   );
 
   const bestTeam = useMemo(() => genreArtists.slice(0, TEAM_SIZE), [genreArtists]);
   const bestPossibleScore = useMemo(
     () => bestTeam.reduce((s, a) => s + calcPoints(a), 0),
-    [bestTeam],
+    [bestTeam]
   );
-  const bestAvgGrade = bestTeam.length >= TEAM_SIZE
-    ? getLetterGrade(Math.round(bestPossibleScore / TEAM_SIZE))
-    : null;
+  const bestAvgGrade =
+    bestTeam.length >= TEAM_SIZE ? getLetterGrade(Math.round(bestPossibleScore / TEAM_SIZE)) : null;
 
   const teamScore = useMemo(
     () => team.reduce((sum, a) => sum + (a ? calcPoints(a) : 0), 0),
-    [team],
+    [team]
   );
 
   const filledCount = team.filter(Boolean).length;
@@ -119,10 +156,7 @@ export function TeamBuilderTab() {
   const avgGrade = avgScore !== null ? getLetterGrade(avgScore) : null;
   const scoreGap = filledCount === TEAM_SIZE ? bestPossibleScore - teamScore : null;
 
-  const pickedIds = useMemo(
-    () => new Set(team.filter(Boolean).map((a) => a!.id)),
-    [team],
-  );
+  const pickedIds = useMemo(() => new Set(team.filter(Boolean).map((a) => a!.id)), [team]);
 
   const skillComposition = useMemo(() => {
     const counts: Record<string, number> = { Best: 0, Good: 0, Okay: 0, Bad: 0, Worst: 0 };
@@ -149,21 +183,29 @@ export function TeamBuilderTab() {
   }, [team]);
 
   const teamStats = useMemo(() => {
-    const s: TeamStats = { dmgFactor: 0, skillDmg: 0, basicAtk: 0, resistance: 0, sResist: 0, fanCap: 0, rallyCap: 0 };
+    const s: TeamStats = {
+      dmgFactor: 0,
+      skillDmg: 0,
+      basicAtk: 0,
+      resistance: 0,
+      sResist: 0,
+      fanCap: 0,
+      rallyCap: 0,
+    };
     team.forEach((artist) => {
       if (!artist) return;
       artist.skills.forEach((skill) => {
         const contrib = parseSkillContrib(skill);
-        (Object.keys(contrib) as (keyof TeamStats)[]).forEach((k) => { s[k] += contrib[k] ?? 0; });
+        (Object.keys(contrib) as (keyof TeamStats)[]).forEach((k) => {
+          s[k] += contrib[k] ?? 0;
+        });
       });
     });
     return s;
   }, [team]);
 
   function setSlot(slotIdx: number, artistId: string) {
-    const artist = artistId
-      ? (genreArtists.find((a) => a.id === Number(artistId)) ?? null)
-      : null;
+    const artist = artistId ? (genreArtists.find((a) => a.id === Number(artistId)) ?? null) : null;
     const newScore = team.reduce((sum, a, i) => {
       const effective = i === slotIdx ? artist : a;
       return sum + (effective ? calcPoints(effective) : 0);
@@ -178,7 +220,9 @@ export function TeamBuilderTab() {
 
   function loadRecommended() {
     const next: (Artist | null)[] = Array(TEAM_SIZE).fill(null);
-    bestTeam.forEach((a, i) => { next[i] = a; });
+    bestTeam.forEach((a, i) => {
+      next[i] = a;
+    });
     const newScore = next.reduce((s, a) => s + (a ? calcPoints(a) : 0), 0);
     setLastDelta(newScore - teamScore);
     setTeam(next);
@@ -232,7 +276,9 @@ export function TeamBuilderTab() {
       {!selectedGenre ? (
         <div className="text-center py-24 text-slate-500">
           <p className="text-lg">Select a genre above to start building your team</p>
-          <p className="mt-2 text-sm">All 5 artists must be from the same genre for the best bonuses</p>
+          <p className="mt-2 text-sm">
+            All 5 artists must be from the same genre for the best bonuses
+          </p>
         </div>
       ) : (
         <>
@@ -241,19 +287,29 @@ export function TeamBuilderTab() {
             <div className="rounded-2xl border border-emerald-700/40 bg-gradient-to-b from-emerald-900/20 to-slate-900/60 p-5 mb-6">
               <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
                 <div>
-                  <h2 className="text-sm font-semibold text-emerald-400 uppercase tracking-widest">Recommended Team</h2>
-                  <p className="text-xs text-slate-500 mt-0.5">Top 5 by score for {selectedGenre}</p>
+                  <h2 className="text-sm font-semibold text-emerald-400 uppercase tracking-widest">
+                    Recommended Team
+                  </h2>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    Top 5 by score for {selectedGenre}
+                  </p>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-6 text-right">
                     <div>
                       <p className="text-xs text-slate-500 uppercase tracking-widest">Score</p>
-                      <p className="text-xl font-bold tabular-nums text-white">{bestPossibleScore}</p>
+                      <p className="text-xl font-bold tabular-nums text-white">
+                        {bestPossibleScore}
+                      </p>
                     </div>
                     {bestAvgGrade && (
                       <div>
-                        <p className="text-xs text-slate-500 uppercase tracking-widest">Avg Grade</p>
-                        <p className={`text-xl font-bold ${getRankingClass(bestAvgGrade)}`}>{bestAvgGrade}</p>
+                        <p className="text-xs text-slate-500 uppercase tracking-widest">
+                          Avg Grade
+                        </p>
+                        <p className={`text-xl font-bold ${getRankingClass(bestAvgGrade)}`}>
+                          {bestAvgGrade}
+                        </p>
                       </div>
                     )}
                   </div>
@@ -270,7 +326,10 @@ export function TeamBuilderTab() {
                   const pts = calcPoints(a);
                   const gr = getLetterGrade(pts);
                   return (
-                    <div key={a.id} className="rounded-xl border border-slate-700/60 bg-slate-900/60 p-3 flex flex-col gap-1.5">
+                    <div
+                      key={a.id}
+                      className="rounded-xl border border-slate-700/60 bg-slate-900/60 p-3 flex flex-col gap-1.5"
+                    >
                       {a.pic ? (
                         <div className="relative w-full aspect-[3/4] overflow-hidden rounded-lg bg-slate-800/60">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -280,28 +339,48 @@ export function TeamBuilderTab() {
                             className="w-full h-full object-cover object-top"
                           />
                           <div className="absolute top-1.5 left-1.5 right-1.5 flex items-center justify-between">
-                            <span className="text-xs text-slate-300 bg-slate-900/70 px-1.5 py-0.5 rounded">#{i + 1}</span>
-                            <span className={`text-xs font-bold px-2 py-0.5 rounded-full border ${GRADE_BADGE[gr]}`}>{gr}</span>
+                            <span className="text-xs text-slate-300 bg-slate-900/70 px-1.5 py-0.5 rounded">
+                              #{i + 1}
+                            </span>
+                            <span
+                              className={`text-xs font-bold px-2 py-0.5 rounded-full border ${GRADE_BADGE[gr]}`}
+                            >
+                              {gr}
+                            </span>
                           </div>
                         </div>
                       ) : (
                         <div className="flex items-center justify-between">
                           <span className="text-xs text-slate-500">#{i + 1}</span>
-                          <span className={`text-xs font-bold px-2 py-0.5 rounded-full border ${GRADE_BADGE[gr]}`}>{gr}</span>
+                          <span
+                            className={`text-xs font-bold px-2 py-0.5 rounded-full border ${GRADE_BADGE[gr]}`}
+                          >
+                            {gr}
+                          </span>
                         </div>
                       )}
                       <span className="text-sm font-semibold text-white truncate">{a.name}</span>
                       <span className="text-xs text-slate-400">{a.position}</span>
                       <div className="flex flex-col gap-1 mt-1">
                         {a.skills[1] && (
-                          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs ${getSkillClass(a.skills[1])}`}>{a.skills[1]}</span>
+                          <span
+                            className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs ${getSkillClass(a.skills[1])}`}
+                          >
+                            {a.skills[1]}
+                          </span>
                         )}
                         {a.skills[2] && (
-                          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs ${getSkillClass(a.skills[2])}`}>{a.skills[2]}</span>
+                          <span
+                            className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs ${getSkillClass(a.skills[2])}`}
+                          >
+                            {a.skills[2]}
+                          </span>
                         )}
                       </div>
                       <div className="mt-auto pt-2 border-t border-slate-700/40 text-right">
-                        <span className="text-xs font-bold tabular-nums text-emerald-300">{pts} pts</span>
+                        <span className="text-xs font-bold tabular-nums text-emerald-300">
+                          {pts} pts
+                        </span>
                       </div>
                     </div>
                   );
@@ -316,7 +395,7 @@ export function TeamBuilderTab() {
               const points = artist ? calcPoints(artist) : null;
               const grade = points !== null ? getLetterGrade(points) : null;
               const available = genreArtists.filter(
-                (a) => !pickedIds.has(a.id) || a.id === artist?.id,
+                (a) => !pickedIds.has(a.id) || a.id === artist?.id
               );
 
               return (
@@ -329,9 +408,15 @@ export function TeamBuilderTab() {
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-xs uppercase tracking-widest text-slate-500">Slot {slotIdx + 1}</span>
+                    <span className="text-xs uppercase tracking-widest text-slate-500">
+                      Slot {slotIdx + 1}
+                    </span>
                     {grade && (
-                      <span className={`text-xs font-bold px-2 py-0.5 rounded-full border ${GRADE_BADGE[grade]}`}>{grade}</span>
+                      <span
+                        className={`text-xs font-bold px-2 py-0.5 rounded-full border ${GRADE_BADGE[grade]}`}
+                      >
+                        {grade}
+                      </span>
                     )}
                   </div>
 
@@ -366,24 +451,32 @@ export function TeamBuilderTab() {
                         </div>
                       )}
                       <div className="flex flex-col gap-1 min-w-0">
-                        <span className="text-sm font-semibold text-white truncate">{artist.name}</span>
+                        <span className="text-sm font-semibold text-white truncate">
+                          {artist.name}
+                        </span>
                         <span className="text-xs text-slate-400">{artist.position}</span>
                       </div>
                       <div className="flex flex-col gap-1">
                         {artist.skills[1] && (
-                          <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs ${getSkillClass(artist.skills[1])}`}>
+                          <span
+                            className={`inline-flex items-center px-2 py-1 rounded-full text-xs ${getSkillClass(artist.skills[1])}`}
+                          >
                             {artist.skills[1]}
                           </span>
                         )}
                         {artist.skills[2] && (
-                          <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs ${getSkillClass(artist.skills[2])}`}>
+                          <span
+                            className={`inline-flex items-center px-2 py-1 rounded-full text-xs ${getSkillClass(artist.skills[2])}`}
+                          >
                             {artist.skills[2]}
                           </span>
                         )}
                       </div>
                       <div className="mt-auto pt-2 border-t border-slate-700/60 flex items-center justify-between">
                         <span className="text-xs text-slate-500">Score</span>
-                        <span className="text-sm font-bold tabular-nums text-white">{points} pts</span>
+                        <span className="text-sm font-bold tabular-nums text-white">
+                          {points} pts
+                        </span>
                       </div>
                     </>
                   ) : (
@@ -401,15 +494,21 @@ export function TeamBuilderTab() {
             <div className="flex flex-wrap items-center justify-between gap-6">
               <div className="flex flex-wrap items-center gap-8">
                 <div>
-                  <p className="text-xs uppercase tracking-widest text-slate-400 mb-1">Total Score</p>
+                  <p className="text-xs uppercase tracking-widest text-slate-400 mb-1">
+                    Total Score
+                  </p>
                   <p className="text-3xl font-bold tabular-nums text-white">{teamScore}</p>
                 </div>
                 <div>
-                  <p className="text-xs uppercase tracking-widest text-slate-400 mb-1">Avg / Slot</p>
+                  <p className="text-xs uppercase tracking-widest text-slate-400 mb-1">
+                    Avg / Slot
+                  </p>
                   {avgScore !== null ? (
                     <p className="text-3xl font-bold tabular-nums text-white">
                       {avgScore}
-                      <span className={`text-xl ml-1.5 ${getRankingClass(avgGrade ?? "F")}`}>{avgGrade}</span>
+                      <span className={`text-xl ml-1.5 ${getRankingClass(avgGrade ?? "F")}`}>
+                        {avgGrade}
+                      </span>
                     </p>
                   ) : (
                     <p className="text-3xl font-bold text-slate-600">—</p>
@@ -418,7 +517,8 @@ export function TeamBuilderTab() {
                 <div>
                   <p className="text-xs uppercase tracking-widest text-slate-400 mb-1">Filled</p>
                   <p className="text-3xl font-bold tabular-nums text-white">
-                    {filledCount}<span className="text-slate-500 text-xl"> / {TEAM_SIZE}</span>
+                    {filledCount}
+                    <span className="text-slate-500 text-xl"> / {TEAM_SIZE}</span>
                   </p>
                 </div>
                 {scoreGap !== null && (
@@ -427,7 +527,9 @@ export function TeamBuilderTab() {
                     {scoreGap === 0 ? (
                       <p className="text-xl font-bold text-emerald-400">Optimal!</p>
                     ) : (
-                      <p className="text-xl font-bold tabular-nums text-amber-400">▼ {scoreGap} pts</p>
+                      <p className="text-xl font-bold tabular-nums text-amber-400">
+                        ▼ {scoreGap} pts
+                      </p>
                     )}
                   </div>
                 )}
@@ -435,12 +537,15 @@ export function TeamBuilderTab() {
 
               <div className="flex items-center gap-4">
                 {lastDelta !== null && lastDelta !== 0 && (
-                  <div className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-base font-bold tabular-nums ${
-                    lastDelta > 0
-                      ? "bg-green-900/30 border-green-600/40 text-green-400"
-                      : "bg-red-900/30 border-red-600/40 text-red-400"
-                  }`}>
-                    {lastDelta > 0 ? "▲" : "▼"} {lastDelta > 0 ? "+" : ""}{lastDelta} pts
+                  <div
+                    className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-base font-bold tabular-nums ${
+                      lastDelta > 0
+                        ? "bg-green-900/30 border-green-600/40 text-green-400"
+                        : "bg-red-900/30 border-red-600/40 text-red-400"
+                    }`}
+                  >
+                    {lastDelta > 0 ? "▲" : "▼"} {lastDelta > 0 ? "+" : ""}
+                    {lastDelta} pts
                   </div>
                 )}
                 <button
@@ -455,7 +560,9 @@ export function TeamBuilderTab() {
             {/* Skill composition */}
             {filledCount > 0 && (
               <div className="mt-4 pt-4 border-t border-slate-700/60 flex flex-wrap items-center gap-3">
-                <span className="text-xs uppercase tracking-widest text-slate-500 shrink-0">Skill Profile</span>
+                <span className="text-xs uppercase tracking-widest text-slate-500 shrink-0">
+                  Skill Profile
+                </span>
                 {TIER_ORDER.filter((tier) => skillComposition[tier] > 0).map((tier) => (
                   <span
                     key={tier}
@@ -472,19 +579,69 @@ export function TeamBuilderTab() {
               <div className="mt-4 pt-4 border-t border-slate-700/60">
                 <p className="text-xs uppercase tracking-widest text-slate-500 mb-3">Team Stats</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-0">
-                  {([
-                    { label: "DMG Factor", icon: "💥", value: teamStats.dmgFactor,   cls: "text-orange-400", pct: false },
-                    { label: "Skill DMG",  icon: "⚔️",  value: teamStats.skillDmg,   cls: "text-red-400",    pct: true  },
-                    { label: "Basic ATK",  icon: "👊",  value: teamStats.basicAtk,   cls: "text-emerald-400",pct: true  },
-                    { label: "Resistance", icon: "🛡️",  value: teamStats.resistance, cls: "text-cyan-400",   pct: true  },
-                    { label: "S.Resist",   icon: "✨",  value: teamStats.sResist,    cls: "text-teal-400",   pct: true  },
-                    { label: "Fan Cap",    icon: "🎵",  value: teamStats.fanCap,     cls: "text-yellow-400", pct: true  },
-                    { label: "Rally Cap",  icon: "🚀",  value: teamStats.rallyCap,   cls: "text-green-400",  pct: true  },
-                  ] as const).map(({ label, icon, value, cls, pct }) => (
-                    <div key={label} className="flex items-center justify-between border-b border-slate-800/60 py-2">
-                      <span className={`text-sm font-medium ${cls}`}>{icon} {label}</span>
+                  {(
+                    [
+                      {
+                        label: "DMG Factor",
+                        icon: "💥",
+                        value: teamStats.dmgFactor,
+                        cls: "text-orange-400",
+                        pct: false,
+                      },
+                      {
+                        label: "Skill DMG",
+                        icon: "⚔️",
+                        value: teamStats.skillDmg,
+                        cls: "text-red-400",
+                        pct: true,
+                      },
+                      {
+                        label: "Basic ATK",
+                        icon: "👊",
+                        value: teamStats.basicAtk,
+                        cls: "text-emerald-400",
+                        pct: true,
+                      },
+                      {
+                        label: "Resistance",
+                        icon: "🛡️",
+                        value: teamStats.resistance,
+                        cls: "text-cyan-400",
+                        pct: true,
+                      },
+                      {
+                        label: "S.Resist",
+                        icon: "✨",
+                        value: teamStats.sResist,
+                        cls: "text-teal-400",
+                        pct: true,
+                      },
+                      {
+                        label: "Fan Cap",
+                        icon: "🎵",
+                        value: teamStats.fanCap,
+                        cls: "text-yellow-400",
+                        pct: true,
+                      },
+                      {
+                        label: "Rally Cap",
+                        icon: "🚀",
+                        value: teamStats.rallyCap,
+                        cls: "text-green-400",
+                        pct: true,
+                      },
+                    ] as const
+                  ).map(({ label, icon, value, cls, pct }) => (
+                    <div
+                      key={label}
+                      className="flex items-center justify-between border-b border-slate-800/60 py-2"
+                    >
+                      <span className={`text-sm font-medium ${cls}`}>
+                        {icon} {label}
+                      </span>
                       <span className="text-sm font-bold tabular-nums text-white">
-                        {value}{pct ? "%" : ""}
+                        {value}
+                        {pct ? "%" : ""}
                       </span>
                     </div>
                   ))}

@@ -57,19 +57,25 @@ export const useArtistFilters = ({
   const filteredArtists = useMemo(() => {
     return artists
       .filter((artist) => {
-        const matchesSearch = filters.searchTerm === "" || artist.name.toLowerCase().includes(filters.searchTerm.toLowerCase());
+        const matchesSearch =
+          filters.searchTerm === "" ||
+          artist.name.toLowerCase().includes(filters.searchTerm.toLowerCase());
         const matchesGroup = filters.selectedGroup === "" || artist.group === filters.selectedGroup;
         const matchesRole = filters.selectedRole === "" || artist.position === filters.selectedRole;
         const matchesGenre = filters.selectedGenre === "" || artist.genre === filters.selectedGenre;
-        const matchesSkill = filters.selectedSkill === "" || artist.skills[1] === filters.selectedSkill;
-        const matchesSkill3 = filters.selectedSkill3 === "" || artist.skills[2] === filters.selectedSkill3;
+        const matchesSkill =
+          filters.selectedSkill === "" || artist.skills[1] === filters.selectedSkill;
+        const matchesSkill3 =
+          filters.selectedSkill3 === "" || artist.skills[2] === filters.selectedSkill3;
         const matchesBuild =
           filters.selectedBuild === "" ||
-          (artist.build && artist.build.toLowerCase().includes(filters.selectedBuild.toLowerCase()));
+          (artist.build &&
+            artist.build.toLowerCase().includes(filters.selectedBuild.toLowerCase()));
         const matchesRanking =
           filters.selectedRanking === "" ||
           getLetterGrade(calculatePoints(artist)) === (filters.selectedRanking as LetterGrade);
-        const matchesPhotos = filters.selectedPhotos === "" || artist.photos === filters.selectedPhotos;
+        const matchesPhotos =
+          filters.selectedPhotos === "" || artist.photos === filters.selectedPhotos;
         return (
           matchesSearch &&
           matchesGroup &&

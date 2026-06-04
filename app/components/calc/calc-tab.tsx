@@ -22,12 +22,12 @@ function SectionGroup({ label, children }: { label: string; children: ReactNode 
   return (
     <div className="space-y-4">
       <div className="sticky top-12 md:top-16 z-20 -mx-4 px-4 py-1.5 bg-slate-950/95 backdrop-blur-sm flex items-center gap-3">
-        <span className="text-xs uppercase tracking-[0.25em] text-slate-400 font-semibold">{label}</span>
+        <span className="text-xs uppercase tracking-[0.25em] text-slate-400 font-semibold">
+          {label}
+        </span>
         <div className="flex-1 h-px bg-slate-700/60" />
       </div>
-      <div className="grid gap-6 md:grid-cols-2">
-        {children}
-      </div>
+      <div className="grid gap-6 md:grid-cols-2">{children}</div>
     </div>
   );
 }
@@ -35,23 +35,31 @@ function SectionGroup({ label, children }: { label: string; children: ReactNode 
 function CalcContent({ resetKey }: { resetKey: number }) {
   const { loading, error } = useCalcTables();
 
-  if (loading) return (
-    <div className="space-y-10">
-      {["Artist", "HQ", "Collection", "Car"].map((label) => (
-        <div key={label} className="space-y-4">
-          <div className="sticky top-12 md:top-16 z-20 -mx-4 px-4 py-1.5 bg-slate-950/95 backdrop-blur-sm flex items-center gap-3">
-            <span className="text-xs uppercase tracking-[0.25em] text-slate-400 font-semibold">{label}</span>
-            <div className="flex-1 h-px bg-slate-700/60" />
+  if (loading)
+    return (
+      <div className="space-y-10">
+        {["Artist", "HQ", "Collection", "Car"].map((label) => (
+          <div key={label} className="space-y-4">
+            <div className="sticky top-12 md:top-16 z-20 -mx-4 px-4 py-1.5 bg-slate-950/95 backdrop-blur-sm flex items-center gap-3">
+              <span className="text-xs uppercase tracking-[0.25em] text-slate-400 font-semibold">
+                {label}
+              </span>
+              <div className="flex-1 h-px bg-slate-700/60" />
+            </div>
+            <div className="grid gap-6 md:grid-cols-2">
+              <CalcSectionSkeleton />
+              <CalcSectionSkeleton />
+            </div>
           </div>
-          <div className="grid gap-6 md:grid-cols-2">
-            <CalcSectionSkeleton />
-            <CalcSectionSkeleton />
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-  if (error) return <div className="flex items-center justify-center py-24"><p className="text-red-400">Error: {error}</p></div>;
+        ))}
+      </div>
+    );
+  if (error)
+    return (
+      <div className="flex items-center justify-center py-24">
+        <p className="text-red-400">Error: {error}</p>
+      </div>
+    );
 
   return (
     <div key={resetKey} className="space-y-10">
@@ -97,7 +105,9 @@ export function CalcTab() {
           <p className="text-sm uppercase tracking-[0.4em] text-slate-400">
             Mick&apos;s Top Girl Resource Calculator
           </p>
-          <h1 className="mt-4 text-2xl md:text-4xl font-bold text-white">Level Progression Cost Calculator</h1>
+          <h1 className="mt-4 text-2xl md:text-4xl font-bold text-white">
+            Level Progression Cost Calculator
+          </h1>
           <p className="mt-2 text-slate-300">Only complete levels are available</p>
           <button
             onClick={() => setResetKey((k) => k + 1)}

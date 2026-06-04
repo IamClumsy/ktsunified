@@ -6,7 +6,10 @@ import type { EventData } from "./ceo-context";
 type TaskState = { used: number };
 type ColorScheme = "violet" | "cyan" | "emerald" | "amber";
 
-const schemes: Record<ColorScheme, { card: string; title: string; total: string; catHeader: string; subtotal: string }> = {
+const schemes: Record<
+  ColorScheme,
+  { card: string; title: string; total: string; catHeader: string; subtotal: string }
+> = {
   violet: {
     card: "bg-gradient-to-b from-violet-900/30 to-slate-900/70 border-violet-700/40",
     title: "text-violet-300",
@@ -59,9 +62,7 @@ export function EventSection({ event, color, id, onReset }: Props) {
   const scheme = schemes[color];
 
   const [taskStates, setTaskStates] = useState<TaskState[][]>(() =>
-    event.categories.map((cat) =>
-      cat.tasks.map((t) => ({ used: t.used }))
-    )
+    event.categories.map((cat) => cat.tasks.map((t) => ({ used: t.used })))
   );
 
   const grandTotal = useMemo(() => {
@@ -77,9 +78,7 @@ export function EventSection({ event, color, id, onReset }: Props) {
   function setUsed(ci: number, ti: number, val: number) {
     setTaskStates((prev) =>
       prev.map((cat, c) =>
-        c === ci
-          ? cat.map((s, t) => (t === ti ? { used: Math.max(0, val) } : s))
-          : cat
+        c === ci ? cat.map((s, t) => (t === ti ? { used: Math.max(0, val) } : s)) : cat
       )
     );
   }
@@ -106,7 +105,9 @@ export function EventSection({ event, color, id, onReset }: Props) {
 
           return (
             <div key={cat.name}>
-              <div className={`text-xs font-semibold uppercase tracking-widest mb-1 ${scheme.catHeader}`}>
+              <div
+                className={`text-xs font-semibold uppercase tracking-widest mb-1 ${scheme.catHeader}`}
+              >
                 {cat.name}
               </div>
               <div className="overflow-x-auto">
@@ -139,7 +140,9 @@ export function EventSection({ event, color, id, onReset }: Props) {
                               className="w-full sm:w-24 rounded border border-slate-700 bg-slate-950 px-2 py-1.5 text-right text-white text-xs"
                             />
                           </td>
-                          <td className={`py-1 text-right font-medium tabular-nums ${scheme.total}`}>
+                          <td
+                            className={`py-1 text-right font-medium tabular-nums ${scheme.total}`}
+                          >
                             {fmt(score)}
                           </td>
                         </tr>
@@ -149,8 +152,12 @@ export function EventSection({ event, color, id, onReset }: Props) {
                 </table>
               </div>
               <div className="flex justify-between items-center mt-2 pt-2 border-t border-slate-800">
-                <span className="text-xs uppercase tracking-widest text-slate-500">{cat.name} Total</span>
-                <span className={`text-sm font-semibold tabular-nums ${scheme.subtotal}`}>{fmt(catTotal)}</span>
+                <span className="text-xs uppercase tracking-widest text-slate-500">
+                  {cat.name} Total
+                </span>
+                <span className={`text-sm font-semibold tabular-nums ${scheme.subtotal}`}>
+                  {fmt(catTotal)}
+                </span>
               </div>
             </div>
           );

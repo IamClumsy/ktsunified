@@ -26,7 +26,7 @@ export function Blueprints() {
   const [battleFrom, setBattleFrom] = useState(0);
   const [battleTo, setBattleTo] = useState(9);
   const maxBattleLevel = useMemo(
-    () => tables?.blueprintsBattle ? tables.blueprintsBattle.data.length - 1 : 9,
+    () => (tables?.blueprintsBattle ? tables.blueprintsBattle.data.length - 1 : 9),
     [tables]
   );
   const battleCost = useMemo(() => {
@@ -38,7 +38,7 @@ export function Blueprints() {
   const [expansionFrom, setExpansionFrom] = useState(0);
   const [expansionTo, setExpansionTo] = useState(9);
   const maxExpansionLevel = useMemo(
-    () => tables?.blueprintsExpansion ? tables.blueprintsExpansion.data.length - 1 : 9,
+    () => (tables?.blueprintsExpansion ? tables.blueprintsExpansion.data.length - 1 : 9),
     [tables]
   );
   const expansionCost = useMemo(() => {
@@ -46,11 +46,12 @@ export function Blueprints() {
     return vlookupDiff(expansionFrom, expansionTo, tables.blueprintsExpansion.data, 3);
   }, [tables, expansionFrom, expansionTo]);
 
-
   return (
     <CalculatorSection title="Blueprints" color="sky">
       {/* Main blueprints tier reference */}
-      <p className="text-xs text-slate-400 uppercase tracking-widest">Main Blueprints — Total per Tier</p>
+      <p className="text-xs text-slate-400 uppercase tracking-widest">
+        Main Blueprints — Total per Tier
+      </p>
       <DropdownInput
         label="Tier"
         value={selectedTier}

@@ -17,7 +17,6 @@ export function CollectionGems() {
     return vlookupDiff(from - 1, to - 1, tables.gems.data, 3);
   }, [tables, from, to]);
 
-
   return (
     <CalculatorSection title="Collection Gems" color="sky">
       <LevelRangeInput from={from} to={to} onFromChange={setFrom} onToChange={setTo} />

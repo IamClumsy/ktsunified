@@ -1,11 +1,17 @@
 export const getRankingClass = (g: string): string => {
   switch (g) {
-    case "S": return "ranking-a";
-    case "A": return "ranking-b";
-    case "B": return "ranking-c";
-    case "C": return "ranking-d";
-    case "F": return "ranking-f";
-    default: return "text-white";
+    case "S":
+      return "ranking-a";
+    case "A":
+      return "ranking-b";
+    case "B":
+      return "ranking-c";
+    case "C":
+      return "ranking-d";
+    case "F":
+      return "ranking-f";
+    default:
+      return "text-white";
   }
 };
 
@@ -36,11 +42,17 @@ export const getSkillClass = (skill: string): string => {
     return "basic-attack-50 bg-gradient-to-r from-slate-700 to-slate-800 border shadow-sm";
   if (t.includes("gold brick"))
     return "bg-gradient-to-r from-slate-600 to-slate-700 text-orange-500 border border-slate-500/40 gold-text";
-  if (t.includes("reduction") && (t.includes("basic attack damage") || t.includes("normal attack damage")))
+  if (
+    t.includes("reduction") &&
+    (t.includes("basic attack damage") || t.includes("normal attack damage"))
+  )
     return "bg-gradient-to-r from-slate-600 to-slate-700 text-blue-500 border border-slate-500/40 blue-text";
   if (trimmed === "12% Skill Damage Reduction")
     return "bg-gradient-to-r from-slate-600 to-slate-700 text-blue-500 border border-slate-500/40 blue-text";
-  if (t.includes("reduce") && (t.includes("normal damage taken") || t.includes("skill damage taken")))
+  if (
+    t.includes("reduce") &&
+    (t.includes("normal damage taken") || t.includes("skill damage taken"))
+  )
     return "bg-gradient-to-r from-slate-600 to-slate-700 text-blue-500 border border-slate-500/40 blue-text";
   if (
     trimmed === "200/DPS Defending HQ, GH, Club, LM" ||

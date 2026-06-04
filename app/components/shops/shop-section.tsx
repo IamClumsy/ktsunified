@@ -38,34 +38,38 @@ export function ShopSection({ shop, color, onTotalChange, remaining }: Props) {
   const scheme = schemes[color];
   const hasVipLevel = shop.items.some((i) => i.vipLevel != null);
   const vipLevels = useMemo(
-    () => hasVipLevel
-      ? [...new Set(shop.items.map((i) => i.vipLevel as number))].sort((a, b) => a - b)
-      : [],
-    [shop.items, hasVipLevel],
+    () =>
+      hasVipLevel
+        ? [...new Set(shop.items.map((i) => i.vipLevel as number))].sort((a, b) => a - b)
+        : [],
+    [shop.items, hasVipLevel]
   );
   const [myVipLevel, setMyVipLevel] = useState<number>(
-    hasVipLevel && vipLevels.length > 0 ? vipLevels[vipLevels.length - 1] : 0,
+    hasVipLevel && vipLevels.length > 0 ? vipLevels[vipLevels.length - 1] : 0
   );
   const [quantities, setQuantities] = useState<number[]>(() => shop.items.map(() => 0));
 
   const visibleIndices = useMemo(
-    () => shop.items.reduce<number[]>((acc, item, i) => {
-      if (!hasVipLevel || (item.vipLevel ?? 0) <= myVipLevel) acc.push(i);
-      return acc;
-    }, []),
-    [shop.items, hasVipLevel, myVipLevel],
+    () =>
+      shop.items.reduce<number[]>((acc, item, i) => {
+        if (!hasVipLevel || (item.vipLevel ?? 0) <= myVipLevel) acc.push(i);
+        return acc;
+      }, []),
+    [shop.items, hasVipLevel, myVipLevel]
   );
 
   const total = useMemo(
     () => quantities.reduce((sum, qty, i) => sum + qty * shop.items[i].price, 0),
-    [quantities, shop.items],
+    [quantities, shop.items]
   );
 
-  useEffect(() => { onTotalChange?.(total); }, [total, onTotalChange]);
+  useEffect(() => {
+    onTotalChange?.(total);
+  }, [total, onTotalChange]);
 
   function setQty(idx: number, qty: number) {
     const max = shop.items[idx].quantity;
-    setQuantities((prev) => prev.map((v, i) => i === idx ? Math.min(max, Math.max(0, qty)) : v));
+    setQuantities((prev) => prev.map((v, i) => (i === idx ? Math.min(max, Math.max(0, qty)) : v)));
   }
 
   function reset() {
@@ -82,14 +86,18 @@ export function ShopSection({ shop, color, onTotalChange, remaining }: Props) {
         <div className="flex items-center gap-3">
           {hasVipLevel && (
             <div className="flex items-center gap-2">
-              <label className="text-xs text-slate-400 uppercase tracking-widest shrink-0">My VIP Level</label>
+              <label className="text-xs text-slate-400 uppercase tracking-widest shrink-0">
+                My VIP Level
+              </label>
               <select
                 value={myVipLevel}
                 onChange={(e) => setMyVipLevel(Number(e.target.value))}
                 className="rounded border border-slate-700 bg-slate-950 px-2 py-1 text-white text-xs focus:outline-none focus:ring-2 focus:ring-violet-400/60"
               >
                 {vipLevels.map((lvl) => (
-                  <option key={lvl} value={lvl}>{lvl}</option>
+                  <option key={lvl} value={lvl}>
+                    {lvl}
+                  </option>
                 ))}
               </select>
             </div>
@@ -139,12 +147,18 @@ export function ShopSection({ shop, color, onTotalChange, remaining }: Props) {
                         }`}
                       />
                       {item.quantity > 0 && (
-                        <span className="text-slate-500 text-xs tabular-nums">/ {fmt(item.quantity)}</span>
+                        <span className="text-slate-500 text-xs tabular-nums">
+                          / {fmt(item.quantity)}
+                        </span>
                       )}
                     </div>
                   </td>
-                  <td className="py-2 text-right text-slate-400 tabular-nums pr-1">{fmt(item.price)}</td>
-                  <td className={`py-2 text-right font-medium tabular-nums ${scheme.total}`}>{fmt(subtotal)}</td>
+                  <td className="py-2 text-right text-slate-400 tabular-nums pr-1">
+                    {fmt(item.price)}
+                  </td>
+                  <td className={`py-2 text-right font-medium tabular-nums ${scheme.total}`}>
+                    {fmt(subtotal)}
+                  </td>
                 </tr>
               );
             })}
@@ -152,7 +166,9 @@ export function ShopSection({ shop, color, onTotalChange, remaining }: Props) {
         </table>
       </div>
       <div className="mt-4 flex justify-between items-center border-t border-slate-700 pt-4">
-        <span className="text-sm uppercase tracking-widest text-slate-400">Total {shop.currency} Needed</span>
+        <span className="text-sm uppercase tracking-widest text-slate-400">
+          Total {shop.currency} Needed
+        </span>
         <span className={`text-2xl font-bold tabular-nums ${scheme.title}`}>{fmt(total)}</span>
       </div>
     </section>

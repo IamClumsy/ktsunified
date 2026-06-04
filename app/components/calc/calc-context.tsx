@@ -42,9 +42,7 @@ export function CalcTablesProvider({ children }: { children: ReactNode }) {
     })();
   }, []);
 
-  return (
-    <TablesContext.Provider value={state}>{children}</TablesContext.Provider>
-  );
+  return <TablesContext.Provider value={state}>{children}</TablesContext.Provider>;
 }
 
 export function useCalcTables() {

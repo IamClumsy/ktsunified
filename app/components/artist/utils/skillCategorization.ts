@@ -1,6 +1,10 @@
 export const isGoodBuff = (skill: string): boolean => {
   const t = (skill || "").toLowerCase();
-  if (t.includes("60%") && (t.includes("basic attack damage") || t.includes("normal attack damage"))) return false;
+  if (
+    t.includes("60%") &&
+    (t.includes("basic attack damage") || t.includes("normal attack damage"))
+  )
+    return false;
   if (t.includes("30%") && t.includes("skill damage")) return false;
   if (t.includes("28%") && t.includes("skill damage")) return false;
   if (t.includes("70%") && t.includes("basic attack damage")) return false;
@@ -22,7 +26,11 @@ export const isWorstSkill = (skill: string): boolean => {
   if (isDamageSkill) return false;
   const is200DpsDefending =
     t.includes("200/dps") &&
-    (t.includes("defending") || t.includes("hq") || t.includes("gh") || t.includes("club") || t.includes("lm"));
+    (t.includes("defending") ||
+      t.includes("hq") ||
+      t.includes("gh") ||
+      t.includes("club") ||
+      t.includes("lm"));
   if (is200DpsDefending) return false;
   return (
     t.includes("180/dps") ||
@@ -43,7 +51,11 @@ export const isBadSkill = (skill: string): boolean => {
   const trimmed = (skill || "").trim();
   const isDefendingDps =
     (t.includes("200/dps") || t.includes("240/dps")) &&
-    (t.includes("defending") || t.includes("hq") || t.includes("gh") || t.includes("club") || t.includes("lm"));
+    (t.includes("defending") ||
+      t.includes("hq") ||
+      t.includes("gh") ||
+      t.includes("club") ||
+      t.includes("lm"));
   const is240DpsAttacking = t.includes("240/dps") && t.includes("attacking enemy company");
   return (
     !isWorstSkill(skill) &&
@@ -59,14 +71,19 @@ export const isBadSkill = (skill: string): boolean => {
 
 export const isDirectDamage = (skill: string): boolean => {
   const t = (skill || "").toLowerCase();
-  if (t.includes("60%") && (t.includes("basic attack damage") || t.includes("normal attack damage"))) return true;
+  if (
+    t.includes("60%") &&
+    (t.includes("basic attack damage") || t.includes("normal attack damage"))
+  )
+    return true;
   if (t.includes("70%") && t.includes("basic attack damage")) return true;
   if (t.includes("80%") && t.includes("basic attack damage")) return true;
   if (t.includes("30%") && t.includes("skill damage")) return true;
   if (t.includes("28%") && t.includes("skill damage")) return true;
   if (t.includes("24%") && t.includes("skill damage")) return true;
   if (t.includes("damage to player")) return true;
-  const mentionsDamage = t.includes("damage") && !t.includes("reduc") && !t.includes("taken") && !t.includes("increase");
+  const mentionsDamage =
+    t.includes("damage") && !t.includes("reduc") && !t.includes("taken") && !t.includes("increase");
   const timeBased = t.includes(" sec/") || /\bsec\b/.test(t);
   return (
     (mentionsDamage || timeBased) &&
