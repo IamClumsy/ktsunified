@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: 24
           cache: npm
-      - run: npm ci
+      - run: npm install --prefer-offline
       - run: npx tsc --noEmit
 
   lint:
@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: 24
           cache: npm
-      - run: npm ci
+      - run: npm install --prefer-offline
       - run: npm run lint
 
   format:
@@ -40,5 +40,5 @@ jobs:
         with:
           node-version: 24
           cache: npm
-      - run: npm ci
+      - run: npm install --prefer-offline
       - run: npx prettier --check "**/*.{ts,tsx,js,mjs,json,css,md}" --ignore-path .prettierignore
