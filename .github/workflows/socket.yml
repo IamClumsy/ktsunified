@@ -10,13 +10,22 @@ jobs:
   socket:
     name: Socket.dev supply chain scan
     runs-on: ubuntu-latest
+    env:
+      SOCKET_TOKEN: ${{ secrets.SOCKET_SECURITY_API_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Only runs when SOCKET_SECURITY_API_KEY secret is set in repo settings.
+      # To enable: go to socket.dev, get an API key, add it as a repo secret.
       - name: Socket Security
+        if: env.SOCKET_TOKEN != ''
         uses: SocketDev/action@v1.3.2
         with:
-          mode: cli
+          mode: firewall
           github-token: ${{ github.token }}
           socket-token: ${{ secrets.SOCKET_SECURITY_API_KEY }}
+
+      - name: Socket not configured
+        if: env.SOCKET_TOKEN == ''
+        run: echo "⚠️ Socket.dev skipped — add SOCKET_SECURITY_API_KEY secret to enable supply chain scanning"
