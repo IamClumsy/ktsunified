@@ -37,7 +37,7 @@ export function CarCore() {
   return (
     <CalculatorSection title="Car Core" color="amber">
       <DropdownInput label="Rank" value={rank} options={RANK_OPTIONS} onChange={setRank} />
-      <LevelRangeInput from={from} to={to} onFromChange={setFrom} onToChange={setTo} />
+      <LevelRangeInput from={from} to={to} onFromChange={setFrom} onToChange={setTo} max={60} />
       <ResultDisplay
         accentClass="text-amber-300"
         results={[

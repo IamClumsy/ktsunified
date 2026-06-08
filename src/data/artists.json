@@ -1034,5 +1034,17 @@
     "build": "",
     "photos": "Bali 5",
     "pic": "Momosaki"
+  },
+  {
+    "id": 80,
+    "name": "Elara",
+    "group": "None",
+    "rank": "SSR",
+    "position": "Dancer",
+    "genre": "Hip-Hop",
+    "skills": ["10 sec/1800 Damage", "10% Rally Fan Capacity", "50% Basic Attack Damage"],
+    "build": "",
+    "photos": "Universal",
+    "pic": "Elara"
   }
 ]

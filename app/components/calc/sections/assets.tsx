@@ -22,7 +22,7 @@ export function Assets() {
   const [type, setType] = useState("Jewelry");
   const [source, setSource] = useState("Standard");
   const [from, setFrom] = useState(32);
-  const [to, setTo] = useState(75);
+  const [to, setTo] = useState(90);
 
   const col = assetCol(type, source);
 
@@ -37,7 +37,7 @@ export function Assets() {
   }, [tables, from, to]);
 
   return (
-    <CalculatorSection title="Assets" color="pink">
+    <CalculatorSection title="Assets" note="*Max level 90" color="pink">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <DropdownInput label="Type" value={type} options={TYPE_OPTIONS} onChange={setType} />
         <DropdownInput
@@ -47,7 +47,7 @@ export function Assets() {
           onChange={setSource}
         />
       </div>
-      <LevelRangeInput from={from} to={to} onFromChange={setFrom} onToChange={setTo} />
+      <LevelRangeInput from={from} to={to} onFromChange={setFrom} onToChange={setTo} max={90} />
       <ResultDisplay
         accentClass="text-pink-300"
         results={[

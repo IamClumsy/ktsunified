@@ -33,7 +33,7 @@ export function VillaHomemaking() {
   return (
     <CalculatorSection title="Villa Homemaking" color="emerald">
       <DropdownInput label="Tier" value={tier} options={TIER_OPTIONS} onChange={setTier} />
-      <LevelRangeInput from={from} to={to} onFromChange={setFrom} onToChange={setTo} />
+      <LevelRangeInput from={from} to={to} onFromChange={setFrom} onToChange={setTo} max={60} />
       <ResultDisplay
         accentClass="text-emerald-300"
         results={[

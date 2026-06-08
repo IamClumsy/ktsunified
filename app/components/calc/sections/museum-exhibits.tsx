@@ -33,7 +33,7 @@ export function MuseumExhibits() {
   return (
     <CalculatorSection title="Museum Exhibits" color="sky">
       <DropdownInput label="Exhibit Room" value={tier} options={ROOM_OPTIONS} onChange={setTier} />
-      <LevelRangeInput from={from} to={to} onFromChange={setFrom} onToChange={setTo} />
+      <LevelRangeInput from={from} to={to} onFromChange={setFrom} onToChange={setTo} max={60} />
       <ResultDisplay
         accentClass="text-sky-300"
         results={[
