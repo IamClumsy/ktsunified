@@ -1046,5 +1046,17 @@
     "build": "",
     "photos": "Universal",
     "pic": "Elara"
+  },
+  {
+    "id": 81,
+    "name": "Nephtyhs",
+    "group": "None",
+    "rank": "SSR",
+    "position": "Center",
+    "genre": "R&B",
+    "skills": ["10 sec/1800 Damage", "24$ Damage to Player", "16% Fan Capacity"],
+    "build": "",
+    "photos": "Rome 5",
+    "pic": "Nephtyhs"
   }
 ]
