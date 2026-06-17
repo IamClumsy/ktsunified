@@ -1049,7 +1049,7 @@
   },
   {
     "id": 81,
-    "name": "Nephtyhs",
+    "name": "Nephthys",
     "group": "None",
     "rank": "SSR",
     "position": "Center",
@@ -1057,6 +1057,6 @@
     "skills": ["10 sec/1800 Damage", "24$ Damage to Player", "16% Fan Capacity"],
     "build": "",
     "photos": "Rome 5",
-    "pic": "Nephtyhs"
+    "pic": "Nephthys"
   }
 ]
