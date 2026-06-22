@@ -666,7 +666,7 @@
   {
     "id": 51,
     "name": "Aya",
-    "group": "None",
+    "group": "10 PM",
     "rank": "SSR",
     "position": "Center",
     "genre": "R&B",
@@ -678,7 +678,7 @@
   {
     "id": 52,
     "name": "Yumeno",
-    "group": "None",
+    "group": "10 PM",
     "rank": "SSR",
     "position": "Vocalist",
     "genre": "Pop",
@@ -690,7 +690,7 @@
   {
     "id": 53,
     "name": "Mio",
-    "group": "None",
+    "group": "10 PM",
     "rank": "SSR",
     "position": "Dancer",
     "genre": "Hip-Hop",
@@ -1054,9 +1054,21 @@
     "rank": "SSR",
     "position": "Center",
     "genre": "R&B",
-    "skills": ["10 sec/1800 Damage", "24$ Damage to Player", "16% Fan Capacity"],
+    "skills": ["10 sec/1800 Damage", "24% Damage to Player", "16% Fan Capacity"],
     "build": "",
     "photos": "Rome 5",
     "pic": "Nephthys"
+  },
+  {
+    "id": 82,
+    "name": "Elame",
+    "group": "None",
+    "rank": "SSR",
+    "position": "Dancer",
+    "genre": "Hip-Hop",
+    "skills": ["10 sec/1800 Damage", "80% Basic Attack Damage", "16% Fan Capacity"],
+    "build": "",
+    "photos": "Tokyo 6",
+    "pic": "Elame"
   }
 ]
