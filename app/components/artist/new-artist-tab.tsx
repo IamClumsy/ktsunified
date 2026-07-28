@@ -329,6 +329,20 @@ export function NewArtistTab() {
               </button>
             ))}
           </div>
+          {/* Collection quick-filter */}
+          <select
+            aria-label="Filter by collection"
+            value={selectedCollection}
+            onChange={(e) => startTransition(() => setSelectedCollection(e.target.value))}
+            className="rounded-lg border border-slate-700 bg-slate-900 px-3 py-2.5 text-sm text-slate-300 focus:outline-none focus:border-pink-500/60"
+          >
+            <option value="">All Collections</option>
+            {collections.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
           {/* Pics toggle — only relevant in card mode */}
           {viewMode === "cards" && (
             <button
