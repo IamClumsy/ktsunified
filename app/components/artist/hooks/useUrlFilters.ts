@@ -11,7 +11,8 @@ export type UrlFilterKey =
   | "skill3"
   | "grade"
   | "sort"
-  | "view";
+  | "view"
+  | "collection";
 
 /**
  * Reads a filter value from the URL search params.
@@ -28,6 +29,7 @@ export function useUrlFilterValues(): Record<UrlFilterKey, string> {
     grade: params.get("grade") ?? "",
     sort: params.get("sort") ?? "",
     view: params.get("view") ?? "",
+    collection: params.get("collection") ?? "",
   };
 }
 

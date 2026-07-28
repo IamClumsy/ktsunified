@@ -97,6 +97,7 @@ export function NewArtistTab() {
   const selectedSkill = urlFilters.skill2;
   const selectedSkill3 = urlFilters.skill3;
   const selectedRanking = urlFilters.grade;
+  const selectedCollection = urlFilters.collection;
   const sortBy = (urlFilters.sort || "ranking") as SortOption;
   const viewMode = (urlFilters.view || "cards") as ViewMode;
 
@@ -106,6 +107,8 @@ export function NewArtistTab() {
   const setSelectedSkill = (v: string) => startTransition(() => setUrlFilter({ skill2: v }));
   const setSelectedSkill3 = (v: string) => startTransition(() => setUrlFilter({ skill3: v }));
   const setSelectedRanking = (v: string) => startTransition(() => setUrlFilter({ grade: v }));
+  const setSelectedCollection = (v: string) =>
+    startTransition(() => setUrlFilter({ collection: v }));
   const setSortBy = (v: SortOption) => startTransition(() => setUrlFilter({ sort: v }));
   const setViewMode = (v: ViewMode) => startTransition(() => setUrlFilter({ view: v }));
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -119,6 +122,10 @@ export function NewArtistTab() {
 
   const roles = useMemo(() => [...new Set(artists.map((a) => a.position))], [artists]);
   const genres = useMemo(() => [...new Set(artists.map((a) => a.genre))], [artists]);
+  const collections = useMemo(
+    () => [...new Set(artists.map((a) => a.collection).filter(Boolean))].sort() as string[],
+    [artists]
+  );
 
   const allSkills = useMemo(
     () => [...new Set(artists.map((a) => a.skills[1]).filter(Boolean))],
@@ -159,6 +166,7 @@ export function NewArtistTab() {
       selectedBuild: "",
       selectedRanking,
       selectedPhotos: "",
+      selectedCollection,
     },
     skillArrays,
   });
@@ -202,6 +210,7 @@ export function NewArtistTab() {
     selectedSkill,
     selectedSkill3,
     selectedRanking,
+    selectedCollection,
   ].filter(Boolean).length;
 
   const activeFilters = [
@@ -230,6 +239,11 @@ export function NewArtistTab() {
       label: "Grade",
       value: selectedRanking,
       clear: () => startTransition(() => setSelectedRanking("")),
+    },
+    selectedCollection && {
+      label: "Collection",
+      value: selectedCollection,
+      clear: () => startTransition(() => setSelectedCollection("")),
     },
   ].filter(Boolean) as { label: string; value: string; clear: () => void }[];
 
@@ -511,7 +525,7 @@ export function NewArtistTab() {
               </optgroup>
             </select>
           </div>
-          <div className="space-y-1 col-span-2">
+          <div className="space-y-1">
             <label
               htmlFor="ssr-filter-ranking"
               className="text-xs uppercase tracking-widest text-slate-400"
@@ -531,6 +545,30 @@ export function NewArtistTab() {
               {["S", "A", "B", "C", "F"].map((r) => (
                 <option key={r} value={r}>
                   {r}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="space-y-1">
+            <label
+              htmlFor="ssr-filter-collection"
+              className="text-xs uppercase tracking-widest text-slate-400"
+            >
+              Collection
+            </label>
+            <select
+              id="ssr-filter-collection"
+              value={selectedCollection}
+              onChange={(e) => {
+                const v = e.target.value;
+                startTransition(() => setSelectedCollection(v));
+              }}
+              className={selectClass}
+            >
+              <option value="">All Collections</option>
+              {collections.map((c) => (
+                <option key={c} value={c}>
+                  {c}
                 </option>
               ))}
             </select>

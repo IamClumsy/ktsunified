@@ -12,6 +12,7 @@ interface FilterState {
   selectedBuild: string;
   selectedRanking: string;
   selectedPhotos: string;
+  selectedCollection: string;
 }
 
 interface SkillArrays {
@@ -76,6 +77,8 @@ export const useArtistFilters = ({
           getLetterGrade(calculatePoints(artist)) === (filters.selectedRanking as LetterGrade);
         const matchesPhotos =
           filters.selectedPhotos === "" || artist.photos === filters.selectedPhotos;
+        const matchesCollection =
+          filters.selectedCollection === "" || artist.collection === filters.selectedCollection;
         return (
           matchesSearch &&
           matchesGroup &&
@@ -85,7 +88,8 @@ export const useArtistFilters = ({
           matchesSkill3 &&
           matchesBuild &&
           matchesRanking &&
-          matchesPhotos
+          matchesPhotos &&
+          matchesCollection
         );
       })
       .sort((a, b) => {

@@ -11,6 +11,7 @@ export interface Artist {
   build?: string;
   photos?: string;
   pic?: string;
+  collection?: string;
 }
 
 export enum LetterGrade {
