@@ -720,6 +720,13 @@ export function NewArtistTab() {
                     )}
                   </div>
                 </div>
+                {artist.collection && artist.collection !== "Unreleased" && (
+                  <div>
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-slate-800 text-slate-300 border border-slate-600/50">
+                      {artist.collection}
+                    </span>
+                  </div>
+                )}
               </div>
             );
           })}
