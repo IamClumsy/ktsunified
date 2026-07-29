@@ -63,7 +63,7 @@ const selectClass =
   "w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-pink-400/70";
 
 type SortOption = "ranking" | "name" | "genre";
-type ViewMode = "cards" | "list";
+type ViewMode = "tier" | "cards" | "list";
 
 function HighlightedName({ name, term }: { name: string; term: string }) {
   if (!term) return <>{name}</>;
@@ -99,7 +99,7 @@ export function NewArtistTab() {
   const selectedRanking = urlFilters.grade;
   const selectedCollection = urlFilters.collection;
   const sortBy = (urlFilters.sort || "ranking") as SortOption;
-  const viewMode = (urlFilters.view || "cards") as ViewMode;
+  const viewMode = (urlFilters.view || "tier") as ViewMode;
 
   const setSearchTerm = (v: string) => setUrlFilter({ search: v });
   const setSelectedRole = (v: string) => startTransition(() => setUrlFilter({ role: v }));
@@ -315,7 +315,7 @@ export function NewArtistTab() {
           </div>
           {/* View mode */}
           <div className="flex items-center gap-1 rounded-lg border border-slate-700 bg-slate-900 overflow-hidden">
-            {(["cards", "list"] as ViewMode[]).map((mode) => (
+            {(["tier", "cards", "list"] as ViewMode[]).map((mode) => (
               <button
                 key={mode}
                 onClick={() => startTransition(() => setViewMode(mode))}
@@ -325,7 +325,7 @@ export function NewArtistTab() {
                     : "text-slate-400 hover:text-slate-200"
                 }`}
               >
-                {mode === "cards" ? "Cards" : "List"}
+                {mode === "tier" ? "Tier" : mode === "cards" ? "Cards" : "List"}
               </button>
             ))}
           </div>
@@ -343,8 +343,8 @@ export function NewArtistTab() {
               </option>
             ))}
           </select>
-          {/* Pics toggle — only relevant in card mode */}
-          {viewMode === "cards" && (
+          {/* Pics toggle — only relevant in card/tier mode */}
+          {(viewMode === "cards" || viewMode === "tier") && (
             <button
               onClick={() => setShowPics((v) => !v)}
               className={`px-3 py-2.5 rounded-lg border text-sm transition-colors ${
@@ -629,7 +629,7 @@ export function NewArtistTab() {
         })}
       </div>
 
-      {/* Cards / List */}
+      {/* Tier / Cards / List */}
       {sortedArtists.length === 0 ? (
         <div className="text-center py-16 text-slate-400">
           <p>No artists match the current filters.</p>
@@ -639,6 +639,73 @@ export function NewArtistTab() {
           >
             Clear all filters
           </button>
+        </div>
+      ) : viewMode === "tier" ? (
+        <div className="flex flex-col gap-2">
+          {(["S", "A", "B", "C", "F"] as const).map((grade) => {
+            const row = sortedArtists.filter((a) => getLetterGrade(calculatePoints(a)) === grade);
+            if (row.length === 0) return null;
+            const labelCls =
+              grade === "S"
+                ? "bg-yellow-400/20 text-yellow-300 border-yellow-400/50"
+                : grade === "A"
+                  ? "bg-emerald-400/20 text-emerald-300 border-emerald-400/50"
+                  : grade === "B"
+                    ? "bg-sky-400/20 text-sky-300 border-sky-400/50"
+                    : grade === "C"
+                      ? "bg-slate-400/20 text-slate-300 border-slate-400/40"
+                      : "bg-red-500/20 text-red-400 border-red-500/40";
+            const borderCls =
+              grade === "S"
+                ? "border-yellow-400/40"
+                : grade === "A"
+                  ? "border-emerald-400/40"
+                  : grade === "B"
+                    ? "border-sky-400/40"
+                    : grade === "C"
+                      ? "border-slate-500/40"
+                      : "border-red-500/40";
+            return (
+              <div
+                key={grade}
+                className={`flex items-stretch rounded-xl border ${borderCls} overflow-hidden`}
+              >
+                {/* Grade label */}
+                <div
+                  className={`flex items-center justify-center w-12 shrink-0 font-black text-xl border-r ${labelCls}`}
+                >
+                  {grade}
+                </div>
+                {/* Artist chips — horizontally scrollable on mobile */}
+                <div className="flex flex-wrap gap-2 p-2 flex-1 bg-slate-900/50 min-w-0">
+                  {row.map((artist) => (
+                    <div key={artist.id} className="flex flex-col items-center gap-1 w-16 shrink-0">
+                      {showPics && artist.pic ? (
+                        <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-slate-800 shrink-0">
+                          <Image
+                            src={`/images/artists/${artist.pic}.webp`}
+                            alt={artist.name}
+                            fill
+                            sizes="64px"
+                            className="object-cover object-top"
+                          />
+                        </div>
+                      ) : (
+                        <div
+                          className={`w-16 h-16 rounded-lg border-2 flex items-center justify-center text-lg font-black ${GRADE_BORDER[grade] ?? "border-slate-700"} bg-slate-800/60`}
+                        >
+                          {artist.name[0]}
+                        </div>
+                      )}
+                      <span className="text-[10px] text-slate-300 text-center leading-tight w-full truncate">
+                        {artist.name}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
       ) : viewMode === "cards" ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
