@@ -319,7 +319,7 @@
   },
   {
     "id": 23,
-    "name": "Sunny Sky",
+    "name": "Sora",
     "group": "Tokyo Siba",
     "rank": "SSR",
     "position": "Vocalist",
@@ -327,7 +327,7 @@
     "skills": ["10 sec/1800 Damage", "50% Basic Attack Damage", "10% Fan Capacity"],
     "build": "Single Car",
     "photos": "Universal",
-    "pic": "Sunny Sky",
+    "pic": "Sora",
     "collection": "Tokyo S1"
   },
   {
