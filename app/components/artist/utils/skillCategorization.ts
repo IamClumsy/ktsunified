@@ -42,7 +42,8 @@ export const isWorstSkill = (skill: string): boolean => {
     t.includes("10/sec") ||
     t.includes("driving speed") ||
     t.includes("drive speed") ||
-    t.includes("drive speed increase")
+    t.includes("drive speed increase") ||
+    t.includes("gain fans selling")
   );
 };
 
