@@ -239,13 +239,18 @@ function generateCalcTables() {
   const blueprintsWs = wb.Sheets["Blueprints"];
   if (blueprintsWs) {
     const bpRaw = XLSX.utils.sheet_to_json(blueprintsWs, { header: 1 });
-    const tierHeaders = bpRaw[1]?.slice(1, 12).map((v) => String(v)) ?? [];
-    const tierAccum = new Array(11).fill(0);
+    const tierHeaders =
+      bpRaw[1]
+        ?.slice(1, 22)
+        .map((v) => String(v))
+        .filter((v) => v && v !== "undefined") ?? [];
+    const numTiers = tierHeaders.length;
+    const tierAccum = new Array(numTiers).fill(0);
     for (let r = 2; r < bpRaw.length; r++) {
       const row = bpRaw[r];
       if (!Array.isArray(row)) continue;
       if (typeof row[0] === "string") break;
-      for (let t = 0; t < 11; t++) {
+      for (let t = 0; t < numTiers; t++) {
         if (typeof row[t + 1] === "number") tierAccum[t] += row[t + 1];
       }
     }
@@ -268,7 +273,7 @@ function generateCalcTables() {
       for (let r = startRow; r < bpRaw.length; r++) {
         const row = bpRaw[r];
         if (!Array.isArray(row) || typeof row[0] !== "number") break;
-        const levelCost = row.slice(1, 12).reduce((s, v) => s + (typeof v === "number" ? v : 0), 0);
+        const levelCost = row.slice(1).reduce((s, v) => s + (typeof v === "number" ? v : 0), 0);
         accum += levelCost;
         rows.push([row[0], levelCost, accum]);
       }

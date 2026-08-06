@@ -12,7 +12,7 @@ export function Blueprints() {
   const { tables } = useCalcTables();
 
   // Main blueprints — tier total reference
-  const [selectedTier, setSelectedTier] = useState("Tier 1");
+  const [selectedTier, setSelectedTier] = useState("Tier 21");
   const tierOptions = useMemo(
     () => tables?.blueprintsMain?.data.map((r) => String(r[0])) ?? [],
     [tables]
@@ -24,7 +24,7 @@ export function Blueprints() {
 
   // Master Group Battle
   const [battleFrom, setBattleFrom] = useState(0);
-  const [battleTo, setBattleTo] = useState(9);
+  const [battleTo, setBattleTo] = useState(10);
   const maxBattleLevel = useMemo(
     () => (tables?.blueprintsBattle ? tables.blueprintsBattle.data.length - 1 : 9),
     [tables]
@@ -36,7 +36,7 @@ export function Blueprints() {
 
   // Master Expansion
   const [expansionFrom, setExpansionFrom] = useState(0);
-  const [expansionTo, setExpansionTo] = useState(9);
+  const [expansionTo, setExpansionTo] = useState(10);
   const maxExpansionLevel = useMemo(
     () => (tables?.blueprintsExpansion ? tables.blueprintsExpansion.data.length - 1 : 9),
     [tables]
