@@ -42,7 +42,7 @@ export function BlueprintsGroupBattle() {
   const [from, setFrom] = useState("1");
   const [to, setTo] = useState("10");
   const levelOptions = useMemo(
-    () => tables?.blueprintsBattle?.data.map((r) => String(r[0])) ?? [],
+    () => tables?.blueprintsBattle?.data.map((r) => String(r[0])).filter((v) => v !== "0") ?? [],
     [tables]
   );
   const results = useMemo(() => {
@@ -69,7 +69,7 @@ export function BlueprintsExpansion() {
   const [from, setFrom] = useState("1");
   const [to, setTo] = useState("10");
   const levelOptions = useMemo(
-    () => tables?.blueprintsExpansion?.data.map((r) => String(r[0])) ?? [],
+    () => tables?.blueprintsExpansion?.data.map((r) => String(r[0])).filter((v) => v !== "0") ?? [],
     [tables]
   );
   const results = useMemo(() => {
