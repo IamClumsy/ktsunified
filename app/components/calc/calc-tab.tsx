@@ -88,7 +88,7 @@ function CalcContent({ resetKey }: { resetKey: number }) {
         <CeoOutfit />
         <CeoSports />
       </SectionGroup>
-      <SectionGroup label="Other">
+      <SectionGroup label="Blueprints">
         <BlueprintsMain />
         <BlueprintsGroupBattle />
         <BlueprintsExpansion />

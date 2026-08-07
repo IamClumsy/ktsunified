@@ -26,7 +26,7 @@ export function CeoTablesProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch("/data/ceo-tables.json");
+        const res = await fetch("/data/ceo-tables.json", { cache: "no-store" });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         if (data.error) throw new Error(data.error);
