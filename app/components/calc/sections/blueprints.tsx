@@ -40,7 +40,7 @@ export function BlueprintsMain() {
 export function BlueprintsGroupBattle() {
   const { tables } = useCalcTables();
 
-  const [from, setFrom] = useState(0);
+  const [from, setFrom] = useState(1);
   const [to, setTo] = useState(10);
   const maxLevel = useMemo(
     () => (tables?.blueprintsBattle ? tables.blueprintsBattle.data.length - 1 : 10),
@@ -71,7 +71,7 @@ export function BlueprintsGroupBattle() {
 export function BlueprintsExpansion() {
   const { tables } = useCalcTables();
 
-  const [from, setFrom] = useState(0);
+  const [from, setFrom] = useState(1);
   const [to, setTo] = useState(10);
   const maxLevel = useMemo(
     () => (tables?.blueprintsExpansion ? tables.blueprintsExpansion.data.length - 1 : 10),

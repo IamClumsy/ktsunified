@@ -267,30 +267,40 @@ function generateCalcTables() {
       if (typeof row[0] === "string" && row[0].includes("GROUP BATTLE")) battleTitleRow = r;
       if (typeof row[0] === "string" && row[0].includes("EXPANSION")) expansionTitleRow = r;
     }
-    // Each master section has a header row naming a resource per column, and the
+    // Each master section has a header row naming a resource per column. The
     // same resource name can repeat across multiple column groups (different
-    // upgrade phases) — those columns are summed together under one label.
+    // upgrade phases) — those stay as separate columns, numbered "Name 1",
+    // "Name 2", etc. so each phase's cost is visible on its own.
     const parseMasterBreakdown = (titleRow) => {
       const headerRow = bpRaw[titleRow + 1] ?? [];
-      const labelToCols = new Map();
-      headerRow.slice(1).forEach((v, i) => {
-        const label = v != null ? String(v) : null;
+      const rawLabels = headerRow.slice(1).map((v) => (v != null ? String(v) : null));
+      const totalByLabel = new Map();
+      rawLabels.forEach((label) => {
         if (!label) return;
-        if (!labelToCols.has(label)) labelToCols.set(label, []);
-        labelToCols.get(label).push(i);
+        totalByLabel.set(label, (totalByLabel.get(label) ?? 0) + 1);
       });
-      const labels = [...labelToCols.keys()];
+      const seenByLabel = new Map();
+      const labels = [];
+      const colIndices = [];
+      rawLabels.forEach((label, i) => {
+        if (!label) return;
+        if (totalByLabel.get(label) > 1) {
+          const n = (seenByLabel.get(label) ?? 0) + 1;
+          seenByLabel.set(label, n);
+          labels.push(`${label} ${n}`);
+        } else {
+          labels.push(label);
+        }
+        colIndices.push(i);
+      });
       const accum = new Array(labels.length).fill(0);
       const rows = [];
       for (let r = titleRow + 2; r < bpRaw.length; r++) {
         const row = bpRaw[r];
         if (!Array.isArray(row) || typeof row[0] !== "number") break;
         const values = row.slice(1);
-        labels.forEach((label, li) => {
-          const sum = labelToCols
-            .get(label)
-            .reduce((s, ci) => s + (typeof values[ci] === "number" ? values[ci] : 0), 0);
-          accum[li] += sum;
+        colIndices.forEach((ci, li) => {
+          accum[li] += typeof values[ci] === "number" ? values[ci] : 0;
         });
         rows.push([row[0], ...accum]);
       }
