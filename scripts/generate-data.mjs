@@ -259,33 +259,50 @@ function generateCalcTables() {
       data: tierHeaders.map((h, i) => [h, tierAccum[i]]),
     };
 
-    let battleDataStart = -1;
-    let expansionDataStart = -1;
+    let battleTitleRow = -1;
+    let expansionTitleRow = -1;
     for (let r = 0; r < bpRaw.length; r++) {
       const row = bpRaw[r];
       if (!Array.isArray(row)) continue;
-      if (typeof row[0] === "string" && row[0].includes("GROUP BATTLE")) battleDataStart = r + 2;
-      if (typeof row[0] === "string" && row[0].includes("EXPANSION")) expansionDataStart = r + 2;
+      if (typeof row[0] === "string" && row[0].includes("GROUP BATTLE")) battleTitleRow = r;
+      if (typeof row[0] === "string" && row[0].includes("EXPANSION")) expansionTitleRow = r;
     }
-    const parseMasterSection = (startRow) => {
+    // Each master section has a header row naming a resource per column, and the
+    // same resource name can repeat across multiple column groups (different
+    // upgrade phases) — those columns are summed together under one label.
+    const parseMasterBreakdown = (titleRow) => {
+      const headerRow = bpRaw[titleRow + 1] ?? [];
+      const labelToCols = new Map();
+      headerRow.slice(1).forEach((v, i) => {
+        const label = v != null ? String(v) : null;
+        if (!label) return;
+        if (!labelToCols.has(label)) labelToCols.set(label, []);
+        labelToCols.get(label).push(i);
+      });
+      const labels = [...labelToCols.keys()];
+      const accum = new Array(labels.length).fill(0);
       const rows = [];
-      let accum = 0;
-      for (let r = startRow; r < bpRaw.length; r++) {
+      for (let r = titleRow + 2; r < bpRaw.length; r++) {
         const row = bpRaw[r];
         if (!Array.isArray(row) || typeof row[0] !== "number") break;
-        const levelCost = row.slice(1).reduce((s, v) => s + (typeof v === "number" ? v : 0), 0);
-        accum += levelCost;
-        rows.push([row[0], levelCost, accum]);
+        const values = row.slice(1);
+        labels.forEach((label, li) => {
+          const sum = labelToCols
+            .get(label)
+            .reduce((s, ci) => s + (typeof values[ci] === "number" ? values[ci] : 0), 0);
+          accum[li] += sum;
+        });
+        rows.push([row[0], ...accum]);
       }
-      return rows;
+      return { headers: ["Level", ...labels], data: rows };
     };
-    if (battleDataStart >= 0) {
-      const data = parseMasterSection(battleDataStart);
-      if (data.length) result.blueprintsBattle = { headers: ["Level", "Cost", "Accum"], data };
+    if (battleTitleRow >= 0) {
+      const table = parseMasterBreakdown(battleTitleRow);
+      if (table.data.length) result.blueprintsBattle = table;
     }
-    if (expansionDataStart >= 0) {
-      const data = parseMasterSection(expansionDataStart);
-      if (data.length) result.blueprintsExpansion = { headers: ["Level", "Cost", "Accum"], data };
+    if (expansionTitleRow >= 0) {
+      const table = parseMasterBreakdown(expansionTitleRow);
+      if (table.data.length) result.blueprintsExpansion = table;
     }
   }
 

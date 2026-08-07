@@ -16,7 +16,7 @@ import { VillaHomemaking } from "./sections/villa-homemaking";
 import { CeoOutfit } from "./sections/ceo-outfit";
 import { CeoSports } from "./sections/ceo-sports";
 import { HqBuilding } from "./sections/hq-building";
-import { Blueprints } from "./sections/blueprints";
+import { BlueprintsMain, BlueprintsGroupBattle, BlueprintsExpansion } from "./sections/blueprints";
 
 function SectionGroup({ label, children }: { label: string; children: ReactNode }) {
   return (
@@ -89,7 +89,9 @@ function CalcContent({ resetKey }: { resetKey: number }) {
         <CeoSports />
       </SectionGroup>
       <SectionGroup label="Other">
-        <Blueprints />
+        <BlueprintsMain />
+        <BlueprintsGroupBattle />
+        <BlueprintsExpansion />
       </SectionGroup>
     </div>
   );

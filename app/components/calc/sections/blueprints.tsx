@@ -2,16 +2,15 @@
 
 import { useState, useMemo } from "react";
 import { useCalcTables } from "../calc-context";
-import { vlookupDiff, vlookup } from "../vlookup";
+import { vlookupDiffMulti, vlookup } from "../vlookup";
 import { CalculatorSection } from "../calculator-section";
 import { LevelRangeInput } from "../inputs/level-range-input";
 import { DropdownInput } from "../inputs/dropdown-input";
 import { ResultDisplay } from "../result-display";
 
-export function Blueprints() {
+export function BlueprintsMain() {
   const { tables } = useCalcTables();
 
-  // Main blueprints — tier total reference
   const [selectedTier, setSelectedTier] = useState("Tier 21");
   const tierOptions = useMemo(
     () => tables?.blueprintsMain?.data.map((r) => String(r[0])) ?? [],
@@ -22,36 +21,8 @@ export function Blueprints() {
     return vlookup(selectedTier, tables.blueprintsMain.data, 2);
   }, [tables, selectedTier]);
 
-  // Master Group Battle
-  const [battleFrom, setBattleFrom] = useState(0);
-  const [battleTo, setBattleTo] = useState(10);
-  const maxBattleLevel = useMemo(
-    () => (tables?.blueprintsBattle ? tables.blueprintsBattle.data.length - 1 : 9),
-    [tables]
-  );
-  const battleCost = useMemo(() => {
-    if (!tables?.blueprintsBattle) return null;
-    return vlookupDiff(battleFrom, battleTo, tables.blueprintsBattle.data, 3);
-  }, [tables, battleFrom, battleTo]);
-
-  // Master Expansion
-  const [expansionFrom, setExpansionFrom] = useState(0);
-  const [expansionTo, setExpansionTo] = useState(10);
-  const maxExpansionLevel = useMemo(
-    () => (tables?.blueprintsExpansion ? tables.blueprintsExpansion.data.length - 1 : 9),
-    [tables]
-  );
-  const expansionCost = useMemo(() => {
-    if (!tables?.blueprintsExpansion) return null;
-    return vlookupDiff(expansionFrom, expansionTo, tables.blueprintsExpansion.data, 3);
-  }, [tables, expansionFrom, expansionTo]);
-
   return (
     <CalculatorSection title="Blueprints" color="sky">
-      {/* Main blueprints tier reference */}
-      <p className="text-xs text-slate-400 uppercase tracking-widest">
-        Main Blueprints — Total per Tier
-      </p>
       <DropdownInput
         label="Tier"
         value={selectedTier}
@@ -62,36 +33,68 @@ export function Blueprints() {
         accentClass="text-sky-300"
         results={[{ label: "Total Blueprints", value: tierTotal }]}
       />
+    </CalculatorSection>
+  );
+}
 
-      {/* Master Group Battle */}
-      <p className="text-xs text-slate-400 uppercase tracking-widest mt-4">Master — Group Battle</p>
-      <LevelRangeInput
-        from={battleFrom}
-        to={battleTo}
-        onFromChange={setBattleFrom}
-        onToChange={setBattleTo}
-        min={0}
-        max={maxBattleLevel}
-      />
-      <ResultDisplay
-        accentClass="text-sky-300"
-        results={[{ label: "Blueprints", value: battleCost }]}
-      />
+export function BlueprintsGroupBattle() {
+  const { tables } = useCalcTables();
 
-      {/* Master Expansion */}
-      <p className="text-xs text-slate-400 uppercase tracking-widest mt-4">Master — Expansion</p>
+  const [from, setFrom] = useState(0);
+  const [to, setTo] = useState(10);
+  const maxLevel = useMemo(
+    () => (tables?.blueprintsBattle ? tables.blueprintsBattle.data.length - 1 : 10),
+    [tables]
+  );
+  const results = useMemo(() => {
+    if (!tables?.blueprintsBattle) return [];
+    const labels = tables.blueprintsBattle.headers.slice(1) as string[];
+    const diffs = vlookupDiffMulti(from, to, tables.blueprintsBattle.data, labels.length);
+    return labels.map((label, i) => ({ label, value: diffs[i] }));
+  }, [tables, from, to]);
+
+  return (
+    <CalculatorSection title="Group Battle" color="sky">
       <LevelRangeInput
-        from={expansionFrom}
-        to={expansionTo}
-        onFromChange={setExpansionFrom}
-        onToChange={setExpansionTo}
+        from={from}
+        to={to}
+        onFromChange={setFrom}
+        onToChange={setTo}
         min={0}
-        max={maxExpansionLevel}
+        max={maxLevel}
       />
-      <ResultDisplay
-        accentClass="text-sky-300"
-        results={[{ label: "Blueprints", value: expansionCost }]}
+      <ResultDisplay accentClass="text-sky-300" results={results} />
+    </CalculatorSection>
+  );
+}
+
+export function BlueprintsExpansion() {
+  const { tables } = useCalcTables();
+
+  const [from, setFrom] = useState(0);
+  const [to, setTo] = useState(10);
+  const maxLevel = useMemo(
+    () => (tables?.blueprintsExpansion ? tables.blueprintsExpansion.data.length - 1 : 10),
+    [tables]
+  );
+  const results = useMemo(() => {
+    if (!tables?.blueprintsExpansion) return [];
+    const labels = tables.blueprintsExpansion.headers.slice(1) as string[];
+    const diffs = vlookupDiffMulti(from, to, tables.blueprintsExpansion.data, labels.length);
+    return labels.map((label, i) => ({ label, value: diffs[i] }));
+  }, [tables, from, to]);
+
+  return (
+    <CalculatorSection title="Expansion" color="sky">
+      <LevelRangeInput
+        from={from}
+        to={to}
+        onFromChange={setFrom}
+        onToChange={setTo}
+        min={0}
+        max={maxLevel}
       />
+      <ResultDisplay accentClass="text-sky-300" results={results} />
     </CalculatorSection>
   );
 }
