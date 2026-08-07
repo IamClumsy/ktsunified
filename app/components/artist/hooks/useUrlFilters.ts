@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 
 export type UrlFilterKey =
@@ -35,21 +35,20 @@ export function useUrlFilterValues(): Record<UrlFilterKey, string> {
 
 /**
  * Returns a stable setter that updates URL params without a full navigation.
+ *
+ * Reads the current params from window.location at call time (not from a
+ * cached/ref-synced value) so that rapid-fire updates — e.g. a filter change
+ * still in flight inside startTransition when "Clear all" fires — always
+ * build on top of whatever the URL actually is, instead of a stale snapshot
+ * that could resurrect filters right after they were cleared.
  */
 export function useSetUrlFilter() {
   const router = useRouter();
   const pathname = usePathname();
-  const params = useSearchParams();
-
-  // Use a ref so the callback is stable across renders
-  const paramsRef = useRef(params);
-  useEffect(() => {
-    paramsRef.current = params;
-  }, [params]);
 
   return useCallback(
     (updates: Partial<Record<UrlFilterKey, string>>) => {
-      const next = new URLSearchParams(paramsRef.current.toString());
+      const next = new URLSearchParams(window.location.search);
       for (const [key, value] of Object.entries(updates)) {
         if (value) {
           next.set(key, value);
