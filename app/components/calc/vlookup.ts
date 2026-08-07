@@ -28,17 +28,3 @@ export function vlookupDiff(
   if (vTo == null || vFrom == null) return null;
   return vTo - vFrom;
 }
-
-/** Diffs every value column (2..colCount+1) between two keys in one pass. */
-export function vlookupDiffMulti(
-  from: number | string,
-  to: number | string,
-  table: unknown[][],
-  colCount: number
-): (number | null)[] {
-  const results: (number | null)[] = [];
-  for (let c = 2; c <= colCount + 1; c++) {
-    results.push(vlookupDiff(from, to, table, c));
-  }
-  return results;
-}
