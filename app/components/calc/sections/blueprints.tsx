@@ -4,7 +4,6 @@ import { useState, useMemo } from "react";
 import { useCalcTables } from "../calc-context";
 import { vlookupDiffMulti, vlookup } from "../vlookup";
 import { CalculatorSection } from "../calculator-section";
-import { LevelRangeInput } from "../inputs/level-range-input";
 import { DropdownInput } from "../inputs/dropdown-input";
 import { ResultDisplay } from "../result-display";
 
@@ -40,10 +39,10 @@ export function BlueprintsMain() {
 export function BlueprintsGroupBattle() {
   const { tables } = useCalcTables();
 
-  const [from, setFrom] = useState(1);
-  const [to, setTo] = useState(10);
-  const maxLevel = useMemo(
-    () => (tables?.blueprintsBattle ? tables.blueprintsBattle.data.length - 1 : 10),
+  const [from, setFrom] = useState("1");
+  const [to, setTo] = useState("10");
+  const levelOptions = useMemo(
+    () => tables?.blueprintsBattle?.data.map((r) => String(r[0])) ?? [],
     [tables]
   );
   const results = useMemo(() => {
@@ -55,14 +54,10 @@ export function BlueprintsGroupBattle() {
 
   return (
     <CalculatorSection title="Group Battle" color="sky">
-      <LevelRangeInput
-        from={from}
-        to={to}
-        onFromChange={setFrom}
-        onToChange={setTo}
-        min={0}
-        max={maxLevel}
-      />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <DropdownInput label="From Level" value={from} options={levelOptions} onChange={setFrom} />
+        <DropdownInput label="To Level" value={to} options={levelOptions} onChange={setTo} />
+      </div>
       <ResultDisplay accentClass="text-sky-300" results={results} />
     </CalculatorSection>
   );
@@ -71,10 +66,10 @@ export function BlueprintsGroupBattle() {
 export function BlueprintsExpansion() {
   const { tables } = useCalcTables();
 
-  const [from, setFrom] = useState(1);
-  const [to, setTo] = useState(10);
-  const maxLevel = useMemo(
-    () => (tables?.blueprintsExpansion ? tables.blueprintsExpansion.data.length - 1 : 10),
+  const [from, setFrom] = useState("1");
+  const [to, setTo] = useState("10");
+  const levelOptions = useMemo(
+    () => tables?.blueprintsExpansion?.data.map((r) => String(r[0])) ?? [],
     [tables]
   );
   const results = useMemo(() => {
@@ -86,14 +81,10 @@ export function BlueprintsExpansion() {
 
   return (
     <CalculatorSection title="Expansion" color="sky">
-      <LevelRangeInput
-        from={from}
-        to={to}
-        onFromChange={setFrom}
-        onToChange={setTo}
-        min={0}
-        max={maxLevel}
-      />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <DropdownInput label="From Level" value={from} options={levelOptions} onChange={setFrom} />
+        <DropdownInput label="To Level" value={to} options={levelOptions} onChange={setTo} />
+      </div>
       <ResultDisplay accentClass="text-sky-300" results={results} />
     </CalculatorSection>
   );
